@@ -39,7 +39,7 @@ function save(mail) {
 }
 
 function getDefaultFilterBy() {
-    return filterBy = {
+    return {
         status: '',
         txt: '',
         isRead: null,
@@ -49,7 +49,7 @@ function getDefaultFilterBy() {
 }
 
 function getEmptyMail() {
-    return mail = {
+    return {
         createdAt: 0,
         subject: '',
         body: '',
