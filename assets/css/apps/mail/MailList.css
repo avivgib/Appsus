@@ -1,1 +1,109 @@
- /* mail list */
+.emails-list {
+    width: 100%;
+    font-size: 0.875rem;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+}
+
+.emails-list .mail-preview {
+    position: relative;
+    padding-block: 0.71428571428em;
+    box-shadow: inset 0 -1px 0 0 var(--gl-shadow2);
+    background-color: var(--gl1);
+    cursor: pointer;
+
+    line-height: 1.42857142857;
+}
+
+.emails-list .mail-preview:hover {
+    box-shadow:
+        inset -1px 0 0 var(--gl-shadow1),
+        inset 1px 0 0 var(--gl-shadow1),
+        0 1px 2px 0 var(--gl-shadow2),
+        0 1px 3px 1px var(--gl-shadow2);
+    z-index: 2;
+}
+
+.emails-list .mail-preview>.grip {
+    position: relative;
+    width: 0.21428571428em;
+}
+
+.emails-list .mail-preview>.grip>.fa.grip-vertical {
+    position: absolute;
+    top: 50%;
+    left: 0.28571428571em;
+    translate: 0 -50%;
+    opacity: 0;
+
+}
+
+.emails-list .mail-preview:hover>.grip>.fa.grip-vertical {
+    opacity: 0.4;
+    cursor: grab;
+    z-index: 1;
+}
+
+
+.emails-list .mail-preview>.mail-select {
+
+    padding-inline: 0.92857142857em;
+    padding-inline-end: 0.71428571428em;
+
+    /* * */
+    min-width: 1.42857142857em;
+    font-size: 1.07142857143em;
+}
+
+.emails-list .mail-preview>.mail-star {
+    padding-inline-end: 0.71428571428em;
+}
+
+.emails-list .mail-preview>.mail-important {
+    padding-inline-end: 0.71428571428em;
+}
+
+.emails-list .mail-preview>.mail-select,
+.emails-list .mail-preview>.mail-star,
+.emails-list .mail-preview>.mail-important {
+    position: relative;
+    opacity: 0.3;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.emails-list .mail-preview:hover>.mail-select,
+.emails-list .mail-preview:hover>.mail-star,
+.emails-list .mail-preview:hover>.mail-important {
+    opacity: 0.6;
+}
+
+.emails-list .mail-preview>.sent-from {
+    display: flex;
+    padding-inline-end: 2.28571428571em;
+    flex-basis: 168px;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.emails-list .mail-preview>.mail-subject {
+    flex: 1 1 auto;
+    padding-inline-end: 0.71428571428em;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.emails-list .mail-preview>.mail-subject>span {
+    color: var(--gl-font2);
+}
+
+.emails-list .mail-preview>.gap {
+    flex-basis: 1.42857142857em;
+    max-width: 1.42857142857em;
+    padding-left: 0.57142857142em;
+}
+
+.emails-list .mail-preview>.sentat {
+    padding-inline-end: 1.14285714286em;
+    text-wrap: nowrap;
+}

@@ -1,3 +1,4 @@
+import { MailList } from '../cmps/MailList.jsx';
 import { mailService } from '../services/mail.service.js'
 const { useState, useEffect, useRef } = React
 
@@ -19,7 +20,7 @@ export function MailIndex() {
     if (!emails) return 'loading...'
     return (
         <section className="container">
-            Emails
+            <MailList emails={emails} />
         </section>
     )
 }
