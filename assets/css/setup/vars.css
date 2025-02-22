@@ -14,11 +14,12 @@
 
     /* gmail */
 
-    /* gmail mail list */
+    /* gmail mail list */ 
     --gl1: #f2f6fc;
 
     --gl-shadow1: rgb(218, 220, 224);
     --gl-shadow2: rgba(60, 64, 67, .15);
 
+    --gl-font1: rgb(32, 33, 36);
     --gl-font2: rgb(95, 99, 104);
 }
