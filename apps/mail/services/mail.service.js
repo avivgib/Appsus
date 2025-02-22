@@ -79,7 +79,7 @@ function _getEmailsDemoData() {
             subject: 'Welcome to Our Newsletter!',
             body: 'Thank you for subscribing to our newsletter. Stay tuned for exciting updates and offers!',
             isRead: false,
-            sentAt: 1708345600000,
+            sentAt: Date.now(),
             removedAt: null,
             from: 'newsletter@example.com',
             to: 'user@appsus.com'
@@ -90,7 +90,7 @@ function _getEmailsDemoData() {
             subject: 'Meeting Reminder',
             body: 'Don\'t forget about our meeting scheduled for tomorrow at 10:00 AM.',
             isRead: true,
-            sentAt: 1708259200000,
+            sentAt: 1738368000000,
             removedAt: null,
             from: 'hr@example.com',
             to: 'user@appsus.com'

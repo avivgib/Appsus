@@ -1,6 +1,7 @@
 import { MailPreview } from "./MailPreview.jsx"
 
 export function MailList({ emails }) {
+    
 
     return (
         <ul className='emails-list clean-list'>
