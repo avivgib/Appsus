@@ -1,0 +1,82 @@
+.mail-details {
+    background-color: rgb(255, 255, 255);
+    font-size: 0.875rem;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.42857142857;
+
+    border-radius: 16px;
+}
+
+.mail-details>.details-header-bar {
+    height: 3.42857142857em;
+    margin-inline-end: 1.14285714286em;
+    padding-inline: 1.14285714286em;
+}
+
+.mail-details>.details-header-bar>* {
+    cursor: pointer;
+    color: var(--gl-font2);
+}
+
+
+.mail-details>.mail-wrapper {
+    padding-inline-end: 1.14285714286em;
+
+    overflow-y: scroll;
+    height: 40.5em;
+}
+
+.mail-details>.mail-wrapper>.mail-subject {
+    grid-column: 2 span;
+
+    padding-block-start: 0.90909090909em;
+    padding-inline-start: 0.90909090909em;
+    font-size: 1.57142857143em;
+    line-height: 0.90909090909;
+}
+
+.mail-details>.mail-wrapper>.mail-content {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    grid-template-rows: max-content;
+    padding-block-start: 1.42857142857em;
+
+}
+
+.mail-details>.mail-wrapper>.mail-content>.icon {
+    grid-area: 1/1/3/1;
+    padding-inline: 1.14285714286em;
+    min-width: 40px;
+    align-content: center;
+}
+
+.mail-wrapper>.mail-content>.icon>.usr-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.mail-wrapper>.mail-content>.mail-header {
+    grid-area: 1/2;
+    align-items: baseline;
+}
+
+.mail-wrapper>.mail-content>.mail-header>.mail-from {
+    font-weight: bold;
+}
+
+.mail-wrapper>.mail-content>.mail-header>.mail-sentat,
+.mail-wrapper>.mail-content>.mail-to {
+    color: var(--gl-font2);
+    font-size: 0.85714285714em;
+}
+
+.mail-wrapper>.mail-content>.mail-to {
+    grid-area: 2/2;
+}
+
+.mail-wrapper>.mail-content>.mail-body {
+    grid-area: 3/1/3/3;
+    margin-block-start: 0.57142857142em;
+    padding-inline-start: 1.14285714286em;
+}

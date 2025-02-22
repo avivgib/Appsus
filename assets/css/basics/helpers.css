@@ -44,6 +44,10 @@
     content: '\f58e';
 }
 
+.fa.arrow-left::before {
+    content: '\f060';
+}
+
 /* regular */
 
 .fare::before {

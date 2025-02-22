@@ -1,13 +1,13 @@
 import { MailPreview } from "./MailPreview.jsx"
 
-export function MailList({ emails }) {
-    
+export function MailList({ emails, onOpenMailDetails }) {
+
 
     return (
         <ul className='emails-list clean-list'>
 
             {emails.map(mail => {
-                return <li key={mail.id} className='mail-preview'>
+                return <li key={mail.id} className='mail-preview' onClick={() => { onOpenMailDetails(mail.id) }}>
                     <div className='grip'><span className='fa grip-vertical'></span></div>
                     <div className='mail-select'><span className='fare square'></span></div>
                     <div className='mail-star'><span className='fare star'></span></div>

@@ -14,7 +14,9 @@
 
     /* gmail */
 
-    /* gmail mail list */ 
+    /* gmail mail list */
+    --bc-gl1: #f8fafd;
+
     --gl1: #f2f6fc;
 
     --gl-shadow1: rgb(218, 220, 224);
