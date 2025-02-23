@@ -48,6 +48,14 @@
     content: '\f060';
 }
 
+.fa.pen::before {
+    content: '\f304';
+}
+
+.fa.envelope-open-text::before {
+    content: '\f658';
+}
+
 /* regular */
 
 .fare::before {
@@ -72,4 +80,16 @@
 
 .fare.envelope-open::before {
     content: '\f2b6';
+}
+
+.fare.paper-plane::before {
+    content: '\f1d8';
+}
+
+.fare.trash-can::before {
+    content: '\f2ed';
+}
+
+.fare.note-sticky::before {
+    content: '\f249';
 }

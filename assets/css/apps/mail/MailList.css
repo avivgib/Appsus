@@ -1,4 +1,6 @@
 .emails-wrapper {
+    grid-area: 1/2;
+
     width: 100%;
     font-size: 0.875rem;
     font-family: Roboto, Helvetica, Arial, sans-serif;

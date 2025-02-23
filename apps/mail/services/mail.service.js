@@ -8,6 +8,8 @@ export const mailService = {
     save,
     getDefaultFilterBy,
     getEmptyMail,
+    getUserMail,
+    calculateUnreadMails,
 }
 
 const EMAILS_KEY = 'emails_key'
@@ -18,14 +20,38 @@ const loggedinUser = {
     fullname: 'Mahatma Appsus'
 }
 
-function query() {
+function query(filterBy) {
     return storageService.query(EMAILS_KEY)
         .then(emails => {
+
+            if (filterBy.status === 'inbox') {
+                emails = emails.filter(mail => {
+                    return mail.from !== loggedinUser.email && !mail.removedAt
+                })
+            }
+
+            if (filterBy.status === 'sent') {
+                emails = emails.filter(mail => {
+                    return mail.from === loggedinUser.email && mail.sentAt
+                })
+            }
+
+            if (filterBy.status === 'trash') {
+                emails = emails.filter(mail => mail.removedAt)
+            }
+
+            if (filterBy.status === 'draft') {
+                emails = emails.filter(mail => !mail.sentAt)
+            }
 
             emails = emails.sort((e1, e2) => e2.sentAt - e1.sentAt)
 
             return emails
         })
+}
+
+function getUserMail() {
+    return loggedinUser.email
 }
 
 function get(mailId) {
@@ -46,7 +72,7 @@ function save(mail) {
 
 function getDefaultFilterBy() {
     return {
-        status: '',
+        status: 'inbox',
         txt: '',
         isRead: null,
         isStared: null,
@@ -75,6 +101,20 @@ function _createBooks() {
 function _creatDemoEmails() {
     const emails = _getEmailsDemoData()
     utilService.saveToStorage(EMAILS_KEY, emails)
+}
+
+
+function calculateUnreadMails() {
+    return storageService.query(EMAILS_KEY)
+        .then(emails => {
+            return emails.reduce((acc, mail) => {
+                if (mail.from !== loggedinUser.email && !mail.removedAt && !mail.isRead) acc.inbox++
+                else if (mail.from === loggedinUser.email && mail.sentAt && !mail.isRead) acc.sent++
+                else if (mail.removedAt && !mail.isRead) acc.trash++
+                else if (!mail.sentAt && !mail.isRead) acc.draft++
+                return acc
+            }, { inbox: 0, sent: 0, trash: 0, draft: 0 })
+        })
 }
 
 function _getEmailsDemoData() {
