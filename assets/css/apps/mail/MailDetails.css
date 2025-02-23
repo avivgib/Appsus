@@ -80,3 +80,16 @@
     margin-block-start: 0.57142857142em;
     padding-inline-start: 1.14285714286em;
 }
+
+@media (min-width: 700px) {
+
+    .mail-wrapper>.mail-content>.mail-header {
+        justify-content: space-between;
+    }
+
+    .mail-wrapper>.mail-content>.mail-body {
+        grid-area: 3/2;
+        padding-inline-start: 0;
+    }
+
+}
