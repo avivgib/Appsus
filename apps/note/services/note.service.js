@@ -1,11 +1,9 @@
 // note service
 import { storageService } from "../../../services/async-storage.service.js";
 import { utilService } from "../../../services/util.service.js";
-import { eventBusService } from "../../../services/event-bus.service.js";
 import { notes as defaultNotes } from "../data/notes.js"
 
 const NOTES_KEY = 'notes'
-const gCache = utilService.loadFromStorage(NOTES_KEY) || {}
 _createNotes()
 
 export const noteService = {
@@ -17,22 +15,13 @@ export const noteService = {
     getEmptyNote
 }
 
-function query(filterBy = {}) {
+function query() {
+    console.log('Fetching notes from storage...');
     return storageService.query(NOTES_KEY)
-        .then(notes => {
-            if (!Array.isArray(notes) || !notes.length) {
-                // console.log(`notes: ${notes}`)
-                notes = [...defaultNotes]
-                utilService.saveToStorage(NOTES_KEY, notes)
-            }
-            return books
-            // return _filterNotes(books, filterBy)
-        })
 }
 
 function get(noteId) {
     return storageService.get(NOTES_KEY, noteId)
-        .then(_setNextPrevNoteId)
 }
 
 function remove(noteId) {
@@ -40,34 +29,33 @@ function remove(noteId) {
 }
 
 function save(note) {
-    if (note.id) {
-        return storageService.put(NOTES_KEY, note)
-    } else {
-        return storageService.post(NOTES_KEY, note)
-    }
+    return note.id
+        ? storageService.put(NOTES_KEY, note)
+        : storageService.post(NOTES_KEY, note)
 }
 
 function getDefaultFilter() {
-    return filterBy = {
-        id,
+    return {
+        id: '',
         createdAt: null,
         type: '',
         isPinned: false,
-        info: {
-            title: ''
+        info: { 
+            title: '',
+            content: '' 
         },
     }
 }
 
-
-function getEmptyNote(id = '', createdAt = '', type = '', isPinned = false ) {
-    return note = {
+function getEmptyNote(id = '', createdAt = '', type = '', isPinned = false) {
+    return {
         id,
         createdAt,
         type,
         isPinned,
         info: {
-            title: ''
+            title: '',
+            content: ''
         }
     }
 }
@@ -76,8 +64,10 @@ function getEmptyNote(id = '', createdAt = '', type = '', isPinned = false ) {
 
 
 function _createNotes() {
-    const notes = utilService.loadFromStorage(NOTES_KEY)
-    if (!notes || !notes.length) _createDemoNotes()
+    let notes = utilService.loadFromStorage(NOTES_KEY)
+    if (!notes || !notes.length) {
+        utilService.saveToStorage(NOTES_KEY, defaultNotes)
+    }
 }
 
 // function _filterNotes(notes, filterBy) {
