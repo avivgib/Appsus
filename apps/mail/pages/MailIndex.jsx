@@ -8,12 +8,10 @@ const { useState, useEffect, useRef } = React
 
 export function MailIndex() {
 
-
-    const [emails, setEamils] = useState(null)
+    const [emails, setEmails] = useState(null)
     const [openMail, setOpenMail] = useState(null)
-    const [unreadEmailsNum, setUnreadEmailsNum] = useState({ inbox: 0, sent: 0, trash: 0, draft: 0 })
+    const [unreadEmailsNum, setUnreadEmailsNum] = useState(null)
     const [filterBy, setFilterBy] = useState({ ...mailService.getDefaultFilterBy() })
-    console.log(unreadEmailsNum);
 
 
     useEffect(() => {
@@ -21,15 +19,19 @@ export function MailIndex() {
     }, [filterBy])
 
     useEffect(() => {
-        if (emails) {
-            calculateUnreadMails(emails)
-        }
-    }, [emails])
+        loadUnreadStats()
+    }, [])
+
 
     function loadEmails() {
         mailService.query(filterBy)
-            .then(emails => setEamils(emails))
+            .then(emails => setEmails(emails))
             .catch(error => console.error(error))
+    }
+
+    function loadUnreadStats() {
+        mailService.calculateUnreadMails()
+            .then(res => setUnreadEmailsNum(res))
     }
 
     function onOpenMailDetails(mailId) {
@@ -42,9 +44,12 @@ export function MailIndex() {
 
         mailService.save({ ...currMail, isRead: true })
             .then(currMail => {
-                setEamils(prev => {
+                setEmails(prev => {
                     return prev.map(mail => (mail.id === currMail.id) ? currMail : mail)
                 })
+                setUnreadEmailsNum(prev => ({
+                    ...prev, [filterBy.status]: unreadEmailsNum[filterBy.status] - 1
+                }))
             })
     }
 
@@ -55,11 +60,14 @@ export function MailIndex() {
 
         mailService.save({ ...currMail, isRead: !currMail.isRead })
             .then(currMail => {
-                setEamils(prev => {
+                setEmails(prev => {
                     return prev.map(mail => (mail.id === currMail.id) ? currMail : mail)
                 })
+                setUnreadEmailsNum(prev => ({
+                    ...prev, [filterBy.status]: unreadEmailsNum[filterBy.status] + (currMail.isRead ? -1 : 1)
+                }))
             })
-            .catch(erroe => console.error(erroe))
+            .catch(error => console.error(error))
     }
 
 
@@ -67,13 +75,6 @@ export function MailIndex() {
         setOpenMail(null)
     }
 
-    function calculateUnreadMails(emails) {
-        const unreadMails = emails.reduce((acc, mail) => {
-            if (!mail.isRead) acc++
-            return acc
-        }, 0)
-        setUnreadEmailsNum(unreadMails)
-    }
 
     // function onSetFilterBy({ target }) {
     //     const { name, value } = target
@@ -82,7 +83,6 @@ export function MailIndex() {
     function onSetStatusInFilterBy(statusTyep) {
         setFilterBy(prev => ({ ...prev, status: statusTyep }))
     }
-
 
 
     if (!emails) return 'loading...'
@@ -94,7 +94,9 @@ export function MailIndex() {
                 onToggleIsRead={onToggleIsRead} />
             <MailFolderList
                 onSetStatusInFilterBy={onSetStatusInFilterBy}
-                filterBy={filterBy} />
+                filterBy={filterBy}
+                unreadEmailsNum={unreadEmailsNum}
+            />
 
             {/* <MailCompose />
             {openMail && <MailDetails openMail={openMail} onGoingBack={onGoingBack} />} */}

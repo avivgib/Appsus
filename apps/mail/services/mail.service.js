@@ -9,6 +9,7 @@ export const mailService = {
     getDefaultFilterBy,
     getEmptyMail,
     getUserMail,
+    calculateUnreadMails,
 }
 
 const EMAILS_KEY = 'emails_key'
@@ -100,6 +101,20 @@ function _createBooks() {
 function _creatDemoEmails() {
     const emails = _getEmailsDemoData()
     utilService.saveToStorage(EMAILS_KEY, emails)
+}
+
+
+function calculateUnreadMails() {
+    return storageService.query(EMAILS_KEY)
+        .then(emails => {
+            return emails.reduce((acc, mail) => {
+                if (mail.from !== loggedinUser.email && !mail.removedAt && !mail.isRead) acc.inbox++
+                else if (mail.from === loggedinUser.email && mail.sentAt && !mail.isRead) acc.sent++
+                else if (mail.removedAt && !mail.isRead) acc.trash++
+                else if (!mail.sentAt && !mail.isRead) acc.draft++
+                return acc
+            }, { inbox: 0, sent: 0, trash: 0, draft: 0 })
+        })
 }
 
 function _getEmailsDemoData() {
