@@ -20,6 +20,12 @@ const loggedinUser = {
 
 function query() {
     return storageService.query(EMAILS_KEY)
+        .then(emails => {
+
+            emails = emails.sort((e1, e2) => e2.sentAt - e1.sentAt)
+
+            return emails
+        })
 }
 
 function get(mailId) {
@@ -56,7 +62,7 @@ function getEmptyMail() {
         isRead: false,
         sentAt: 0,
         removedAt: null,
-        from: '',
+        from: loggedinUser.email,
         to: ''
     }
 }

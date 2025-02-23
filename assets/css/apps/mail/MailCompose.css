@@ -1,0 +1,60 @@
+.new-email {
+    font-size: 0.875rem;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+
+    line-height: 1.42857142857;
+
+    overflow: hidden;
+    border-radius: 16px;
+
+    background-color: var(--white);
+}
+
+.new-email>.new-email-titel {
+    padding-inline: 1.14285714286em;
+    padding-block: 0.71428571428em;
+    font-weight: bold;
+    background-color: var(--gl1);
+}
+
+.new-message-form {
+    padding-inline: 1.14285714286em;
+}
+
+.new-message-form>input,
+.new-message-form>textarea {
+    border: none;
+    outline: none;
+    font-family: inherit;
+    box-shadow: inset 0 -1px 0 var(--gl-shadow1);
+    padding-block: 0.71428571428em;
+}
+
+.new-message-form>textarea {
+    resize: none;
+}
+
+.new-message-form>.send-btn {
+    align-self: start;
+    border-radius: 100vh;
+    text-transform: capitalize;
+    transition: 200ms;
+    color: var(--white);
+    background-color: var(--g-btn);
+    font-weight: bold;
+
+    height: 2.57142857143em;
+    min-width: 5.71428571429em;
+    padding-inline: 1.14285714286em;
+    margin: 0.85714285714em;
+
+    &:hover {
+        box-shadow: 3px 3px 5px var(--gl-shadow1);
+        filter: brightness(1.1);
+    }
+
+    &:active {
+        box-shadow: 3px 3px 5px var(--gl-shadow1);
+        filter: brightness(1.3);
+    }
+}

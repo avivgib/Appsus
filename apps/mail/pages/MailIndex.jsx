@@ -1,3 +1,4 @@
+import { MailCompose } from '../cmps/MailCompose.jsx';
 import { MailDetails } from '../cmps/MailDetails.jsx';
 import { MailList } from '../cmps/MailList.jsx';
 import { mailService } from '../services/mail.service.js'
@@ -79,6 +80,7 @@ export function MailIndex() {
                 onOpenMailDetails={onOpenMailDetails}
                 onToggleIsRead={onToggleIsRead}
                 unreadEmailsNum={unreadEmailsNum} />
+            <MailCompose />
             {openMail && <MailDetails openMail={openMail} onGoingBack={onGoingBack} />}
         </section>
     )

@@ -17,7 +17,7 @@ export function MailDetails({ openMail, onGoingBack }) {
                         <span className='mail-sentat'>{new Date(sentAt).toLocaleDateString()}</span>
                     </div>
                     <div className='mail-to'>{to}</div>
-                    <div className='mail-body'>{body}</div>
+                    <div className='mail-body'><pre>{body}</pre></div>
                 </div>
             </div>
         </section>
