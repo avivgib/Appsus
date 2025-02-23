@@ -30,13 +30,15 @@ export function MailCompose(props) {
             .catch(error => console.log(error))
     }
 
+    const { to, subject, body } = newMail
+
     return (
         <section className='new-email'>
             <div className='new-email-titel'>new message</div>
             <form ref={formRef} onSubmit={onSend} className='new-message-form flex column'>
-                <input type="email" id="email" name='to' placeholder='to' onChange={handleChange} required />
-                <input type="text" id='subject' name='subject' placeholder='subject' onChange={handleChange} required />
-                <textarea name="body" id="body" placeholder='body' rows="10" onChange={handleChange} required></textarea>
+                <input type="email" id="email" name='to' placeholder='to' value={to} onChange={handleChange} required />
+                <input type="text" id='subject' name='subject' placeholder='subject' value={subject} onChange={handleChange} required />
+                <textarea name="body" id="body" placeholder='body' rows="10" value={body} onChange={handleChange} required></textarea>
                 <button className='send-btn'>send</button>
             </form>
         </section>
