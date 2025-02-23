@@ -1,7 +1,26 @@
-.emails-list {
+.emails-wrapper {
     width: 100%;
     font-size: 0.875rem;
     font-family: Roboto, Helvetica, Arial, sans-serif;
+
+    overflow: hidden;
+    border-radius: 16px;
+}
+
+.emails-bar {
+    height: 3.42857142857em;
+    /* margin-inline-end: 1.14285714286em;
+    padding-inline: 1.14285714286em; */
+    background-color: white;
+
+    box-shadow: inset 0px -1px 0px black;
+}
+
+.emails-list {
+    overflow-y: scroll;
+
+    /* height: 40.5em; */
+    max-height: 40.5em;
 }
 
 .emails-list .mail-preview {

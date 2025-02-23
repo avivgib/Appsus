@@ -8,10 +8,19 @@ export function MailIndex() {
 
     const [emails, setEamils] = useState(null)
     const [openMail, setOpenMail] = useState(null)
+    const [unreadEmailsNum, setUnreadEmailsNum] = useState(null)
+    console.log(unreadEmailsNum);
+
 
     useEffect(() => {
         loadEmails()
     }, [])
+
+    useEffect(() => {
+        if (emails) {
+            calculateUnreadMails(emails)
+        }
+    }, [emails])
 
     function loadEmails() {
         mailService.query()
@@ -54,10 +63,22 @@ export function MailIndex() {
         setOpenMail(null)
     }
 
+    function calculateUnreadMails(emails) {
+        const unreadMails = emails.reduce((acc, mail) => {
+            if (!mail.isRead) acc++
+            return acc
+        }, 0)
+        setUnreadEmailsNum(unreadMails)
+    }
+
     if (!emails) return 'loading...'
     return (
         <section className="gmail">
-            <MailList emails={emails} onOpenMailDetails={onOpenMailDetails} onToggleIsRead={onToggleIsRead} />
+            <MailList
+                emails={emails}
+                onOpenMailDetails={onOpenMailDetails}
+                onToggleIsRead={onToggleIsRead}
+                unreadEmailsNum={unreadEmailsNum} />
             {openMail && <MailDetails openMail={openMail} onGoingBack={onGoingBack} />}
         </section>
     )
