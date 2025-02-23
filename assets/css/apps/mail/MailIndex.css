@@ -1,1 +1,4 @@
- /* mail index  */
+.gmail {
+    padding-inline: 10px;
+    background-color: var(--bc-gl1);
+}

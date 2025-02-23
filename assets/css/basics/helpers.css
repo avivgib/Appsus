@@ -31,3 +31,45 @@
     margin: 0;
     list-style-type: none;
 }
+
+/* font awsome */
+
+/* solid */
+
+.fa::before {
+    font-family: fa;
+}
+
+.fa.grip-vertical::before {
+    content: '\f58e';
+}
+
+.fa.arrow-left::before {
+    content: '\f060';
+}
+
+/* regular */
+
+.fare::before {
+    font-family: fare;
+}
+
+.fare.square::before {
+    content: '\f0c8';
+}
+
+.fare.star::before {
+    content: '\f005';
+}
+
+.fare.book-mark::before {
+    content: '\f02e';
+}
+
+.fare.envelope::before {
+    content: '\f0e0';
+}
+
+.fare.envelope-open::before {
+    content: '\f2b6';
+}
