@@ -40,7 +40,7 @@
     text-transform: capitalize;
     transition: 200ms;
     color: var(--white);
-    background-color: var(--g-btn);
+    background-color: var(--g-btn1);
     font-weight: bold;
 
     height: 2.57142857143em;

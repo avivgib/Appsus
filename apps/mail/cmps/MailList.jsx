@@ -1,12 +1,11 @@
 import { MailPreview } from "./MailPreview.jsx"
 
-export function MailList({ emails, onOpenMailDetails, onToggleIsRead, unreadEmailsNum }) {
+export function MailList({ emails, onOpenMailDetails, onToggleIsRead }) {
 
 
     return (
         <section className='emails-wrapper'>
             <div className='emails-bar flex align-center'>
-                <div>unread emails: {unreadEmailsNum}/{emails.length}</div>
             </div>
             <ul className='emails-list clean-list'>
                 {emails.map(mail => {

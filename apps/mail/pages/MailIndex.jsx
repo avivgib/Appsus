@@ -1,5 +1,6 @@
 import { MailCompose } from '../cmps/MailCompose.jsx';
 import { MailDetails } from '../cmps/MailDetails.jsx';
+import { MailFolderList } from '../cmps/MailFolderList.jsx';
 import { MailList } from '../cmps/MailList.jsx';
 import { mailService } from '../services/mail.service.js'
 
@@ -7,15 +8,17 @@ const { useState, useEffect, useRef } = React
 
 export function MailIndex() {
 
+
     const [emails, setEamils] = useState(null)
     const [openMail, setOpenMail] = useState(null)
-    const [unreadEmailsNum, setUnreadEmailsNum] = useState(null)
+    const [unreadEmailsNum, setUnreadEmailsNum] = useState({ inbox: 0, sent: 0, trash: 0, draft: 0 })
+    const [filterBy, setFilterBy] = useState({ ...mailService.getDefaultFilterBy() })
     console.log(unreadEmailsNum);
 
 
     useEffect(() => {
         loadEmails()
-    }, [])
+    }, [filterBy])
 
     useEffect(() => {
         if (emails) {
@@ -24,7 +27,7 @@ export function MailIndex() {
     }, [emails])
 
     function loadEmails() {
-        mailService.query()
+        mailService.query(filterBy)
             .then(emails => setEamils(emails))
             .catch(error => console.error(error))
     }
@@ -72,16 +75,29 @@ export function MailIndex() {
         setUnreadEmailsNum(unreadMails)
     }
 
+    // function onSetFilterBy({ target }) {
+    //     const { name, value } = target
+    // }
+
+    function onSetStatusInFilterBy(statusTyep) {
+        setFilterBy(prev => ({ ...prev, status: statusTyep }))
+    }
+
+
+
     if (!emails) return 'loading...'
     return (
-        <section className="gmail">
+        <section className="mail-index main-layout">
             <MailList
                 emails={emails}
                 onOpenMailDetails={onOpenMailDetails}
-                onToggleIsRead={onToggleIsRead}
-                unreadEmailsNum={unreadEmailsNum} />
-            <MailCompose />
-            {openMail && <MailDetails openMail={openMail} onGoingBack={onGoingBack} />}
+                onToggleIsRead={onToggleIsRead} />
+            <MailFolderList
+                onSetStatusInFilterBy={onSetStatusInFilterBy}
+                filterBy={filterBy} />
+
+            {/* <MailCompose />
+            {openMail && <MailDetails openMail={openMail} onGoingBack={onGoingBack} />} */}
         </section>
     )
 }

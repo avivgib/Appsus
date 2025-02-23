@@ -1,0 +1,71 @@
+.mail-folder {
+    grid-area: 1/1;
+
+    font-size: 0.875rem;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+
+    line-height: 1.42857142857;
+
+    width: 187px;
+    height: 631px;
+}
+
+.mail-folder button {
+    text-transform: capitalize;
+    font-size: 0.875rem;
+}
+
+.mail-folder>.add-email-btn {
+    display: flex;
+    align-items: center;
+
+    margin-block-start: 0.57142857142em;
+    margin-block-end: 1.14285714286em;
+    margin-inline-start: 0.57142857142em;
+    padding-inline-end: 1.71428571429em;
+    height: 4em;
+    min-width: 4em;
+    border-radius: 1.14285714286em;
+    background-color: var(--g-btn2);
+    transition: 200ms;
+
+    &:hover {
+        box-shadow: 5px 5px 10px var(--gl-shadow1);
+    }
+}
+
+.mail-folder>.add-email-btn>span {
+    width: 1.71428571429em;
+}
+
+.mail-folder li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    height: 2.28571428571em;
+    padding: 0 1.85714285714em 0 0.85714285714em;
+    border-radius: 0 20px 20px 0;
+    cursor: pointer;
+
+    margin-inline-end: 0.71428571428em;
+
+    &:hover {
+        background-color: var(--gl-shadow1);
+    }
+}
+
+.mail-folder li.active {
+    background-color: var(--g-btn3);
+}
+
+.mail-folder li .fa,
+.mail-folder li .fare {
+    margin-inline-end: 1.28571428571em;
+    padding-inline-start: 0.85714285714em;
+}
+
+.mail-folder li button {
+    background-color: transparent;
+    margin-inline-end: auto;
+}
