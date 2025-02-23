@@ -21,7 +21,17 @@ export function MailIndex() {
 
     function onOpenMailDetails(mailId) {
         const mail = emails.find(mail => mail.id === mailId)
+        if (!mail.isRead) setReadMail(mail)
         setOpenMail(mail)
+    }
+
+    function setReadMail(currMail) {
+        setEamils(prev => {
+            return prev.map(mail => (mail.id === currMail.id) ? { ...mail, isRead: true } : mail)
+        })
+
+        mailService.save({ ...currMail, isRead: true })
+            .then(res => console.log(res))
     }
 
     function onGoingBack() {

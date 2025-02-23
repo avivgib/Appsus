@@ -7,7 +7,7 @@ export function MailList({ emails, onOpenMailDetails }) {
         <ul className='emails-list clean-list'>
 
             {emails.map(mail => {
-                return <li key={mail.id} className='mail-preview' onClick={() => { onOpenMailDetails(mail.id) }}>
+                return <li key={mail.id} className={`mail-preview ${mail.isRead ? '' : 'unread'}`} onClick={() => { onOpenMailDetails(mail.id) }}>
                     <div className='grip'><span className='fa grip-vertical'></span></div>
                     <div className='mail-select'><span className='fare square'></span></div>
                     <div className='mail-star'><span className='fare star'></span></div>

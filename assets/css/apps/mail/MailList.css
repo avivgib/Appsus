@@ -16,6 +16,12 @@
     color: var(--gl-font2);
 }
 
+
+.emails-list .mail-preview.unread {
+    background-color: white;
+}
+
+
 .emails-list .mail-preview:hover {
     box-shadow:
         inset -1px 0 0 var(--gl-shadow1),
@@ -82,6 +88,12 @@
 .emails-list .mail-preview>.mail-select,
 .emails-list .mail-preview>.mail-important {
     display: none;
+}
+
+.emails-list .mail-preview.unread>.sent-from,
+.emails-list .mail-preview.unread>.mail-content>.mail-subject,
+.emails-list .mail-preview.unread>.sentat {
+    font-weight: bold;
 }
 
 .emails-list .mail-preview>.sent-from {
