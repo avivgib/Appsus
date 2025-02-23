@@ -1,6 +1,6 @@
 import { MailPreview } from "./MailPreview.jsx"
 
-export function MailList({ emails, onOpenMailDetails }) {
+export function MailList({ emails, onOpenMailDetails, onToggleIsRead }) {
 
 
     return (
@@ -13,6 +13,10 @@ export function MailList({ emails, onOpenMailDetails }) {
                     <div className='mail-star'><span className='fare star'></span></div>
                     <div className='mail-important'><span className='fare book-mark'></span></div>
                     <MailPreview mail={mail} />
+                    <div className='mail-btns'>
+                        <span className={`fare ${mail.isRead ? 'envelope-open' : 'envelope'}`}
+                            onClick={(event) => onToggleIsRead(event, mail.id)}></span>
+                    </div>
                 </li>
             })}
 

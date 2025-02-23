@@ -65,3 +65,11 @@
 .fare.book-mark::before {
     content: '\f02e';
 }
+
+.fare.envelope::before {
+    content: '\f0e0';
+}
+
+.fare.envelope-open::before {
+    content: '\f2b6';
+}
