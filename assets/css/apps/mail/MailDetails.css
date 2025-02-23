@@ -92,4 +92,9 @@
         padding-inline-start: 0;
     }
 
+    .mail-wrapper>.mail-content>.mail-body>pre {
+        font-family: inherit;
+        margin: 0;
+    }
+
 }
