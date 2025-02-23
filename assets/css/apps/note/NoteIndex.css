@@ -1,1 +1,37 @@
  /* note index */
+ .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    overflow: hidden;
+    font-size: 0.875rem;
+}
+
+
+.note-list {
+    width: calc(100% - 240px);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+    margin-inline: 120px;
+}
+
+.note-card {
+    border: 1px solid #e0e0e0;
+    padding: 16px;
+    border-radius: 8px;
+    background: #ffffff;
+    transition: all 0.3s ease-in-out;
+
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.note-preview {
+    flex-grow: 1;
+    overflow: hidden;
+}
