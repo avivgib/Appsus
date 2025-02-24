@@ -24,12 +24,11 @@ export function MailIndex() {
         loadUnreadStats()
     }, [])
 
-
+    
     function loadEmails() {
         mailService.query(filterBy)
             .then(emails => setEmails(emails))
             .catch(error => console.error(error))
-
     }
 
     function loadUnreadStats() {
@@ -39,24 +38,14 @@ export function MailIndex() {
 
     function onOpenMailDetails(mailId) {
         const mail = emails.find(mail => mail.id === mailId)
-        if (!mail.isRead) setReadMail(mail)
+        if (!mail.isRead) onToggleIsRead(null, mailId)
         setOpenMail(mail)
     }
 
-    function setReadMail(currMail) {
-        mailService.save({ ...currMail, isRead: true })
-            .then(currMail => {
-                setEmails(prev => {
-                    return prev.map(mail => (mail.id === currMail.id) ? currMail : mail)
-                })
-                setUnreadEmailsNum(prev => ({
-                    ...prev, [filterBy.status]: unreadEmailsNum[filterBy.status] - 1
-                }))
-            })
-    }
-
     function onToggleIsRead(ev, mailId) {
-        ev.stopPropagation()
+        if (ev) {
+            ev.stopPropagation()
+        }
         const currMail = emails.find(mail => mail.id === mailId)
 
         mailService.save({ ...currMail, isRead: !currMail.isRead })
