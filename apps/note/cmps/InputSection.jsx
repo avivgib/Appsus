@@ -1,19 +1,35 @@
-export function InputSection({ isFullInputOpen, toggleAddInput, inputRef, noteContent, setNoteContent }) {
+export function InputSection(props) {
+
+    const { 
+        inputRef, 
+        isFullInputOpen, 
+        toggleAddInput, 
+        noteToEdit, 
+        handleChangeInfo 
+    } = props
+
     return (
         <div
             ref={inputRef}
             className={`input-container ${isFullInputOpen ? 'expanded' : ''}`}
-            onClick={toggleAddInput}
+            onClick={() => !isFullInputOpen && toggleAddInput()}
         >
 
             {isFullInputOpen && (
-                <input className="extra-input" placeholder="Title" />
+                <input 
+                name='title'
+                className='title-input'
+                placeholder='Title'
+                value={noteToEdit.info.title}
+                onChange={handleChangeInfo} 
+                />
             )}
             <input
-                className="add-note-input"
+                name='content'
+                className="content-input"
                 placeholder="Take a note..."
-                value={noteContent}
-                onChange={({ target }) => setNoteContent(target.value)}
+                value={noteToEdit.info.content}
+                onChange={handleChangeInfo}
             />
         </div>
     )

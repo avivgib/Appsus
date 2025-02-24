@@ -34,14 +34,14 @@
     border-color: #888;
 }
 
-.extra-input {
+.title-input {
     margin-top: 5px;
 }
 
 .note-list {
     width: calc(100% - 240px);
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    grid-template-columns: repeat(auto-fit, 240px);
     gap: 16px;
     margin-top: 20px;
     margin-inline: 120px;
