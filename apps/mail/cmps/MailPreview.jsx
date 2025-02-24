@@ -1,5 +1,7 @@
+import { mailService } from "../services/mail.service.js"
 
-export function MailPreview({ mail, status }) {
+
+export function MailPreview({ mail }) {
 
 
     function setSentAtDateDisplay(sentAt) {
@@ -17,12 +19,14 @@ export function MailPreview({ mail, status }) {
         }
     }
 
-    function setSentFrom(status) {
-        switch (status) {
-            case 'inbox': return <span>{from}</span>
-            case 'sent': return <span>{`to: ${to}`}</span>
-            case 'draft': return <span style={{ color: 'var(--gl-font3)' }}>Draft</span>
-            case 'trash': return from
+    function renderMailSentFrom() {
+        const usrEmail = mailService.getUserMail()
+        if (mail.from !== usrEmail) {
+            return <span>{from}</span>
+        } else if (mail.from === usrEmail && mail.sentAt) {
+            return <span>{`to: ${to}`}</span>
+        } else if (!mail.sentAt) {
+            return <span style={{ color: 'var(--gl-font3)' }}>Draft</span>
         }
     }
 
@@ -31,11 +35,11 @@ export function MailPreview({ mail, status }) {
     return (
         <React.Fragment>
             <div className='icon'><img src="assets/images/use-icon.jpg" alt="use-icon" className='usr-icon' /></div>
-            < div className='sent-from'>{setSentFrom(status)}</div>
+            <div className='sent-from'>{renderMailSentFrom()}</div>
             <div className='mail-content'><span className='mail-subject'>{subject}</span> <span>{body}</span> </div>
             <div className='gap'></div>
             <div className='sentat' >
-                {status === 'draft' ? setSentAtDateDisplay(createdAt) : setSentAtDateDisplay(sentAt)}
+                {sentAt ? setSentAtDateDisplay(sentAt) : setSentAtDateDisplay(createdAt)}
             </div>
         </React.Fragment >
     )

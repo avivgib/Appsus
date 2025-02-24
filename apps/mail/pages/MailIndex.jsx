@@ -24,7 +24,7 @@ export function MailIndex() {
         loadUnreadStats()
     }, [])
 
-    
+
     function loadEmails() {
         mailService.query(filterBy)
             .then(emails => setEmails(emails))
@@ -157,7 +157,6 @@ export function MailIndex() {
                 onGoingBack={onGoingBack}
                 onSaveMail={onSaveMail}
                 onRemoveMail={onRemoveMail}
-                status={filterBy.status}
             />}
 
 
