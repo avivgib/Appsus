@@ -8,6 +8,7 @@ const { useState, useEffect, useRef } = React
 
 export function MailIndex() {
 
+    const [cmpType, setCmpType] = useState('list')
     const [emails, setEmails] = useState(null)
     const [openMail, setOpenMail] = useState(null)
     const [unreadEmailsNum, setUnreadEmailsNum] = useState(null)
@@ -17,6 +18,7 @@ export function MailIndex() {
     useEffect(() => {
         loadEmails()
     }, [filterBy])
+
 
     useEffect(() => {
         loadUnreadStats()
@@ -41,7 +43,6 @@ export function MailIndex() {
     }
 
     function setReadMail(currMail) {
-
         mailService.save({ ...currMail, isRead: true })
             .then(currMail => {
                 setEmails(prev => {
@@ -75,32 +76,47 @@ export function MailIndex() {
         setOpenMail(null)
     }
 
-
-    // function onSetFilterBy({ target }) {
-    //     const { name, value } = target
-    // }
-
     function onSetStatusInFilterBy(statusTyep) {
         setFilterBy(prev => ({ ...prev, status: statusTyep }))
+    }
+
+    function onSetcmpType(cmpType) {
+        setCmpType(cmpType)
     }
 
 
     if (!emails) return 'loading...'
     return (
         <section className="mail-index main-layout">
-            <MailList
-                emails={emails}
-                onOpenMailDetails={onOpenMailDetails}
-                onToggleIsRead={onToggleIsRead} />
             <MailFolderList
+                onSetcmpType={onSetcmpType}
                 onSetStatusInFilterBy={onSetStatusInFilterBy}
                 filterBy={filterBy}
                 unreadEmailsNum={unreadEmailsNum}
             />
 
-            {/* <MailCompose />
-            {openMail && <MailDetails openMail={openMail} onGoingBack={onGoingBack} />} */}
+            <DynamicCmp
+                cmpType={cmpType}
+                onSetcmpType={onSetcmpType}
+                emails={emails}
+                onOpenMailDetails={onOpenMailDetails}
+                onToggleIsRead={onToggleIsRead}
+                openMail={openMail}
+                onGoingBack={onGoingBack} />
+
         </section>
     )
 }
 
+function DynamicCmp({ cmpType, ...prop }) {
+    switch (cmpType) {
+        case 'list':
+            return <MailList {...prop} />
+        case 'compose':
+            return <MailCompose {...prop} />
+        case 'details':
+            return <MailDetails  {...prop} />
+        default:
+            null;
+    }
+}

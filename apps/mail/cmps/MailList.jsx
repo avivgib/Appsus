@@ -1,6 +1,6 @@
 import { MailPreview } from "./MailPreview.jsx"
 
-export function MailList({ emails, onOpenMailDetails, onToggleIsRead }) {
+export function MailList({ onSetcmpType, emails, onOpenMailDetails, onToggleIsRead }) {
 
 
     return (
@@ -9,7 +9,8 @@ export function MailList({ emails, onOpenMailDetails, onToggleIsRead }) {
             </div>
             <ul className='emails-list clean-list'>
                 {emails.map(mail => {
-                    return <li key={mail.id} className={`mail-preview ${mail.isRead ? '' : 'unread'}`} onClick={() => { onOpenMailDetails(mail.id) }}>
+                    return <li key={mail.id} className={`mail-preview ${mail.isRead ? '' : 'unread'}`}
+                        onClick={() => { onOpenMailDetails(mail.id); onSetcmpType('details') }}>
                         <div className='grip'><span className='fa grip-vertical'></span></div>
                         <div className='mail-envelope'>
                             <span className={`fare ${mail.isRead ? 'envelope-open' : 'envelope'}`}

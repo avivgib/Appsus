@@ -15,7 +15,7 @@
     padding-inline: 1.14285714286em; */
     background-color: white;
 
-    box-shadow: inset 0px -1px 0px black;
+    box-shadow: inset 0px -1px 0px var(--gl-shadow2);
 }
 
 .emails-list {

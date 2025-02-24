@@ -11,6 +11,8 @@
     height: 3.42857142857em;
     margin-inline-end: 1.14285714286em;
     padding-inline: 1.14285714286em;
+
+    box-shadow: inset 0px -1px 0px var(--gl-shadow2);
 }
 
 .mail-details>.details-header-bar>* {

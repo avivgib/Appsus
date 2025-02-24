@@ -1,12 +1,12 @@
 
-export function MailDetails({ openMail, onGoingBack }) {
+export function MailDetails({ onSetcmpType, openMail, onGoingBack }) {
 
     const { id, subject, body, sentAt, from, to } = openMail
 
     return (
         <section className='mail-details'>
             <div className='details-header-bar flex align-center '>
-                <span className='fa arrow-left' onClick={onGoingBack}></span>
+                <span className='fa arrow-left' onClick={() => { onGoingBack(); onSetcmpType('list') }}></span>
             </div>
             <div className='mail-wrapper'>
                 <div className='mail-subject'>{subject}</div>
@@ -20,6 +20,6 @@ export function MailDetails({ openMail, onGoingBack }) {
                     <div className='mail-body'><pre>{body}</pre></div>
                 </div>
             </div>
-        </section>
+        </section >
     )
 }

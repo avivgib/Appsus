@@ -8,6 +8,8 @@
     border-radius: 16px;
 
     background-color: var(--white);
+
+    height: max-content;
 }
 
 .new-email>.new-email-titel {
@@ -15,6 +17,10 @@
     padding-block: 0.71428571428em;
     font-weight: bold;
     background-color: var(--gl1);
+}
+
+.new-email>.new-email-titel>.close-btn {
+    background: transparent;
 }
 
 .new-message-form {
