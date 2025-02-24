@@ -101,7 +101,6 @@ export function MailIndex() {
     }
 
 
-    if (!emails) return 'loading...'
     return (
         <section className="mail-index main-layout">
             <MailFolderList
@@ -111,7 +110,7 @@ export function MailIndex() {
                 unreadEmailsNum={unreadEmailsNum}
             />
 
-            <DynamicCmp
+            {emails && <DynamicCmp
                 cmpType={cmpType}
                 onSetcmpType={onSetcmpType}
                 emails={emails}
@@ -122,7 +121,10 @@ export function MailIndex() {
                 onSaveMail={onSaveMail}
 
                 status={filterBy.status}
-            />
+            />}
+
+
+            {!emails && <img className='loader' src="assets/images/loading.gif" alt="load" />}
 
         </section>
     )

@@ -15,7 +15,7 @@ export function MailFolderList({ onSetcmpType, onSetStatusInFilterBy, filterBy, 
                     <span className='fa envelope-open-text'></span>
                     <button> inbox</button>
                     <span className='unread-emails'>
-                        {unreadEmailsNum.inbox > 0 ? unreadEmailsNum.inbox : ''}
+                        {unreadEmailsNum && unreadEmailsNum.inbox > 0 ? unreadEmailsNum.inbox : ''}
                     </span>
                 </li>
                 <li className={status === 'sent' ? 'active' : ''}
@@ -23,7 +23,7 @@ export function MailFolderList({ onSetcmpType, onSetStatusInFilterBy, filterBy, 
                     <span className='fare paper-plane'></span>
                     <button>sent</button>
                     <span className='unread-emails'>
-                        {unreadEmailsNum.sent > 0 ? unreadEmailsNum.sent : ''}
+                        {unreadEmailsNum && unreadEmailsNum.sent > 0 ? unreadEmailsNum.sent : ''}
                     </span>
                 </li>
                 <li className={status === 'trash' ? 'active' : ''}
@@ -31,7 +31,7 @@ export function MailFolderList({ onSetcmpType, onSetStatusInFilterBy, filterBy, 
                     <span className='fare trash-can'>
                     </span><button>trash</button>
                     <span className='unread-emails'>
-                        {unreadEmailsNum.trash > 0 ? unreadEmailsNum.trash : ''}
+                        {unreadEmailsNum && unreadEmailsNum.trash > 0 ? unreadEmailsNum.trash : ''}
                     </span>
                 </li>
                 <li className={status === 'draft' ? 'active' : ''}
@@ -39,7 +39,7 @@ export function MailFolderList({ onSetcmpType, onSetStatusInFilterBy, filterBy, 
                     <span className='fare note-sticky'>
                     </span><button>draft</button>
                     <span className='unread-emails'>
-                        {unreadEmailsNum.draft > 0 ? unreadEmailsNum.draft : ''}
+                        {unreadEmailsNum && unreadEmailsNum.draft > 0 ? unreadEmailsNum.draft : ''}
                     </span>
                 </li>
             </ul>
