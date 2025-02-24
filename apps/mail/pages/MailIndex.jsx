@@ -102,7 +102,7 @@ export function MailIndex() {
                         updateUnreadEmailsNum(-1, false)
                     }
 
-                    return
+                    return onSetcmpType('list')
                 })
                 .catch(error => console.error(error))
         } else {
@@ -117,8 +117,8 @@ export function MailIndex() {
                     if (!mail.isRead) {
                         updateUnreadEmailsNum(-1, true)
                     }
-
-                    return
+                    
+                    return onSetcmpType('list')
                 })
         }
     }
