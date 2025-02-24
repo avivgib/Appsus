@@ -11,14 +11,16 @@ export function MailFolderList({ onSetcmpType, onSetStatusInFilterBy, filterBy, 
             <ul className='clean-list'>
 
                 <li className={status === 'inbox' ? 'active' : ''}
+                    style={unreadEmailsNum && unreadEmailsNum.inbox > 0 ? { fontWeight: 'bold' } : {}}
                     onClick={() => { onSetStatusInFilterBy('inbox'); onSetcmpType('list') }} >
                     <span className='fa envelope-open-text'></span>
-                    <button> inbox</button>
+                    <button>inbox</button>
                     <span className='unread-emails'>
                         {unreadEmailsNum && unreadEmailsNum.inbox > 0 ? unreadEmailsNum.inbox : ''}
                     </span>
                 </li>
                 <li className={status === 'sent' ? 'active' : ''}
+                    style={unreadEmailsNum && unreadEmailsNum.sent > 0 ? { fontWeight: 'bold' } : {}}
                     onClick={() => { onSetStatusInFilterBy('sent'); onSetcmpType('list') }}>
                     <span className='fare paper-plane'></span>
                     <button>sent</button>
@@ -27,6 +29,7 @@ export function MailFolderList({ onSetcmpType, onSetStatusInFilterBy, filterBy, 
                     </span>
                 </li>
                 <li className={status === 'trash' ? 'active' : ''}
+                    style={unreadEmailsNum && unreadEmailsNum.trash > 0 ? { fontWeight: 'bold' } : {}}
                     onClick={() => { onSetStatusInFilterBy('trash'); onSetcmpType('list') }} >
                     <span className='fare trash-can'>
                     </span><button>trash</button>
@@ -35,6 +38,7 @@ export function MailFolderList({ onSetcmpType, onSetStatusInFilterBy, filterBy, 
                     </span>
                 </li>
                 <li className={status === 'draft' ? 'active' : ''}
+                    style={unreadEmailsNum && unreadEmailsNum.draft > 0 ? { fontWeight: 'bold' } : {}}
                     onClick={() => { onSetStatusInFilterBy('draft'); onSetcmpType('list') }} >
                     <span className='fare note-sticky'>
                     </span><button>draft</button>

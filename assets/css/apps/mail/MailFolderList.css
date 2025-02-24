@@ -57,6 +57,7 @@
 
 .mail-folder li.active {
     background-color: var(--g-btn3);
+    font-weight: bold;
 }
 
 .mail-folder li .fa,
@@ -68,4 +69,5 @@
 .mail-folder li button {
     background-color: transparent;
     margin-inline-end: auto;
+    font-weight: inherit;
 }
