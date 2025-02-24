@@ -96,7 +96,7 @@
     font-size: 1.07142857143em;
 }
 
-.emails-list .mail-preview>.mail-important {
+.emails-list .mail-preview>.mail-remove {
     padding-inline-end: 0.71428571428em;
 }
 
@@ -107,7 +107,7 @@
 
 
 .emails-list .mail-preview>.mail-envelope,
-.emails-list .mail-preview>.mail-important {
+.emails-list .mail-preview>.mail-remove {
     display: none;
 }
 
@@ -178,7 +178,7 @@
 
     .emails-list .mail-preview>.mail-envelope,
     .emails-list .mail-preview>.mail-star,
-    .emails-list .mail-preview>.mail-important {
+    .emails-list .mail-preview>.mail-remove {
         display: flex;
         position: relative;
         opacity: 0.3;
@@ -188,7 +188,7 @@
 
     .emails-list .mail-preview:hover>.mail-envelope,
     .emails-list .mail-preview:hover>.mail-star,
-    .emails-list .mail-preview:hover>.mail-important {
+    .emails-list .mail-preview:hover>.mail-remove {
         opacity: 0.6;
     }
 

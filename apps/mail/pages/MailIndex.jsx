@@ -101,6 +101,51 @@ export function MailIndex() {
     }
 
 
+    function onRemoveMail(ev, mailId) {
+        ev.stopPropagation()
+        const mail = emails.find(mail => mail.id === mailId)
+        if (mail.removedAt) {
+            mailService.remove(mailId)
+                .then(res => {
+                    setEmails(prev => prev.filter(mail => mail.id !== mailId))
+                    if (!mail.isRead && filterBy.status !== 'trash') {
+                        console.log('kaka');
+                        setUnreadEmailsNum(prev => ({
+                            ...prev,
+                            [filterBy.status]: unreadEmailsNum[filterBy.status] - 1,
+                            trash: unreadEmailsNum.trash + 1
+                        }))
+                    } else if (!mail.isRead && filterBy.status === 'trash') {
+                        setUnreadEmailsNum(prev => ({
+                            ...prev,
+                            [filterBy.status]: unreadEmailsNum[filterBy.status] - 1,
+                        }))
+                    }
+                    return
+                })
+                .catch(error => console.error(error))
+        } else {
+            const updateMail = { ...mail, removedAt: Date.now() }
+            mailService.save(updateMail)
+                .then(updateMail => {
+                    setEmails(prev => {
+                        return prev.map(mail => (mail.id === updateMail.id) ? updateMail : mail)
+                    })
+                    setEmails(prev => prev.filter(mail => mail.id !== mailId))
+
+                    if (!mail.isRead) {
+                        setUnreadEmailsNum(prev => ({
+                            ...prev,
+                            [filterBy.status]: unreadEmailsNum[filterBy.status] - 1,
+                            trash: unreadEmailsNum.trash + 1
+                        }))
+                    }
+
+                    return
+                })
+        }
+    }
+
     return (
         <section className="mail-index main-layout">
             <MailFolderList
@@ -119,7 +164,7 @@ export function MailIndex() {
                 openMail={openMail}
                 onGoingBack={onGoingBack}
                 onSaveMail={onSaveMail}
-
+                onRemoveMail={onRemoveMail}
                 status={filterBy.status}
             />}
 

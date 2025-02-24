@@ -32,7 +32,7 @@ function query(filterBy) {
 
             if (filterBy.status === 'sent') {
                 emails = emails.filter(mail => {
-                    return mail.from === loggedinUser.email && mail.sentAt
+                    return mail.from === loggedinUser.email && mail.sentAt && !mail.removedAt
                 })
             }
 
@@ -41,7 +41,7 @@ function query(filterBy) {
             }
 
             if (filterBy.status === 'draft') {
-                emails = emails.filter(mail => !mail.sentAt)
+                emails = emails.filter(mail => !mail.sentAt && !mail.removedAt)
             }
 
             emails = emails.sort((e1, e2) => e2.sentAt - e1.sentAt)
@@ -55,11 +55,11 @@ function getUserMail() {
 }
 
 function get(mailId) {
-    return storageService.query(EMAILS_KEY, mailId)
+    return storageService.get(EMAILS_KEY, mailId)
 }
 
 function remove(mailId) {
-    return storageService.query(EMAILS_KEY, mailId)
+    return storageService.remove(EMAILS_KEY, mailId)
 }
 
 function save(mail) {
