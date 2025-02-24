@@ -28,6 +28,7 @@ export function MailList({ onSetcmpType, emails, onOpenMailDetails, onToggleIsRe
                     )
                     : <li className='no-mail'>No emails found</li>
                 }
+                <li className='emails-footer'></li>
             </ul >
         </section>
     )

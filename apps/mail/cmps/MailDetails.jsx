@@ -20,6 +20,7 @@ export function MailDetails({ onSetcmpType, openMail, onRemoveMail }) {
                     <div className='mail-to'>{to}</div>
                     <div className='mail-body'><pre>{body}</pre></div>
                 </div>
+                <div className='details-footer'></div>
             </div>
         </section >
     )

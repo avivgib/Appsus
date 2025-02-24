@@ -5,6 +5,8 @@
     line-height: 1.42857142857;
 
     border-radius: 16px;
+    overflow: hidden;
+    height: max-content;
 }
 
 .mail-details>.details-header-bar {
@@ -20,13 +22,19 @@
     color: var(--gl-font2);
 }
 
-
 .mail-details>.mail-wrapper {
     padding-inline-end: 1.14285714286em;
 
-    overflow-y: scroll;
+    overflow-y: auto;
     height: 40.5em;
 }
+
+
+.mail-details>.mail-wrapper>.details-footer {
+    background-color: white;
+    padding: 1.14285714286em;
+}
+
 
 .mail-details>.mail-wrapper>.mail-subject {
     grid-column: 2 span;
@@ -41,8 +49,7 @@
     display: grid;
     grid-template-columns: max-content 1fr;
     grid-template-rows: max-content;
-    padding-block-start: 1.42857142857em;
-
+    padding-block: 1.42857142857em;
 }
 
 .mail-details>.mail-wrapper>.mail-content>.icon {
@@ -50,6 +57,12 @@
     padding-inline: 1.14285714286em;
     min-width: 40px;
     align-content: center;
+}
+
+.mail-wrapper>.mail-content>.mail-body>pre {
+    font-family: inherit;
+    margin: 0;
+    white-space: break-spaces;
 }
 
 .mail-wrapper>.mail-content>.icon>.usr-icon {
@@ -92,11 +105,6 @@
     .mail-wrapper>.mail-content>.mail-body {
         grid-area: 3/2;
         padding-inline-start: 0;
-    }
-
-    .mail-wrapper>.mail-content>.mail-body>pre {
-        font-family: inherit;
-        margin: 0;
     }
 
 }
