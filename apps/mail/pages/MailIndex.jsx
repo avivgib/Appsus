@@ -29,6 +29,7 @@ export function MailIndex() {
         mailService.query(filterBy)
             .then(emails => setEmails(emails))
             .catch(error => console.error(error))
+
     }
 
     function loadUnreadStats() {
@@ -63,9 +64,8 @@ export function MailIndex() {
                 setEmails(prev => {
                     return prev.map(mail => (mail.id === currMail.id) ? currMail : mail)
                 })
-                setUnreadEmailsNum(prev => ({
-                    ...prev, [filterBy.status]: unreadEmailsNum[filterBy.status] + (currMail.isRead ? -1 : 1)
-                }))
+
+                updateUnreadEmailsNum(currMail.isRead ? -1 : 1, false)
             })
             .catch(error => console.error(error))
     }
@@ -108,19 +108,11 @@ export function MailIndex() {
             mailService.remove(mailId)
                 .then(res => {
                     setEmails(prev => prev.filter(mail => mail.id !== mailId))
-                    if (!mail.isRead && filterBy.status !== 'trash') {
-                        console.log('kaka');
-                        setUnreadEmailsNum(prev => ({
-                            ...prev,
-                            [filterBy.status]: unreadEmailsNum[filterBy.status] - 1,
-                            trash: unreadEmailsNum.trash + 1
-                        }))
-                    } else if (!mail.isRead && filterBy.status === 'trash') {
-                        setUnreadEmailsNum(prev => ({
-                            ...prev,
-                            [filterBy.status]: unreadEmailsNum[filterBy.status] - 1,
-                        }))
+
+                    if (!mail.isRead) {
+                        updateUnreadEmailsNum(-1, false)
                     }
+
                     return
                 })
                 .catch(error => console.error(error))
@@ -134,15 +126,26 @@ export function MailIndex() {
                     setEmails(prev => prev.filter(mail => mail.id !== mailId))
 
                     if (!mail.isRead) {
-                        setUnreadEmailsNum(prev => ({
-                            ...prev,
-                            [filterBy.status]: unreadEmailsNum[filterBy.status] - 1,
-                            trash: unreadEmailsNum.trash + 1
-                        }))
+                        updateUnreadEmailsNum(-1, true)
                     }
 
                     return
                 })
+        }
+    }
+
+    function updateUnreadEmailsNum(dif, isToTrash) {
+        if (isToTrash) {
+            setUnreadEmailsNum(prev => ({
+                ...prev,
+                [filterBy.status]: unreadEmailsNum[filterBy.status] + dif,
+                trash: unreadEmailsNum.trash + 1
+            }))
+        } else {
+            setUnreadEmailsNum(prev => ({
+                ...prev,
+                [filterBy.status]: unreadEmailsNum[filterBy.status] + dif
+            }))
         }
     }
 
