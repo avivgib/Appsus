@@ -37,6 +37,17 @@
     color: var(--gl-font2);
 }
 
+.emails-list .no-mail {
+    position: relative;
+    padding-block: 0.71428571428em;
+
+    line-height: 1.42857142857;
+    color: var(--gl-font1);
+    font-weight: bold;
+    text-align: center;
+    background-color: white;
+}
+
 
 .emails-list .mail-preview.unread {
     background-color: white;
