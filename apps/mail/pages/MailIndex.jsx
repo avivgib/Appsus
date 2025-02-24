@@ -8,8 +8,8 @@ const { useState, useEffect, useRef } = React
 
 export function MailIndex() {
 
-    const [cmpType, setCmpType] = useState('list')
     const [emails, setEmails] = useState(null)
+    const [cmpType, setCmpType] = useState('list')
     const [openMail, setOpenMail] = useState(null)
     const [unreadEmailsNum, setUnreadEmailsNum] = useState(null)
     const [filterBy, setFilterBy] = useState({ ...mailService.getDefaultFilterBy() })
@@ -54,7 +54,6 @@ export function MailIndex() {
             })
     }
 
-
     function onToggleIsRead(ev, mailId) {
         ev.stopPropagation()
         const currMail = emails.find(mail => mail.id === mailId)
@@ -71,6 +70,23 @@ export function MailIndex() {
             .catch(error => console.error(error))
     }
 
+    function onSaveMail(mail) {
+        mailService.save(mail)
+            .then(mail => {
+                console.log('mail send')
+                if (filterBy.status === 'sent') {
+                    setEmails(prev => ([mail, ...prev]))
+                }
+                setUnreadEmailsNum(prev => ({
+                    ...prev, sent: unreadEmailsNum.sent + 1
+                }))
+                return
+            })
+            .catch(error => console.log(error))
+            .finally(() => {
+                onSetcmpType('list')
+            })
+    }
 
     function onGoingBack() {
         setOpenMail(null)
@@ -102,7 +118,9 @@ export function MailIndex() {
                 onOpenMailDetails={onOpenMailDetails}
                 onToggleIsRead={onToggleIsRead}
                 openMail={openMail}
-                onGoingBack={onGoingBack} />
+                onGoingBack={onGoingBack}
+                onSaveMail={onSaveMail}
+            />
 
         </section>
     )

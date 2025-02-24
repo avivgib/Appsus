@@ -2,7 +2,7 @@
 import { mailService } from "../services/mail.service.js";
 const { useState, useEffect, useRef } = React
 
-export function MailCompose({ onSetcmpType }) {
+export function MailCompose({ onSetcmpType, onSaveMail }) {
 
     const [newMail, setNewMail] = useState({ ...mailService.getEmptyMail(), createdAt: Date.now() })
     console.log(newMail);
@@ -22,12 +22,8 @@ export function MailCompose({ onSetcmpType }) {
     function onSend(ev) {
         ev.preventDefault()
         const updatedMail = { ...newMail, sentAt: Date.now() }
-        mailService.save(updatedMail)
-            .then(res => {
-                console.log('mail send')
-                formRef.current.reset()
-            })
-            .catch(error => console.log(error))
+        formRef.current.reset()
+        onSaveMail(updatedMail)
     }
 
     const { to, subject, body } = newMail
