@@ -120,6 +120,8 @@ export function MailIndex() {
                 openMail={openMail}
                 onGoingBack={onGoingBack}
                 onSaveMail={onSaveMail}
+
+                status={filterBy.status}
             />
 
         </section>

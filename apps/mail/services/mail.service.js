@@ -82,11 +82,11 @@ function getDefaultFilterBy() {
 
 function getEmptyMail() {
     return {
-        createdAt: 0,
+        createdAt: null,
         subject: '',
         body: '',
         isRead: false,
-        sentAt: 0,
+        sentAt: null,
         removedAt: null,
         from: loggedinUser.email,
         to: ''
@@ -148,7 +148,7 @@ function _getEmailsDemoData() {
             body: 'Please find attached the invoice for your recent purchase. Let us know if you have any questions.',
             isRead: false,
             sentAt: 1708172800000,
-            removedAt: null,
+            removedAt: 1708172800000,
             from: 'billing@example.com',
             to: 'user@appsus.com'
         },
@@ -158,10 +158,20 @@ function _getEmailsDemoData() {
             subject: 'Project Update',
             body: 'The latest project updates have been uploaded to the shared drive. Please review them before our next call.',
             isRead: true,
+            sentAt: null,
+            removedAt: null,
+            from: 'user@appsus.com',
+            to: 'manager@example.com'
+        }, {
+            id: '5',
+            createdAt: 1708086400000,
+            subject: 'where is the money?',
+            body: 'Bring me all your money!!',
+            isRead: false,
             sentAt: 1708086400000,
             removedAt: null,
-            from: 'manager@example.com',
-            to: 'user@appsus.com'
+            from: 'user@appsus.com',
+            to: 'manager@example.com'
         }
     ]
 }

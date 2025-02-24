@@ -1,6 +1,6 @@
 import { MailPreview } from "./MailPreview.jsx"
 
-export function MailList({ onSetcmpType, emails, onOpenMailDetails, onToggleIsRead }) {
+export function MailList({ status, onSetcmpType, emails, onOpenMailDetails, onToggleIsRead }) {
 
 
     return (
@@ -18,7 +18,7 @@ export function MailList({ onSetcmpType, emails, onOpenMailDetails, onToggleIsRe
                         </div>
                         <div className='mail-star'><span className='fare star'></span></div>
                         <div className='mail-important'><span className='fare book-mark'></span></div>
-                        <MailPreview mail={mail} />
+                        <MailPreview mail={mail} status={status} />
                     </li>
                 })}
 
