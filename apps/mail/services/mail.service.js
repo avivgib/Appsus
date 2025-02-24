@@ -109,9 +109,9 @@ function calculateUnreadMails() {
         .then(emails => {
             return emails.reduce((acc, mail) => {
                 if (mail.from !== loggedinUser.email && !mail.removedAt && !mail.isRead) acc.inbox++
-                else if (mail.from === loggedinUser.email && mail.sentAt && !mail.isRead) acc.sent++
+                else if (mail.from === loggedinUser.email && mail.sentAt && !mail.removedAt && !mail.isRead) acc.sent++
+                else if (!mail.sentAt && !mail.removedAt && !mail.isRead) acc.draft++
                 else if (mail.removedAt && !mail.isRead) acc.trash++
-                else if (!mail.sentAt && !mail.isRead) acc.draft++
                 return acc
             }, { inbox: 0, sent: 0, trash: 0, draft: 0 })
         })
