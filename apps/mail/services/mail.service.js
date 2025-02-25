@@ -44,6 +44,20 @@ function query(filterBy) {
                 emails = emails.filter(mail => !mail.sentAt && !mail.removedAt)
             }
 
+            if (filterBy.txt) {
+                const regex = new RegExp(filterBy.txt, 'i')
+                emails = emails.filter(mail => regex.test(mail.subject) || regex.test(mail.body))
+            }
+
+            if (filterBy.isRead !== null) {
+                if (filterBy.isRead) {
+                    emails = emails.filter(mail => mail.isRead)
+                } else {
+                    emails = emails.filter(mail => !mail.isRead)
+                }
+            }
+
+
             emails = emails.sort((e1, e2) => e2.sentAt - e1.sentAt)
 
             return emails
@@ -85,7 +99,7 @@ function getEmptyMail() {
         createdAt: null,
         subject: '',
         body: '',
-        isRead: false,
+        isRead: '',
         sentAt: null,
         removedAt: null,
         from: loggedinUser.email,

@@ -1,5 +1,6 @@
 import { MailCompose } from '../cmps/MailCompose.jsx';
 import { MailDetails } from '../cmps/MailDetails.jsx';
+import { MailFilter } from '../cmps/MailFilter.jsx';
 import { MailFolderList } from '../cmps/MailFolderList.jsx';
 import { MailList } from '../cmps/MailList.jsx';
 import { mailService } from '../services/mail.service.js'
@@ -117,7 +118,7 @@ export function MailIndex() {
                     if (!mail.isRead) {
                         updateUnreadEmailsNum(-1, true)
                     }
-                    
+
                     return onSetcmpType('list')
                 })
         }
@@ -138,14 +139,19 @@ export function MailIndex() {
         }
     }
 
+    function onSetFilterBy(filterBy) {
+        setFilterBy(prev => ({ ...filterBy }))
+    }
+
     return (
         <section className="mail-index main-layout">
+
             <MailFolderList
                 onSetcmpType={onSetcmpType}
                 onSetStatusInFilterBy={onSetStatusInFilterBy}
                 filterBy={filterBy}
-                unreadEmailsNum={unreadEmailsNum}
-            />
+                unreadEmailsNum={unreadEmailsNum} />
+
 
             {emails && <DynamicCmp
                 cmpType={cmpType}
@@ -157,7 +163,9 @@ export function MailIndex() {
                 onGoingBack={onGoingBack}
                 onSaveMail={onSaveMail}
                 onRemoveMail={onRemoveMail}
-            />}
+            >
+                <MailFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
+            </DynamicCmp>}
 
 
             {!emails && <img className='loader' src="assets/images/loading.gif" alt="load" />}
