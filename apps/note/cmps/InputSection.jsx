@@ -3,7 +3,7 @@ export function InputSection(props) {
         inputContainerRef,
         isFullInputOpen,
         toggleAddInput,
-        noteToEdit,
+        newNote,
         handleChangeInfo
     } = props
 
@@ -18,7 +18,7 @@ export function InputSection(props) {
                     name="title"
                     className="title-input"
                     placeholder="Title"
-                    value={noteToEdit.info.title}
+                    value={newNote.info.title}
                     onChange={handleChangeInfo}
                 />
             )}
@@ -26,7 +26,7 @@ export function InputSection(props) {
                 name="content"
                 className="content-input"
                 placeholder="Take a note..."
-                value={noteToEdit.info.content}
+                value={newNote.info.content}
                 onChange={handleChangeInfo}
             />
         </div>

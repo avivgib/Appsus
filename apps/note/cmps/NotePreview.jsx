@@ -5,11 +5,7 @@ export function NotePreview({ note }) {
         const maxLength = 400
         const lengthToSlice = 389
 
-        if (content.length >= maxLength) {
-            return content.slice(0, lengthToSlice) + '...'
-        }
-
-        return content
+        return content.length >= maxLength ? content.slice(0, lengthToSlice) + '...' : content
     }
 
     return (
