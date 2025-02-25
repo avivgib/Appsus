@@ -10,6 +10,7 @@ export const mailService = {
     getEmptyMail,
     getUserMail,
     calculateUnreadMails,
+    getDefaultSortBy,
 }
 
 const EMAILS_KEY = 'emails_key'
@@ -20,7 +21,7 @@ const loggedinUser = {
     fullname: 'Mahatma Appsus'
 }
 
-function query(filterBy) {
+function query(filterBy, sortBy) {
     return storageService.query(EMAILS_KEY)
         .then(emails => {
 
@@ -58,7 +59,17 @@ function query(filterBy) {
             }
 
 
-            emails = emails.sort((e1, e2) => e2.sentAt - e1.sentAt)
+            if (sortBy.date) {
+                emails = emails.sort((e1, e2) => {
+                    const e1Date = (e1.sentAt) ? e1.sentAt : e1.createdAt
+                    const e2Date = (e2.sentAt) ? e2.sentAt : e2.createdAt
+                    return (e1Date - e2Date) * sortBy.date
+                })
+            }
+
+            if (sortBy.title) {
+                emails = emails.sort((e1, e2) => e1.subject.localeCompare(e2.subject) * sortBy.title)
+            }
 
             return emails
         })
@@ -91,6 +102,12 @@ function getDefaultFilterBy() {
         isRead: '',
         isStared: null,
         lables: [],
+    }
+}
+
+function getDefaultSortBy() {
+    return {
+        date: -1,
     }
 }
 

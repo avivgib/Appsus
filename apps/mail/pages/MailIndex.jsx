@@ -3,6 +3,7 @@ import { MailDetails } from '../cmps/MailDetails.jsx';
 import { MailFilter } from '../cmps/MailFilter.jsx';
 import { MailFolderList } from '../cmps/MailFolderList.jsx';
 import { MailList } from '../cmps/MailList.jsx';
+import { MailSort } from '../cmps/MailSort.jsx';
 import { mailService } from '../services/mail.service.js'
 
 const { useState, useEffect, useRef } = React
@@ -14,16 +15,18 @@ export function MailIndex() {
     const [openMail, setOpenMail] = useState(null)
     const [unreadEmailsNum, setUnreadEmailsNum] = useState(null)
     const [filterBy, setFilterBy] = useState({ ...mailService.getDefaultFilterBy() })
+    const [sortBy, setSortBy] = useState({ ...mailService.getDefaultSortBy() })
 
-    console.log(filterBy);
+    // console.log(filterBy);
+    console.log(sortBy);
 
 
     const defaultFilterByRef = useRef({ ...filterBy })
+    const defaultSortByRef = useRef({ ...sortBy })
 
     useEffect(() => {
         loadEmails()
-    }, [filterBy])
-
+    }, [filterBy, sortBy])
 
     useEffect(() => {
         loadUnreadStats()
@@ -31,7 +34,7 @@ export function MailIndex() {
 
 
     function loadEmails() {
-        mailService.query(filterBy)
+        mailService.query(filterBy, sortBy)
             .then(emails => setEmails(emails))
             .catch(error => console.error(error))
     }
@@ -88,6 +91,7 @@ export function MailIndex() {
 
     function onSetStatusInFilterBy(statusType) {
         setFilterBy(prev => ({ ...defaultFilterByRef.current, status: statusType }))
+        setSortBy(prev => ({ ...defaultSortByRef.current }))
     }
 
     function onSetcmpType(cmpType) {
@@ -162,6 +166,10 @@ export function MailIndex() {
         setFilterBy(prev => ({ ...filterBy }))
     }
 
+    function onSetSortBy(sortBy) {
+        setSortBy(prev => ({ ...sortBy }))
+    }
+
     return (
         <section className="mail-index main-layout">
 
@@ -184,6 +192,8 @@ export function MailIndex() {
                 onRemoveMail={onRemoveMail}
             >
                 <MailFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
+
+                <MailSort sortBy={sortBy} onSetSortBy={onSetSortBy} filterBy={filterBy} />
             </DynamicCmp>}
 
 
@@ -205,3 +215,4 @@ function DynamicCmp({ cmpType, ...prop }) {
             null;
     }
 }
+
