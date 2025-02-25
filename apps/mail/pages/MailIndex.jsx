@@ -17,9 +17,6 @@ export function MailIndex() {
     const [filterBy, setFilterBy] = useState({ ...mailService.getDefaultFilterBy() })
     const [sortBy, setSortBy] = useState({ ...mailService.getDefaultSortBy() })
 
-    // console.log(filterBy);
-    console.log(sortBy);
-
 
     const defaultFilterByRef = useRef({ ...filterBy })
     const defaultSortByRef = useRef({ ...sortBy })
@@ -192,7 +189,6 @@ export function MailIndex() {
                 onRemoveMail={onRemoveMail}
             >
                 <MailFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
-
                 <MailSort sortBy={sortBy} onSetSortBy={onSetSortBy} filterBy={filterBy} />
             </DynamicCmp>}
 
