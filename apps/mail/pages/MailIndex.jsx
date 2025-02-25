@@ -55,7 +55,7 @@ export function MailIndex() {
                     return prev.map(mail => (mail.id === currMail.id) ? currMail : mail)
                 })
 
-                updateUnreadEmailsNum(currMail.isRead ? -1 : 1, false)
+                updateUnreadEmailsNum(currMail.isRead ? -1 : 1, false, currMail)
             })
             .catch(error => console.error(error))
     }
@@ -100,7 +100,7 @@ export function MailIndex() {
                     setEmails(prev => prev.filter(mail => mail.id !== mailId))
 
                     if (!mail.isRead) {
-                        updateUnreadEmailsNum(-1, false)
+                        updateUnreadEmailsNum(-1, false, mail)
                     }
 
                     return onSetcmpType('list')
@@ -116,7 +116,7 @@ export function MailIndex() {
                     setEmails(prev => prev.filter(mail => mail.id !== mailId))
 
                     if (!mail.isRead) {
-                        updateUnreadEmailsNum(-1, true)
+                        updateUnreadEmailsNum(-1, true, mail)
                     }
 
                     return onSetcmpType('list')
@@ -124,19 +124,34 @@ export function MailIndex() {
         }
     }
 
-    function updateUnreadEmailsNum(dif, isToTrash) {
+    function updateUnreadEmailsNum(dif, isToTrash, mail) {
+        const status = (filterBy.status) ? filterBy.status : getMailStatus(mail)
+        console.log(mail);
+        console.log(unreadEmailsNum[status]);
+
+
         if (isToTrash) {
             setUnreadEmailsNum(prev => ({
                 ...prev,
-                [filterBy.status]: unreadEmailsNum[filterBy.status] + dif,
+                [status]: unreadEmailsNum[status] + dif,
                 trash: unreadEmailsNum.trash + 1
             }))
         } else {
             setUnreadEmailsNum(prev => ({
                 ...prev,
-                [filterBy.status]: unreadEmailsNum[filterBy.status] + dif
+                [status]: unreadEmailsNum[status] + dif
             }))
         }
+    }
+
+    function getMailStatus(mail) {
+        var status = ''
+        const usrEmail = mailService.getUserMail()
+        if (mail.from !== usrEmail && !mail.removedAt) status = 'inbox'
+        else if (mail.from === usrEmail && mail.sentAt && !mail.removedAt) status = 'sent'
+        else if (!mail.sentAt && !mail.removedAt) status = 'draft'
+        else if (mail.removedAt) status = 'trash'
+        return status
     }
 
     function onSetFilterBy(filterBy) {
