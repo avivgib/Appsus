@@ -60,6 +60,14 @@
     content: '\58';
 }
 
+.fa.magnifying-glass::before {
+    content: '\f002';
+}
+
+.fa.check::before {
+    content: '\f00c';
+}
+
 /* regular */
 
 .fare::before {

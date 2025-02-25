@@ -41,3 +41,10 @@ button {
     border: none;
     cursor: pointer;
 }
+
+input,
+select,
+textarea {
+    font-family: inherit;
+    font-size: inherit;
+}

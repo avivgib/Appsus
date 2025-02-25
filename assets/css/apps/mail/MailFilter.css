@@ -1,0 +1,100 @@
+.mail-filter {
+    margin: 0.57142857142em;
+}
+
+.mail-filter>.main-search {
+    font-size: 1.14285714286em;
+
+    background-color: var(--g-btn4);
+    border-radius: 24px;
+    min-height: 3em;
+    margin-inline: 0.625em;
+    padding-inline: 0.625em;
+    width: 100%;
+
+    /* max-width: 720px; */
+    /* width: 720px; */
+
+    transition: 200ms;
+}
+
+
+
+.mail-filter>.main-search>.fa {
+    position: relative;
+    padding: 0.5em;
+    cursor: pointer;
+}
+
+
+.mail-filter>.main-search:has(input:focus) {
+    background-color: white;
+    box-shadow: 3px 3px 8px var(--gl-shadow2);
+}
+
+.mail-filter>.main-search>input {
+    background-color: inherit;
+    border: none;
+    outline: none;
+    width: 100%;
+}
+
+.mail-filter>.main-search>.rest-btn {
+    opacity: 0;
+    cursor: auto;
+    margin-inline-start: auto;
+}
+
+.mail-filter>.main-search>.rest-btn.show {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.mail-filter>.main-search>input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+}
+
+.mail-filter>.main-search>.fa::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    content: '';
+    background-color: rgba(0, 0, 0, 0.1);
+    width: 1.42857142857em;
+    height: 1.42857142857em;
+    border-radius: 50%;
+    opacity: 0;
+    transition: 200ms;
+}
+
+
+.mail-filter>.main-search>.fa:hover::after {
+    opacity: 1;
+    width: 0.42105263157em;
+    height: 0.42105263157em;
+}
+
+
+.mail-filter>select {
+    margin: 0 0.57142857142em;
+    padding: 0.42857142857em 0.28571428571em;
+    border-radius: 10px;
+    cursor: pointer;
+
+    &:hover {
+        filter: brightness(0.9);
+    }
+}
+
+.mail-filter>select>option {
+    background-color: white;
+}
+
+select:has(option[value="true"]:checked),
+select:has(option[value="false"]:checked) {
+    background-color: var(--g-btn5);
+    color: var(--gl-font4);
+    border: none;
+    outline: none;
+}
