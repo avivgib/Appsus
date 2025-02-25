@@ -15,6 +15,10 @@ export function MailIndex() {
     const [unreadEmailsNum, setUnreadEmailsNum] = useState(null)
     const [filterBy, setFilterBy] = useState({ ...mailService.getDefaultFilterBy() })
 
+    console.log(filterBy);
+
+
+    const defaultFilterByRef = useRef({ ...filterBy })
 
     useEffect(() => {
         loadEmails()
@@ -82,8 +86,8 @@ export function MailIndex() {
         setOpenMail(null)
     }
 
-    function onSetStatusInFilterBy(statusTyep) {
-        setFilterBy(prev => ({ ...prev, status: statusTyep }))
+    function onSetStatusInFilterBy(statusType) {
+        setFilterBy(prev => ({ ...defaultFilterByRef.current, status: statusType }))
     }
 
     function onSetcmpType(cmpType) {

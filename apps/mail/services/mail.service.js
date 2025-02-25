@@ -49,7 +49,7 @@ function query(filterBy) {
                 emails = emails.filter(mail => regex.test(mail.subject) || regex.test(mail.body))
             }
 
-            if (filterBy.isRead !== null) {
+            if (filterBy.isRead !== '') {
                 if (filterBy.isRead) {
                     emails = emails.filter(mail => mail.isRead)
                 } else {
@@ -88,7 +88,7 @@ function getDefaultFilterBy() {
     return {
         status: 'inbox',
         txt: '',
-        isRead: null,
+        isRead: '',
         isStared: null,
         lables: [],
     }
