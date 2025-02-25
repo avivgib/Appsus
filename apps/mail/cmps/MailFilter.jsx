@@ -1,8 +1,13 @@
+import { utilService } from "../../../services/util.service.js"
+
 const { useState, useEffect, useRef } = React
 
 export function MailFilter({ filterBy, onSetFilterBy }) {
     const [editFilterBy, setEditFilterBy] = useState({ ...filterBy })
     const [ischecked, setIschecked] = useState('')
+
+
+    const filterDebounce = useRef(utilService.debounce(onSetFilterBy, 1000))
 
     // rest the editFilterBy if filterBy get status
     useEffect(() => {
@@ -13,7 +18,8 @@ export function MailFilter({ filterBy, onSetFilterBy }) {
     }, [filterBy.status])
 
     useEffect(() => {
-        onSetFilterBy(editFilterBy)
+        filterDebounce.current(editFilterBy)
+        // onSetFilterBy(editFilterBy)
     }, [editFilterBy])
 
 
