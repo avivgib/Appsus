@@ -19,6 +19,14 @@ export function MailFolderList({ onSetcmpType, onSetStatusInFilterBy, filterBy, 
                         {unreadEmailsNum && unreadEmailsNum.inbox > 0 ? unreadEmailsNum.inbox : ''}
                     </span>
                 </li>
+                <li className={status === 'star' ? 'active' : ''}
+                    style={unreadEmailsNum && unreadEmailsNum.inbox > 0 ? { fontWeight: 'bold' } : {}}
+                    onClick={() => { onSetStatusInFilterBy('star'); onSetcmpType('list') }} >
+                    <span className='fare star'></span>
+                    <button>star</button>
+                    <span className='unread-emails'>
+                    </span>
+                </li>
                 <li className={status === 'sent' ? 'active' : ''}
                     style={unreadEmailsNum && unreadEmailsNum.sent > 0 ? { fontWeight: 'bold' } : {}}
                     onClick={() => { onSetStatusInFilterBy('sent'); onSetcmpType('list') }}>

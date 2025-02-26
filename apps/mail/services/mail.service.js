@@ -31,6 +31,10 @@ function query(filterBy, sortBy) {
                 })
             }
 
+            if (filterBy.status === 'star') {
+                emails = emails.filter(mail => mail.isStared)
+            }
+
             if (filterBy.status === 'sent') {
                 emails = emails.filter(mail => {
                     return mail.from === loggedinUser.email && mail.sentAt && !mail.removedAt
