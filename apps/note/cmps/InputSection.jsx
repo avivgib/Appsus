@@ -1,11 +1,36 @@
-export function InputSection(props) {
-    const {
-        inputContainerRef,
-        isFullInputOpen,
-        toggleAddInput,
-        newNote,
-        handleChangeInfo
-    } = props
+import { noteService } from "../services/note.service.js"
+
+const { useState, useEffect, useRef } = React
+
+export function InputSection({ onSaveNote }) {
+    const [newNote, setNewNote] = useState(noteService.getEmptyNote())
+    const [isFullInputOpen, setIsFullInputOpen] = useState(false)
+
+    const emptyNoteRef = useRef(noteService.getEmptyNote())
+    const inputContainerRef = useRef(null)
+
+    useEffect(() => {
+        function handleClickOutside({ target }) {
+            if (inputContainerRef.current && !inputContainerRef.current.contains(target)) {
+                setIsFullInputOpen(false)
+                if (newNote.info.title.trim() || newNote.info.content.trim()) {
+                    onSaveNote(newNote)
+                    setNewNote(prev => emptyNoteRef.current)
+                }
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside)
+        return () => document.removeEventListener('mousedown', handleClickOutside)
+    }, [newNote])
+
+    function handleChangeInfo({ target: { name, value } }) {
+        setNewNote(prev => ({ ...prev, info: { ...prev.info, [name]: value } }))
+    }
+
+    function toggleAddInput() {
+        setIsFullInputOpen(prev => !prev)
+    }
 
     return (
         <div

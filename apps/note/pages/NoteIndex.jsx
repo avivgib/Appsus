@@ -8,28 +8,11 @@ const { useState, useEffect, useRef } = React
 
 export function NoteIndex() {
     const [notes, setNotes] = useState([])
-    const [newNote, setNewNote] = useState(noteService.getEmptyNote())
-    const [isFullInputOpen, setIsFullInputOpen] = useState(false)
-    const [selectedNote, setSelectedNote] = useState(null);
-    const inputContainerRef = useRef(null);
+    const [selectedNote, setSelectedNote] = useState(null)
 
     useEffect(() => {
         loadNotes()
     }, [])
-
-    useEffect(() => {
-        function handleClickOutside({ target }) {
-            if (inputContainerRef.current && !inputContainerRef.current.contains(target)) {
-                setIsFullInputOpen(false)
-                if (newNote.info.title.trim() || newNote.info.content.trim()) {
-                    onSaveNote()
-                }
-            }
-        }
-
-        document.addEventListener('mousedown', handleClickOutside)
-        return () => document.removeEventListener('mousedown', handleClickOutside)
-    }, [newNote])
 
     function loadNotes() {
         noteService.query()
@@ -37,7 +20,7 @@ export function NoteIndex() {
             .catch(() => setNotes([]))
     }
 
-    function onSaveNote() {
+    function onSaveNote(newNote) {
         const title = newNote.info.title.trim()
         const content = newNote.info.content.trim()
 
@@ -49,10 +32,10 @@ export function NoteIndex() {
             .then(savedNote => {
                 setNotes(prevNotes => [savedNote, ...prevNotes])
                 showSuccessMsg(noteToSave.id ? 'Note Edited' : 'Note Added')
-                setNewNote(noteService.getEmptyNote())
+                // setNewNote(noteService.getEmptyNote())
             })
             .catch(() => {
-                setNewNote(noteToSave)
+                // setNewNote(noteToSave)
                 showErrorMsg(noteToSave.id ? 'Problem editing note' : 'Problem adding note')
             })
     }
@@ -66,36 +49,28 @@ export function NoteIndex() {
             .catch(() => showErrorMsg('Problem trashed'))
     }
 
-    function handleChangeInfo({ target: { name, value } }) {
-        setNewNote(prev => ({ ...prev, info: { ...prev.info, [name]: value } }))
-    }
-
     function onEditNote(note) {
-        setSelectedNote(note);
+        setSelectedNote(note)
     }
 
     function onCloseModal() {
-        setSelectedNote(null);
+        setSelectedNote(null)
     }
 
     function onSaveEditedNote(updatedNote) {
         noteService.save(updatedNote)
             .then(savedNote => {
-                setNotes(prevNotes => prevNotes.map(note => note.id === savedNote.id ? savedNote : note));
-                showSuccessMsg("Note updated");
-                onCloseModal();
+                setNotes(prevNotes => prevNotes.map(note => note.id === savedNote.id ? savedNote : note))
+                showSuccessMsg("Note updated")
+                onCloseModal()
             })
-            .catch(() => showErrorMsg("Error updating note"));
+            .catch(() => showErrorMsg("Error updating note"))
     }
 
     return (
         <section className="container">
             <InputSection
-                inputContainerRef={inputContainerRef}
-                isFullInputOpen={isFullInputOpen}
-                toggleAddInput={() => setIsFullInputOpen(prev => !prev)}
-                newNote={newNote}
-                handleChangeInfo={handleChangeInfo}
+                onSaveNote={onSaveNote}
             />
 
             <h1>Notes app</h1>
