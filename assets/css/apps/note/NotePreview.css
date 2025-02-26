@@ -1,3 +1,8 @@
+.note-preview {
+    flex-grow: 1;
+    overflow: hidden;
+}
+
 .note-content {
     margin-block: 20px;
 }

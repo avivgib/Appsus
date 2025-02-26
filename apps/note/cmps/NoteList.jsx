@@ -6,7 +6,7 @@ export function NoteList({ notes, onRemoveNote, onEditNote }) {
             {notes.map(note => (
                 <article key={note.id} className='note-card' onClick={() => onEditNote(note)}>
 
-                    <div className="note-content" >
+                    <div className="note-details" >
                         <NotePreview note={note} />
                     </div>
 
