@@ -27,7 +27,7 @@ function query(filterBy, sortBy) {
 
             if (filterBy.status === 'inbox') {
                 emails = emails.filter(mail => {
-                    return mail.from !== loggedinUser.email && !mail.removedAt
+                    return mail.from !== loggedinUser.email && !mail.removedAt && mail.sentAt
                 })
             }
 

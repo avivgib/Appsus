@@ -67,19 +67,15 @@ export function MailIndex() {
     function onSaveMail(mail) {
         mailService.save(mail)
             .then(mail => {
-                console.log('mail send')
-                if (filterBy.status === 'sent') {
+                if (mail.sentAt && filterBy.status === 'sent') {
                     setEmails(prev => ([mail, ...prev]))
                 }
-                setUnreadEmailsNum(prev => ({
-                    ...prev, sent: unreadEmailsNum.sent + 1
-                }))
+                updateUnreadEmailsNum(1, false, mail)
+
+                onSetcmpType('list')
                 return
             })
             .catch(error => console.log(error))
-            .finally(() => {
-                onSetcmpType('list')
-            })
     }
 
     function onGoingBack() {
@@ -130,7 +126,7 @@ export function MailIndex() {
     }
 
     function updateUnreadEmailsNum(dif, isToTrash, mail) {
-        const status = (filterBy.status) ? filterBy.status : getMailStatus(mail)
+        const status = getMailStatus(mail)
         console.log(mail);
         console.log(unreadEmailsNum[status]);
 
@@ -150,12 +146,14 @@ export function MailIndex() {
     }
 
     function getMailStatus(mail) {
+
         var status = ''
         const usrEmail = mailService.getUserMail()
         if (mail.from !== usrEmail && !mail.removedAt) status = 'inbox'
         else if (mail.from === usrEmail && mail.sentAt && !mail.removedAt) status = 'sent'
         else if (!mail.sentAt && !mail.removedAt) status = 'draft'
         else if (mail.removedAt) status = 'trash'
+
         return status
     }
 

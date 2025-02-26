@@ -8,10 +8,19 @@ export function MailCompose({ onSetcmpType, onSaveMail }) {
     console.log(newMail);
 
     const formRef = useRef()
+    // const autoSaveRef = useRef()
 
     // useEffect(() => {
-    //     setNewMail(prev => ({ ...prev, createdAt: Date.now() }))
+    //     autoSaveRef.current = setInterval(onAutoSave, 5000)
+    //     return (() => {
+    //         clearInterval(autoSaveRef.current)
+    //     })
     // }, [])
+
+    // function onAutoSave() {
+    //     console.log('auto save');
+    //     onSaveMail(newMail, true)
+    // }
 
     function handleChange({ target }) {
         const { name, value } = target
@@ -19,10 +28,11 @@ export function MailCompose({ onSetcmpType, onSaveMail }) {
         setNewMail(prev => ({ ...prev, [name]: value }))
     }
 
-    function onSend(ev) {
+    function onSubmit(ev, isDraft) {
         ev.preventDefault()
-        const updatedMail = { ...newMail, sentAt: Date.now() }
-        formRef.current.reset()
+
+        const updatedMail = isDraft ? { ...newMail } : { ...newMail, sentAt: Date.now() }
+
         onSaveMail(updatedMail)
     }
 
@@ -34,11 +44,14 @@ export function MailCompose({ onSetcmpType, onSaveMail }) {
                 <span>new message</span>
                 <button className='close-btn fa x' onClick={() => onSetcmpType('list')}></button>
             </div>
-            <form ref={formRef} onSubmit={onSend} className='new-message-form flex column'>
+            <form ref={formRef} onSubmit={onSubmit} className='new-message-form flex column'>
                 <input type="email" id="email" name='to' placeholder='to' value={to} onChange={handleChange} required />
                 <input type="text" id='subject' name='subject' placeholder='subject' value={subject} onChange={handleChange} required />
                 <textarea name="body" id="body" placeholder='body' rows="10" value={body} onChange={handleChange} required></textarea>
-                <button className='send-btn'>send</button>
+                <div>
+                    <button className='send-btn'>send</button>
+                    <button type='button' className='save-draft-btn' onClick={(event) => { onSubmit(event, true) }}>save draft</button>
+                </div>
             </form>
         </section>
     )
