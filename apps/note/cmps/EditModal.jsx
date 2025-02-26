@@ -1,23 +1,42 @@
-const {useState} = React
+const { useState, useEffect } = React
 
-export function EditModal({ note, onSaveNote, onClose }) {
+export function EditModal({ note, onClose, onSave }) {
     const [editedNote, setEditedNote] = useState(note)
 
+    useEffect(() => {
+        setEditedNote(note)
+    }, [note])
+
     function handleChange({ target: { name, value } }) {
-        setEditedNote(prev => ({ ...prev, info: { ...prev.info, [name]: value } }))
+        setEditedNote(prev => ({
+            ...prev,
+            info: { ...prev.info, [name]: value }
+        }))
     }
 
-    // function handleSave() {
-    //     onSaveNote(editedNote)
-    // }
+    function handleClose() {
+        const notesAreDifferent = JSON.stringify(editedNote) !== JSON.stringify(note);
+
+        if (notesAreDifferent) {
+            onSave(editedNote)
+            setTimeout(onClose, 1500);
+        } else {
+            onClose()
+        }
+    }
 
     return (
-        <div className="modal-overlay" onClick={onClose}>
+        <div className="modal-overlay show" onClick={handleClose}>
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                <input type="text" name="title" value={editedNote.info.title} onChange={handleChange} />
-                <textarea name="content" value={editedNote.info.content} onChange={handleChange}></textarea>
-                {/* <button onClick={handleSave}>Save</button> */}
-                <button onClick={onClose}>Cancel</button>
+                
+                <div className="modal-body">
+                    <input type="text" name="title" value={editedNote.info.title} onChange={handleChange} />
+                    <textarea name="content" rows={13} value={editedNote.info.content} onChange={handleChange}></textarea>
+                </div>
+
+                <div className="modal-footer">
+                    <button className="close-btn" onClick={handleClose}>Close</button>
+                </div>
             </div>
         </div>
     )

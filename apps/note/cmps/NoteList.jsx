@@ -11,7 +11,6 @@ export function NoteList({ notes, onRemoveNote, onEditNote }) {
                     </div>
 
                     <section className="note-options" onClick={(e) => e.stopPropagation()}>
-                        <button onClick={() => onEditNote(note)}>Edit note</button>
                         <button onClick={() => onRemoveNote(note.id)}>Delete note</button>
                     </section>
                 </article>
