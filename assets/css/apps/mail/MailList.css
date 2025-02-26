@@ -11,7 +11,7 @@
 }
 
 .emails-bar {
-    height: 3.42857142857em;
+    min-height: 3.42857142857em;
     /* margin-inline-end: 1.14285714286em;
     padding-inline: 1.14285714286em; */
     background-color: white;

@@ -1,11 +1,10 @@
 import { MailPreview } from "./MailPreview.jsx"
 
-export function MailList({ onSetcmpType, emails, onOpenMailDetails, onToggleIsRead, onRemoveMail }) {
-
-
+export function MailList({ onSetcmpType, emails, onOpenMailDetails, onToggleIsRead, onRemoveMail, children }) {
     return (
         <section className='emails-wrapper'>
             <div className='emails-bar flex align-center'>
+                {children}
             </div>
             <ul className='emails-list clean-list'>
                 {emails.length > 0

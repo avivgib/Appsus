@@ -1,7 +1,9 @@
 import { MailCompose } from '../cmps/MailCompose.jsx';
 import { MailDetails } from '../cmps/MailDetails.jsx';
+import { MailFilter } from '../cmps/MailFilter.jsx';
 import { MailFolderList } from '../cmps/MailFolderList.jsx';
 import { MailList } from '../cmps/MailList.jsx';
+import { MailSort } from '../cmps/MailSort.jsx';
 import { mailService } from '../services/mail.service.js'
 
 const { useState, useEffect, useRef } = React
@@ -13,12 +15,15 @@ export function MailIndex() {
     const [openMail, setOpenMail] = useState(null)
     const [unreadEmailsNum, setUnreadEmailsNum] = useState(null)
     const [filterBy, setFilterBy] = useState({ ...mailService.getDefaultFilterBy() })
+    const [sortBy, setSortBy] = useState({ ...mailService.getDefaultSortBy() })
 
+
+    const defaultFilterByRef = useRef({ ...filterBy })
+    const defaultSortByRef = useRef({ ...sortBy })
 
     useEffect(() => {
         loadEmails()
-    }, [filterBy])
-
+    }, [filterBy, sortBy])
 
     useEffect(() => {
         loadUnreadStats()
@@ -26,7 +31,7 @@ export function MailIndex() {
 
 
     function loadEmails() {
-        mailService.query(filterBy)
+        mailService.query(filterBy, sortBy)
             .then(emails => setEmails(emails))
             .catch(error => console.error(error))
     }
@@ -54,7 +59,7 @@ export function MailIndex() {
                     return prev.map(mail => (mail.id === currMail.id) ? currMail : mail)
                 })
 
-                updateUnreadEmailsNum(currMail.isRead ? -1 : 1, false)
+                updateUnreadEmailsNum(currMail.isRead ? -1 : 1, false, currMail)
             })
             .catch(error => console.error(error))
     }
@@ -81,8 +86,9 @@ export function MailIndex() {
         setOpenMail(null)
     }
 
-    function onSetStatusInFilterBy(statusTyep) {
-        setFilterBy(prev => ({ ...prev, status: statusTyep }))
+    function onSetStatusInFilterBy(statusType) {
+        setFilterBy(prev => ({ ...defaultFilterByRef.current, status: statusType }))
+        setSortBy(prev => ({ ...defaultSortByRef.current }))
     }
 
     function onSetcmpType(cmpType) {
@@ -99,7 +105,7 @@ export function MailIndex() {
                     setEmails(prev => prev.filter(mail => mail.id !== mailId))
 
                     if (!mail.isRead) {
-                        updateUnreadEmailsNum(-1, false)
+                        updateUnreadEmailsNum(-1, false, mail)
                     }
 
                     return onSetcmpType('list')
@@ -115,37 +121,61 @@ export function MailIndex() {
                     setEmails(prev => prev.filter(mail => mail.id !== mailId))
 
                     if (!mail.isRead) {
-                        updateUnreadEmailsNum(-1, true)
+                        updateUnreadEmailsNum(-1, true, mail)
                     }
-                    
+
                     return onSetcmpType('list')
                 })
         }
     }
 
-    function updateUnreadEmailsNum(dif, isToTrash) {
+    function updateUnreadEmailsNum(dif, isToTrash, mail) {
+        const status = (filterBy.status) ? filterBy.status : getMailStatus(mail)
+        console.log(mail);
+        console.log(unreadEmailsNum[status]);
+
+
         if (isToTrash) {
             setUnreadEmailsNum(prev => ({
                 ...prev,
-                [filterBy.status]: unreadEmailsNum[filterBy.status] + dif,
+                [status]: unreadEmailsNum[status] + dif,
                 trash: unreadEmailsNum.trash + 1
             }))
         } else {
             setUnreadEmailsNum(prev => ({
                 ...prev,
-                [filterBy.status]: unreadEmailsNum[filterBy.status] + dif
+                [status]: unreadEmailsNum[status] + dif
             }))
         }
     }
 
+    function getMailStatus(mail) {
+        var status = ''
+        const usrEmail = mailService.getUserMail()
+        if (mail.from !== usrEmail && !mail.removedAt) status = 'inbox'
+        else if (mail.from === usrEmail && mail.sentAt && !mail.removedAt) status = 'sent'
+        else if (!mail.sentAt && !mail.removedAt) status = 'draft'
+        else if (mail.removedAt) status = 'trash'
+        return status
+    }
+
+    function onSetFilterBy(filterBy) {
+        setFilterBy(prev => ({ ...filterBy }))
+    }
+
+    function onSetSortBy(sortBy) {
+        setSortBy(prev => ({ ...sortBy }))
+    }
+
     return (
         <section className="mail-index main-layout">
+
             <MailFolderList
                 onSetcmpType={onSetcmpType}
                 onSetStatusInFilterBy={onSetStatusInFilterBy}
                 filterBy={filterBy}
-                unreadEmailsNum={unreadEmailsNum}
-            />
+                unreadEmailsNum={unreadEmailsNum} />
+
 
             {emails && <DynamicCmp
                 cmpType={cmpType}
@@ -157,7 +187,10 @@ export function MailIndex() {
                 onGoingBack={onGoingBack}
                 onSaveMail={onSaveMail}
                 onRemoveMail={onRemoveMail}
-            />}
+            >
+                <MailFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
+                <MailSort sortBy={sortBy} onSetSortBy={onSetSortBy} filterBy={filterBy} />
+            </DynamicCmp>}
 
 
             {!emails && <img className='loader' src="assets/images/loading.gif" alt="load" />}
@@ -178,3 +211,4 @@ function DynamicCmp({ cmpType, ...prop }) {
             null;
     }
 }
+

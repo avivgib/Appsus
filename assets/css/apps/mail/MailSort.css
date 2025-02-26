@@ -1,0 +1,32 @@
+.mail-sort {
+    display: flex;
+    margin: 0.57142857142em;
+    order: 2;
+}
+
+.mail-sort>select {
+    margin: 0 0.57142857142em;
+    padding: 0.42857142857em 0.28571428571em;
+    border-radius: 10px;
+    cursor: pointer;
+
+    &:hover {
+        filter: brightness(0.9);
+    }
+}
+
+.mail-sort>select>option {
+    background-color: white;
+}
+
+.mail-sort>select.selected {
+    order: -1;
+}
+
+.mail-sort>select:has(option[value="-1"]:checked),
+.mail-sort>select:has(option[value="1"]:checked) {
+    background-color: var(--g-btn5);
+    color: var(--gl-font4);
+    border: none;
+    outline: none;
+}
