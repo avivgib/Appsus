@@ -122,6 +122,10 @@
     text-align: end;
 }
 
+.emails-list .mail-preview>.mail-star .star-full {
+    color: var(--gl-font5);
+}
+
 .emails-list .mail-preview>.mail-envelope,
 .emails-list .mail-preview>.mail-remove {
     display: none;

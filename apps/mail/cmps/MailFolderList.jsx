@@ -13,7 +13,7 @@ export function MailFolderList({ onSetcmpType, onSetStatusInFilterBy, filterBy, 
                 <li className={status === 'inbox' ? 'active' : ''}
                     style={unreadEmailsNum && unreadEmailsNum.inbox > 0 ? { fontWeight: 'bold' } : {}}
                     onClick={() => { onSetStatusInFilterBy('inbox'); onSetcmpType('list') }} >
-                    <span className='fa envelope-open-text'></span>
+                    <span className={status === 'inbox' ? 'fa envelope-open-text' : ' fa envelope-open'}></span>
                     <button>inbox</button>
                     <span className='unread-emails'>
                         {unreadEmailsNum && unreadEmailsNum.inbox > 0 ? unreadEmailsNum.inbox : ''}
@@ -22,7 +22,7 @@ export function MailFolderList({ onSetcmpType, onSetStatusInFilterBy, filterBy, 
                 <li className={status === 'star' ? 'active' : ''}
                     style={unreadEmailsNum && unreadEmailsNum.inbox > 0 ? { fontWeight: 'bold' } : {}}
                     onClick={() => { onSetStatusInFilterBy('star'); onSetcmpType('list') }} >
-                    <span className='fare star'></span>
+                    <span className={status === 'star' ? 'fa star-full' : 'fare star'}></span>
                     <button>star</button>
                     <span className='unread-emails'>
                     </span>
@@ -30,7 +30,7 @@ export function MailFolderList({ onSetcmpType, onSetStatusInFilterBy, filterBy, 
                 <li className={status === 'sent' ? 'active' : ''}
                     style={unreadEmailsNum && unreadEmailsNum.sent > 0 ? { fontWeight: 'bold' } : {}}
                     onClick={() => { onSetStatusInFilterBy('sent'); onSetcmpType('list') }}>
-                    <span className='fare paper-plane'></span>
+                    <span className={status === 'sent' ? 'fa paper-plane' : 'fare paper-plane'}></span>
                     <button>sent</button>
                     <span className='unread-emails'>
                         {unreadEmailsNum && unreadEmailsNum.sent > 0 ? unreadEmailsNum.sent : ''}
@@ -39,8 +39,8 @@ export function MailFolderList({ onSetcmpType, onSetStatusInFilterBy, filterBy, 
                 <li className={status === 'trash' ? 'active' : ''}
                     style={unreadEmailsNum && unreadEmailsNum.trash > 0 ? { fontWeight: 'bold' } : {}}
                     onClick={() => { onSetStatusInFilterBy('trash'); onSetcmpType('list') }} >
-                    <span className='fare trash-can'>
-                    </span><button>trash</button>
+                    <span className={status === 'trash' ? 'fa trash-can' : 'fare trash-can'}></span>
+                    <button>trash</button>
                     <span className='unread-emails'>
                         {unreadEmailsNum && unreadEmailsNum.trash > 0 ? unreadEmailsNum.trash : ''}
                     </span>
@@ -48,8 +48,8 @@ export function MailFolderList({ onSetcmpType, onSetStatusInFilterBy, filterBy, 
                 <li className={status === 'draft' ? 'active' : ''}
                     style={unreadEmailsNum && unreadEmailsNum.draft > 0 ? { fontWeight: 'bold' } : {}}
                     onClick={() => { onSetStatusInFilterBy('draft'); onSetcmpType('list') }} >
-                    <span className='fare note-sticky'>
-                    </span><button>draft</button>
+                    <span className={status === 'draft' ? 'fa file' : 'fare file'}></span>
+                    <button>draft</button>
                     <span className='unread-emails'>
                         {unreadEmailsNum && unreadEmailsNum.draft > 0 ? unreadEmailsNum.draft : ''}
                     </span>

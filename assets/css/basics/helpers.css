@@ -71,7 +71,26 @@
 
 .fa.star-full::before {
     content: '\f005';
-    color: #f9b200;
+}
+
+.fa.file::before {
+    content: '\f005';
+}
+
+.fa.envelope-open::before {
+    content: '\f2b6';
+}
+
+.fa.paper-plane::before {
+    content: '\f1d8';
+}
+
+.fa.trash-can::before {
+    content: '\f2ed';
+}
+
+.fa.file::before {
+    content: '\f15b';
 }
 
 /* regular */
@@ -110,4 +129,8 @@
 
 .fare.note-sticky::before {
     content: '\f249';
+}
+
+.fare.file::before {
+    content: '\f15b';
 }
