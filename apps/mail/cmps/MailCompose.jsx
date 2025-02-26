@@ -48,7 +48,7 @@ export function MailCompose({ onSetcmpType, onSaveMail }) {
                 <input type="email" id="email" name='to' placeholder='to' value={to} onChange={handleChange} required />
                 <input type="text" id='subject' name='subject' placeholder='subject' value={subject} onChange={handleChange} required />
                 <textarea name="body" id="body" placeholder='body' rows="10" value={body} onChange={handleChange} required></textarea>
-                <div>
+                <div className='mail-compose-btns flex space-between'>
                     <button className='send-btn'>send</button>
                     <button type='button' className='save-draft-btn' onClick={(event) => { onSubmit(event, true) }}>save draft</button>
                 </div>

@@ -40,27 +40,33 @@
     resize: none;
 }
 
-.new-message-form>.send-btn {
-    align-self: start;
+
+.new-message-form>.mail-compose-btns>button {
     border-radius: 100vh;
     text-transform: capitalize;
-    transition: 200ms;
-    color: var(--white);
-    background-color: var(--g-btn1);
     font-weight: bold;
+
+    background-color: var(--g-btn2);
 
     height: 2.57142857143em;
     min-width: 5.71428571429em;
     padding-inline: 1.14285714286em;
     margin: 0.85714285714em;
+    transition: 200ms;
+
 
     &:hover {
-        box-shadow: 3px 3px 5px var(--gl-shadow1);
-        filter: brightness(1.1);
+        box-shadow: 3px 3px 5px var(--gl-shadow2);
+        filter: brightness(1.07);
     }
 
     &:active {
-        box-shadow: 3px 3px 5px var(--gl-shadow1);
+        box-shadow: 3px 3px 5px var(--gl-shadow2);
         filter: brightness(1.3);
     }
+}
+
+.new-message-form>.mail-compose-btns>.send-btn {
+    color: var(--white);
+    background-color: var(--g-btn1);
 }
