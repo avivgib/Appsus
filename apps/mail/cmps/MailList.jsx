@@ -29,6 +29,11 @@ export function MailList({ onSetcmpType, emails, onOpenMail, onToggleIsRead, onR
                                 </div>
                                 <MailPreview mail={mail}
                                 />
+                                <div className='more-list-btns'>
+                                    <span className='fare note-sticky' ></span>
+                                    <span className='fa tag' ></span>
+                                    <span className='fare folder-open' ></span>
+                                </div>
                             </li>
                         })
                     )

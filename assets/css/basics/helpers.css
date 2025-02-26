@@ -93,6 +93,10 @@
     content: '\f15b';
 }
 
+.fa.tag::before {
+    content: '\f02b';
+}
+
 /* regular */
 
 .fare::before {
@@ -133,4 +137,8 @@
 
 .fare.file::before {
     content: '\f15b';
+}
+
+.fare.folder-open::before {
+    content: '\f07c';
 }

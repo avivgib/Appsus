@@ -20,7 +20,6 @@ export function MailFolderList({ onSetcmpType, onSetStatusInFilterBy, filterBy, 
                     </span>
                 </li>
                 <li className={status === 'star' ? 'active' : ''}
-                    style={unreadEmailsNum && unreadEmailsNum.inbox > 0 ? { fontWeight: 'bold' } : {}}
                     onClick={() => { onSetStatusInFilterBy('star'); onSetcmpType('list') }} >
                     <span className={status === 'star' ? 'fa star-full' : 'fare star'}></span>
                     <button>star</button>
