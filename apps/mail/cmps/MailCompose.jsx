@@ -2,12 +2,27 @@
 import { mailService } from "../services/mail.service.js";
 const { useState, useEffect, useRef } = React
 
-export function MailCompose({ onSetcmpType, onSaveMail }) {
+export function MailCompose({ onSetcmpType, onSaveMail, openMail, onGoingBack }) {
 
     const [newMail, setNewMail] = useState({ ...mailService.getEmptyMail(), createdAt: Date.now() })
     console.log(newMail);
 
     const formRef = useRef()
+
+
+    useEffect(() => {
+        if (openMail.edit) {
+            setEditDraft(openMail.edit)
+        }
+        return (() => {
+            onGoingBack('edit')
+        })
+    }, [openMail.edit])
+
+    function setEditDraft(openMail) {
+        setNewMail(prev => ({ ...openMail }))
+    }
+
     // const autoSaveRef = useRef()
 
     // useEffect(() => {

@@ -1,7 +1,15 @@
+const { useState, useEffect, useRef } = React
 
-export function MailDetails({ onSetcmpType, openMail, onRemoveMail }) {
+export function MailDetails({ onSetcmpType, openMail, onRemoveMail, onGoingBack }) {
 
-    const { id, subject, body, sentAt, from, to } = openMail
+    console.log(openMail.details);
+
+
+    useEffect(() => {
+        return (() => { onGoingBack('details') })
+    }, [])
+
+    const { id, subject, body, sentAt, from, to } = openMail.details
 
     return (
         <section className='mail-details'>

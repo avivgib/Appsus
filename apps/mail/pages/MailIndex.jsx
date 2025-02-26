@@ -12,7 +12,7 @@ export function MailIndex() {
 
     const [emails, setEmails] = useState(null)
     const [cmpType, setCmpType] = useState('list')
-    const [openMail, setOpenMail] = useState(null)
+    const [openMail, setOpenMail] = useState({ details: null, edit: null })
     const [unreadEmailsNum, setUnreadEmailsNum] = useState(null)
     const [filterBy, setFilterBy] = useState({ ...mailService.getDefaultFilterBy() })
     const [sortBy, setSortBy] = useState({ ...mailService.getDefaultSortBy() })
@@ -41,11 +41,17 @@ export function MailIndex() {
             .then(res => setUnreadEmailsNum(res))
     }
 
-    function onOpenMailDetails(mailId) {
+    function onOpenMail(mailId, type) {
         const mail = emails.find(mail => mail.id === mailId)
         if (!mail.isRead) onToggleIsRead(null, mailId)
-        setOpenMail(mail)
+
+        setOpenMail(prev => ({ ...prev, [type]: mail }))
     }
+
+    function onGoingBack(type) {
+        setOpenMail(prev => ({ ...prev, [type]: null }))
+    }
+
 
     function onToggleIsRead(ev, mailId) {
         if (ev) {
@@ -70,7 +76,10 @@ export function MailIndex() {
                 if (mail.sentAt && filterBy.status === 'sent') {
                     setEmails(prev => ([mail, ...prev]))
                 }
-                updateUnreadEmailsNum(1, false, mail)
+
+                if (!mail.isRead) {
+                    updateUnreadEmailsNum(1, false, mail)
+                }
 
                 onSetcmpType('list')
                 return
@@ -78,9 +87,6 @@ export function MailIndex() {
             .catch(error => console.log(error))
     }
 
-    function onGoingBack() {
-        setOpenMail(null)
-    }
 
     function onSetStatusInFilterBy(statusType) {
         setFilterBy(prev => ({ ...defaultFilterByRef.current, status: statusType }))
@@ -179,7 +185,7 @@ export function MailIndex() {
                 cmpType={cmpType}
                 onSetcmpType={onSetcmpType}
                 emails={emails}
-                onOpenMailDetails={onOpenMailDetails}
+                onOpenMail={onOpenMail}
                 onToggleIsRead={onToggleIsRead}
                 openMail={openMail}
                 onGoingBack={onGoingBack}
