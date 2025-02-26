@@ -119,6 +119,7 @@ function getEmptyMail() {
         isRead: '',
         sentAt: null,
         removedAt: null,
+        isStared: null,
         from: loggedinUser.email,
         to: ''
     }
@@ -158,6 +159,7 @@ function _getEmailsDemoData() {
             isRead: false,
             sentAt: Date.now(),
             removedAt: null,
+            isStared: true,
             from: 'newsletter@example.com',
             to: 'user@appsus.com'
         },
@@ -169,6 +171,7 @@ function _getEmailsDemoData() {
             isRead: true,
             sentAt: 1738368000000,
             removedAt: null,
+            isStared: null,
             from: 'hr@example.com',
             to: 'user@appsus.com'
         },
@@ -180,6 +183,7 @@ function _getEmailsDemoData() {
             isRead: false,
             sentAt: 1708172800000,
             removedAt: 1708172800000,
+            isStared: true,
             from: 'billing@example.com',
             to: 'user@appsus.com'
         },
@@ -191,6 +195,7 @@ function _getEmailsDemoData() {
             isRead: true,
             sentAt: null,
             removedAt: null,
+            isStared: null,
             from: 'user@appsus.com',
             to: 'manager@example.com'
         }, {
@@ -201,6 +206,7 @@ function _getEmailsDemoData() {
             isRead: false,
             sentAt: 1708086400000,
             removedAt: null,
+            isStared: null,
             from: 'user@appsus.com',
             to: 'manager@example.com'
         }

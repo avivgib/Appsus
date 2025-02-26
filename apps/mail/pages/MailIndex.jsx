@@ -97,7 +97,6 @@ export function MailIndex() {
         setCmpType(cmpType)
     }
 
-
     function onRemoveMail(ev, mailId) {
         ev.stopPropagation()
         const mail = emails.find(mail => mail.id === mailId)
@@ -171,6 +170,21 @@ export function MailIndex() {
         setSortBy(prev => ({ ...sortBy }))
     }
 
+    function onToggleIsStared(ev, mailId) {
+        if (ev) {
+            ev.stopPropagation()
+        }
+        const currMail = emails.find(mail => mail.id === mailId)
+
+        mailService.save({ ...currMail, isStared: !currMail.isStared })
+            .then(currMail => {
+                setEmails(prev => {
+                    return prev.map(mail => (mail.id === currMail.id) ? currMail : mail)
+                })
+            })
+            .catch(error => console.error(error))
+    }
+
     return (
         <section className="mail-index main-layout">
 
@@ -191,6 +205,7 @@ export function MailIndex() {
                 onGoingBack={onGoingBack}
                 onSaveMail={onSaveMail}
                 onRemoveMail={onRemoveMail}
+                onToggleIsStared={onToggleIsStared}
             >
                 <MailFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
                 <MailSort sortBy={sortBy} onSetSortBy={onSetSortBy} filterBy={filterBy} />

@@ -122,7 +122,6 @@
     text-align: end;
 }
 
-
 .emails-list .mail-preview>.mail-envelope,
 .emails-list .mail-preview>.mail-remove {
     display: none;
@@ -185,17 +184,19 @@
         color: var(--gl-font1);
     }
 
+    .emails-list .mail-preview .fa,
     .emails-list .mail-preview .fare {
         position: relative;
     }
 
+    .emails-list .mail-preview .fa::after,
     .emails-list .mail-preview .fare::after {
         position: absolute;
         top: 50%;
         left: 50%;
         translate: -50% -50%;
         content: '';
-        background-color: rgba(0, 0, 0, 0.2);
+        background-color: rgba(0, 0, 0, 0.1);
         width: 1.42857142857em;
         height: 1.42857142857em;
         border-radius: 50%;
@@ -203,6 +204,7 @@
         transition: 200ms;
     }
 
+    .emails-list .mail-preview .fa:hover::after,
     .emails-list .mail-preview .fare:hover::after {
         opacity: 1;
         width: 2.78571428571em;
@@ -232,6 +234,16 @@
     .emails-list .mail-preview:hover>.mail-remove {
         opacity: 0.6;
     }
+
+
+    .emails-list .mail-preview>.mail-star:has(.fa.star-full) {
+        opacity: 0.8;
+    }
+
+    .emails-list .mail-preview:hover>.mail-star:has(.fa.star-full) {
+        opacity: 1;
+    }
+
 
     .emails-list .mail-preview>.grip,
     .emails-list .mail-preview>.gap {

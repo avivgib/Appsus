@@ -38,6 +38,7 @@
 
 .fa::before {
     font-family: fa;
+    line-height: 1.42857142857em;
 }
 
 .fa.grip-vertical::before {
@@ -66,6 +67,11 @@
 
 .fa.check::before {
     content: '\f00c';
+}
+
+.fa.star-full::before {
+    content: '\f005';
+    color: #f9b200;
 }
 
 /* regular */

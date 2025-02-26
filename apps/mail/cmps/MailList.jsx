@@ -1,6 +1,6 @@
 import { MailPreview } from "./MailPreview.jsx"
 
-export function MailList({ onSetcmpType, emails, onOpenMail, onToggleIsRead, onRemoveMail, children }) {
+export function MailList({ onSetcmpType, emails, onOpenMail, onToggleIsRead, onRemoveMail, onToggleIsStared, children }) {
     return (
         <section className='emails-wrapper'>
             <div className='emails-bar flex align-center'>
@@ -23,8 +23,12 @@ export function MailList({ onSetcmpType, emails, onOpenMail, onToggleIsRead, onR
                                 <div className='mail-remove'>
                                     <span className='fare trash-can' onClick={(event) => { onRemoveMail(event, mail.id) }}></span>
                                 </div>
-                                <div className='mail-star'><span className='fare star'></span></div>
-                                <MailPreview mail={mail} />
+                                <div className='mail-star'>
+                                    <span className={`${mail.isStared ? 'fa star-full' : 'fare star'}`}
+                                        onClick={(event) => { onToggleIsStared(event, mail.id) }}></span>
+                                </div>
+                                <MailPreview mail={mail}
+                                />
                             </li>
                         })
                     )
