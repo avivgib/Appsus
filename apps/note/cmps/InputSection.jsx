@@ -1,13 +1,37 @@
 import { noteService } from "../services/note.service.js"
 
 const { useState, useEffect, useRef } = React
+const { useSearchParams } = ReactRouterDOM
+
 
 export function InputSection({ onSaveNote }) {
     const [newNote, setNewNote] = useState(noteService.getEmptyNote())
     const [isFullInputOpen, setIsFullInputOpen] = useState(false)
+    console.log(newNote);
 
     const emptyNoteRef = useRef(noteService.getEmptyNote())
     const inputContainerRef = useRef(null)
+
+    const [searchParams, setSearchParams] = useSearchParams()
+    console.log(searchParams);
+
+
+    useEffect(() => {
+        if (searchParams.size > 0) {
+            setNoteToMail(searchParams)
+        }
+    }, [searchParams])
+
+
+    function setNoteToMail(searchParams) {
+        console.log(searchParams);
+        const subject = searchParams.get('subject') || ''
+        const body = searchParams.get('body') || ''
+        console.log(subject, body);
+        setNewNote(prev => ({ ...prev, info: { ...prev.info, title: subject, content: body } }))
+    }
+
+
 
     useEffect(() => {
         function handleClickOutside({ target }) {
@@ -47,13 +71,20 @@ export function InputSection({ onSaveNote }) {
                     onChange={handleChangeInfo}
                 />
             )}
-            <input
+            <textarea
                 name="content"
                 className="content-input"
                 placeholder="Take a note..."
                 value={newNote.info.content}
                 onChange={handleChangeInfo}
+                rows="1"
             />
+
+            {/* <div
+                contentEditable="true"
+                name="content"
+                onChange={handleChangeInfo}
+            ></div> */}
         </div>
     )
 }

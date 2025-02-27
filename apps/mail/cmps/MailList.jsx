@@ -1,6 +1,17 @@
 import { MailPreview } from "./MailPreview.jsx"
 
+const {useNavigate } = ReactRouterDOM
+
 export function MailList({ onSetcmpType, emails, onOpenMail, onToggleIsRead, onRemoveMail, onToggleIsStared, children }) {
+
+    const navigate = useNavigate()
+
+    function onMailToNote(ev, mail) {
+        ev.stopPropagation()
+        const { subject, body } = mail
+        navigate(`/note?subject=${subject}&body=${body}`)
+    }
+
     return (
         <section className='emails-wrapper'>
             <div className='emails-bar flex align-center'>
@@ -30,9 +41,11 @@ export function MailList({ onSetcmpType, emails, onOpenMail, onToggleIsRead, onR
                                 <MailPreview mail={mail}
                                 />
                                 <div className='more-list-btns'>
-                                    <span className='fare note-sticky' ></span>
+                                    <span className='fare note-sticky'
+                                        onClick={(event) => onMailToNote(event, mail)}
+                                    ></span>
                                     <span className='fa tag' ></span>
-                                    <span className='fare folder-open' ></span>
+                                    <span className='fare folder-open'></span>
                                 </div>
                             </li>
                         })

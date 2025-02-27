@@ -15,3 +15,4 @@ export function NotePreview({ note }) {
         </section>
     )
 }
+
