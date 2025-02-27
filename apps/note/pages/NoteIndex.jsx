@@ -1,7 +1,7 @@
 import { showErrorMsg, showSuccessMsg } from "../../../services/event-bus.service.js"
 import { noteService } from "../services/note.service.js"
 import { NoteList } from "../cmps/NoteList.jsx"
-import { InputSection } from "../cmps/InputSection.jsx"
+import { NoteComposer } from "../cmps/NoteComposer.jsx"
 import { EditModal } from "../cmps/EditModal.jsx"
 
 const { useState, useEffect, useRef } = React
@@ -70,7 +70,7 @@ export function NoteIndex() {
 
     return (
         <section className="container">
-            <InputSection
+            <NoteComposer
                 onSaveNote={onSaveNote}
             />
 
