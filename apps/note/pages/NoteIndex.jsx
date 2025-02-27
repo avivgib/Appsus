@@ -14,6 +14,7 @@ export function NoteIndex() {
         loadNotes()
     }, [])
 
+
     function loadNotes() {
         noteService.query()
             .then(setNotes)

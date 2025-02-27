@@ -1,6 +1,15 @@
 import { NotePreview } from "./NotePreview.jsx"
+const { useNavigate } = ReactRouterDOM
 
 export function NoteList({ notes, onRemoveNote, onEditNote }) {
+
+    const navigate = useNavigate()
+
+    function onNoteToMail(note) {
+        const { title, content } = note.info
+        navigate(`/mail?title=${title}&content=${content}`)
+    }
+
     return (
         <section className='note-list'>
             {notes.map(note => (
@@ -11,7 +20,9 @@ export function NoteList({ notes, onRemoveNote, onEditNote }) {
                     </div>
 
                     <section className="note-options" onClick={(e) => e.stopPropagation()}>
-                        <button onClick={() => onRemoveNote(note.id)}>Delete note</button>
+                        <button className='fare trash-can' onClick={() => onRemoveNote(note.id)}></button>
+                        <button className='fare envelope' onClick={() => onNoteToMail(note)}></button>
+                        {/* <div className='psado'></div> */}
                     </section>
                 </article>
             ))}

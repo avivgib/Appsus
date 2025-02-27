@@ -7,9 +7,11 @@ import { MailSort } from '../cmps/MailSort.jsx';
 import { mailService } from '../services/mail.service.js'
 
 const { useState, useEffect, useRef } = React
+const { useSearchParams } = ReactRouterDOM
 
 export function MailIndex() {
 
+    const [searchParams, setSearchParams] = useSearchParams()
     const [emails, setEmails] = useState(null)
     const [cmpType, setCmpType] = useState('list')
     const [openMail, setOpenMail] = useState({ details: null, edit: null })
@@ -17,9 +19,9 @@ export function MailIndex() {
     const [filterBy, setFilterBy] = useState({ ...mailService.getDefaultFilterBy() })
     const [sortBy, setSortBy] = useState({ ...mailService.getDefaultSortBy() })
 
-
     const defaultFilterByRef = useRef({ ...filterBy })
     const defaultSortByRef = useRef({ ...sortBy })
+
 
     useEffect(() => {
         loadEmails()
@@ -28,6 +30,14 @@ export function MailIndex() {
     useEffect(() => {
         loadUnreadStats()
     }, [])
+
+
+    useEffect(() => {
+        console.log(searchParams);
+        if (searchParams.size > 0) {
+            setCmpType('compose')
+        }
+    }, [searchParams])
 
 
     function loadEmails() {
@@ -51,7 +61,6 @@ export function MailIndex() {
     function onGoingBack(type) {
         setOpenMail(prev => ({ ...prev, [type]: null }))
     }
-
 
     function onToggleIsRead(ev, mailId) {
         if (ev) {
@@ -86,7 +95,6 @@ export function MailIndex() {
             })
             .catch(error => console.log(error))
     }
-
 
     function onSetStatusInFilterBy(statusType) {
         setFilterBy(prev => ({ ...defaultFilterByRef.current, status: statusType }))
@@ -206,6 +214,7 @@ export function MailIndex() {
                 onSaveMail={onSaveMail}
                 onRemoveMail={onRemoveMail}
                 onToggleIsStared={onToggleIsStared}
+                searchParams={searchParams}
             >
                 <MailFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
                 <MailSort sortBy={sortBy} onSetSortBy={onSetSortBy} filterBy={filterBy} />

@@ -1,1 +1,41 @@
  /* note list */
+
+
+ /* .psado {
+     position: relative;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     width: 20px;
+     height: 20px;
+     border-radius: 50%;
+     background-color: rgb(255, 255, 255);
+ }
+
+ .psado::before {
+     content: 'hello';
+ }
+
+ .psado:hover::before {
+     content: 'bye';
+ }
+
+ .psado::after {
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     translate: -50% -50%;
+
+     width: 20px;
+     height: 20px;
+     background-color: rgba(0, 255, 255, 0.167);
+     opacity: 0;
+     transition: 200ms;
+     border-radius: 50%;
+ }
+
+ .psado:hover::after {
+     opacity: 1;
+     width: 100px;
+     height: 100px;
+ } */
