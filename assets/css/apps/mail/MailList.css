@@ -260,7 +260,7 @@
     .emails-list .mail-preview>.mail-remove {
         display: flex;
         position: relative;
-        opacity: 0.3;
+        color: var(--gl-font6);
         font-weight: bold;
         flex-shrink: 0;
     }
@@ -268,12 +268,16 @@
     .emails-list .mail-preview:hover>.mail-envelope,
     .emails-list .mail-preview:hover>.mail-star,
     .emails-list .mail-preview:hover>.mail-remove {
-        opacity: 0.6;
+        color: var(--gl-font2);
+    }
+
+    .emails-list .mail-preview>.mail-remove.open {
+        z-index: 4;
     }
 
 
     .emails-list .mail-preview>.mail-star:has(.fa.star-full) {
-        opacity: 0.8;
+        opacity: 1;
     }
 
     .emails-list .mail-preview:hover>.mail-star:has(.fa.star-full) {

@@ -1,8 +1,13 @@
+import { LabelPicker } from "../../../cmps/LabelPicker.jsx"
 import { MailPreview } from "./MailPreview.jsx"
 
-const {useNavigate } = ReactRouterDOM
+const { useNavigate } = ReactRouterDOM
+const { useState, useEffect, useRef } = React
 
-export function MailList({ onSetcmpType, emails, onOpenMail, onToggleIsRead, onRemoveMail, onToggleIsStared, children }) {
+export function MailList({ onSetcmpType, emails, onOpenMail, onToggleIsRead, onRemoveMail, onToggleIsStared, updateMailLabels, children }) {
+
+    const [openLabelPicker, setOpenLabelPicker] = useState(null)
+    console.log(openLabelPicker);
 
     const navigate = useNavigate()
 
@@ -11,6 +16,24 @@ export function MailList({ onSetcmpType, emails, onOpenMail, onToggleIsRead, onR
         const { subject, body } = mail
         navigate(`/note?subject=${subject}&body=${body}`)
     }
+
+
+    function onSaveLabels(ev, labels) {
+        ev.stopPropagation()
+        console.log(labels);
+        updateMailLabels(openLabelPicker, labels)
+        setOpenLabelPicker('')
+    }
+
+
+    function onTogglLabelPikcer(ev, mailId) {
+
+        if (ev) {
+            ev.stopPropagation()
+        }
+        setOpenLabelPicker(mailId)
+    }
+
 
     return (
         <section className='emails-wrapper'>
@@ -31,8 +54,14 @@ export function MailList({ onSetcmpType, emails, onOpenMail, onToggleIsRead, onR
                                     <span className={`fare ${mail.isRead ? 'envelope-open' : 'envelope'}`}
                                         onClick={(event) => onToggleIsRead(event, mail.id)}></span>
                                 </div>
-                                <div className='mail-remove'>
-                                    <span className='fare trash-can' onClick={(event) => { onRemoveMail(event, mail.id) }}></span>
+                                <div className={`mail-remove ${openLabelPicker === mail.id ? 'open' : ''} `}>
+                                    <span className='fa tag' onClick={(event) => { onTogglLabelPikcer(event, mail.id) }}>
+                                        {openLabelPicker === mail.id &&
+                                            <LabelPicker
+                                                onTogglLabelPikcer={onTogglLabelPikcer}
+                                                onSaveLabels={onSaveLabels}
+                                            />}
+                                    </span>
                                 </div>
                                 <div className='mail-star'>
                                     <span className={`${mail.isStared ? 'fa star-full' : 'fare star'}`}
@@ -44,7 +73,7 @@ export function MailList({ onSetcmpType, emails, onOpenMail, onToggleIsRead, onR
                                     <span className='fare note-sticky'
                                         onClick={(event) => onMailToNote(event, mail)}
                                     ></span>
-                                    <span className='fa tag' ></span>
+                                    <span className='fare trash-can' onClick={(event) => { onRemoveMail(event, mail.id) }}></span>
                                     <span className='fare folder-open'></span>
                                 </div>
                             </li>

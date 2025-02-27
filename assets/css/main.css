@@ -8,6 +8,7 @@
 @import './cmps/home.css';
 @import './cmps/UserMsg.css';
 @import './cmps/AppHeader.css';
+@import './cmps/LabelPicker.css';
 
 /* NOTES */
 @import './apps/note/NotePreview.css';

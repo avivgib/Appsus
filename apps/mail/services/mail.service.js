@@ -124,6 +124,7 @@ function getEmptyMail() {
         sentAt: null,
         removedAt: null,
         isStared: null,
+        lables: [],
         from: loggedinUser.email,
         to: ''
     }
@@ -164,6 +165,7 @@ function _getEmailsDemoData() {
             sentAt: Date.now(),
             removedAt: null,
             isStared: true,
+            lables: [],
             from: 'newsletter@example.com',
             to: 'user@appsus.com'
         },
@@ -176,6 +178,7 @@ function _getEmailsDemoData() {
             sentAt: 1738368000000,
             removedAt: null,
             isStared: null,
+            lables: [],
             from: 'hr@example.com',
             to: 'user@appsus.com'
         },
@@ -185,6 +188,7 @@ function _getEmailsDemoData() {
             subject: 'Invoice #12345',
             body: 'Please find attached the invoice for your recent purchase. Let us know if you have any questions.',
             isRead: false,
+            lables: [],
             sentAt: 1708172800000,
             removedAt: 1708172800000,
             isStared: true,
@@ -200,6 +204,7 @@ function _getEmailsDemoData() {
             sentAt: null,
             removedAt: null,
             isStared: null,
+            lables: [],
             from: 'user@appsus.com',
             to: 'manager@example.com'
         }, {
@@ -211,6 +216,7 @@ function _getEmailsDemoData() {
             sentAt: 1708086400000,
             removedAt: null,
             isStared: null,
+            lables: [],
             from: 'user@appsus.com',
             to: 'manager@example.com'
         }
