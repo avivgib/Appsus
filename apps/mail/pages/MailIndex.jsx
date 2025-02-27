@@ -11,18 +11,18 @@ const { useSearchParams } = ReactRouterDOM
 
 export function MailIndex() {
 
-    const [searchParams, setSearchParams] = useSearchParams()
     const [emails, setEmails] = useState(null)
     const [cmpType, setCmpType] = useState('list')
     const [openMail, setOpenMail] = useState({ details: null, edit: null })
     const [unreadEmailsNum, setUnreadEmailsNum] = useState(null)
+
     const [filterBy, setFilterBy] = useState({ ...mailService.getDefaultFilterBy() })
     const [sortBy, setSortBy] = useState({ ...mailService.getDefaultSortBy() })
 
+    const [searchParams, setSearchParams] = useSearchParams()
+
     const defaultFilterByRef = useRef({ ...filterBy })
     const defaultSortByRef = useRef({ ...sortBy })
-
-    console.log(emails);
 
 
     useEffect(() => {
@@ -53,33 +53,10 @@ export function MailIndex() {
             .then(res => setUnreadEmailsNum(res))
     }
 
-    function onOpenMail(mailId, type) {
-        const mail = emails.find(mail => mail.id === mailId)
-        if (!mail.isRead) onToggleIsRead(null, mailId)
-
-        setOpenMail(prev => ({ ...prev, [type]: mail }))
-    }
-
     function onGoingBack(type) {
         setOpenMail(prev => ({ ...prev, [type]: null }))
     }
 
-    function onToggleIsRead(ev, mailId) {
-        if (ev) {
-            ev.stopPropagation()
-        }
-        const currMail = emails.find(mail => mail.id === mailId)
-
-        mailService.save({ ...currMail, isRead: !currMail.isRead })
-            .then(currMail => {
-                setEmails(prev => {
-                    return prev.map(mail => (mail.id === currMail.id) ? currMail : mail)
-                })
-
-                updateUnreadEmailsNum(currMail.isRead ? -1 : 1, false, currMail)
-            })
-            .catch(error => console.error(error))
-    }
 
     function onSaveMail(mail) {
         mailService.save(mail)
@@ -140,11 +117,55 @@ export function MailIndex() {
         }
     }
 
+    function onSetFilterBy(filterBy) {
+        setFilterBy(prev => ({ ...filterBy }))
+    }
+
+    function onSetSortBy(sortBy) {
+        setSortBy(prev => ({ ...sortBy }))
+    }
+
+    function updateMailLabels(mailId, labels) {
+        const mail = emails.find(mail => mail.id === mailId)
+        const updatedMail = { ...mail, lables: labels }
+        console.log(updatedMail);
+        mailService.save(updatedMail)
+            .then(updatedMail => setEmails(prev => prev.map(mail => mail.id === updatedMail.id ? updatedMail : mail)))
+            .catch(error => console.log(error))
+    }
+
+    function onOpenMail(mailId, type) {
+        const mail = emails.find(mail => mail.id === mailId)
+        const mailUpdate = { ...mail, isRead: !mail.isRead }
+
+        saveChanges(mailUpdate, true)
+        setOpenMail(prev => ({ ...prev, [type]: mailUpdate }))
+    }
+
+    function saveChanges(mail, isReadUpdate) {  /// UPDATE
+
+        if (isReadUpdate) {
+            updateUnreadEmailsNum(mail.isRead ? -1 : 1, false, mail)
+        }
+
+        mailService.save(mail)
+            .then(currMail => {
+                setEmails(prev => {
+                    return prev.map(mail => (mail.id === currMail.id) ? currMail : mail)
+                })
+            })
+            .catch(error => console.error(error))
+    }
+
+    /// update the read unread mail stats
+
     function updateUnreadEmailsNum(dif, isToTrash, mail) {
         const status = getMailStatus(mail)
         console.log(mail);
         console.log(unreadEmailsNum[status]);
 
+        if (unreadEmailsNum[status] + dif > emails.length ||
+            unreadEmailsNum[status] + dif < 0) return
 
         if (isToTrash) {
             setUnreadEmailsNum(prev => ({
@@ -172,38 +193,6 @@ export function MailIndex() {
         return status
     }
 
-    function onSetFilterBy(filterBy) {
-        setFilterBy(prev => ({ ...filterBy }))
-    }
-
-    function onSetSortBy(sortBy) {
-        setSortBy(prev => ({ ...sortBy }))
-    }
-
-    function onToggleIsStared(ev, mailId) {
-        if (ev) {
-            ev.stopPropagation()
-        }
-        const currMail = emails.find(mail => mail.id === mailId)
-
-        mailService.save({ ...currMail, isStared: !currMail.isStared })
-            .then(currMail => {
-                setEmails(prev => {
-                    return prev.map(mail => (mail.id === currMail.id) ? currMail : mail)
-                })
-            })
-            .catch(error => console.error(error))
-    }
-
-    function updateMailLabels(mailId, labels) {
-        const mail = emails.find(mail => mail.id === mailId)
-        const updatedMail = { ...mail, lables: labels }
-        console.log(updatedMail);
-        mailService.save(updatedMail)
-            .then(updatedMail => setEmails(prev => prev.map(mail => mail.id === updatedMail.id ? updatedMail : mail)))
-            .catch(error => console.log(error))
-    }
-
     return (
         <section className="mail-index main-layout">
 
@@ -218,15 +207,19 @@ export function MailIndex() {
                 cmpType={cmpType}
                 onSetcmpType={onSetcmpType}
                 emails={emails}
+
                 onOpenMail={onOpenMail}
-                onToggleIsRead={onToggleIsRead}
                 openMail={openMail}
                 onGoingBack={onGoingBack}
+
                 onSaveMail={onSaveMail}
                 onRemoveMail={onRemoveMail}
-                onToggleIsStared={onToggleIsStared}
+
+
                 searchParams={searchParams}
                 updateMailLabels={updateMailLabels}
+
+                saveChanges={saveChanges}
             >
                 <MailFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
                 <MailSort sortBy={sortBy} onSetSortBy={onSetSortBy} filterBy={filterBy} />

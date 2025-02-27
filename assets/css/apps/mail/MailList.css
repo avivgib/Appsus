@@ -64,7 +64,7 @@
 }
 
 
-.emails-list .mail-preview.unread {
+.emails-list .mail-preview:has(.fare.envelope) {
     background-color: white;
 }
 

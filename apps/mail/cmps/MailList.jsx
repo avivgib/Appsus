@@ -4,10 +4,10 @@ import { MailPreview } from "./MailPreview.jsx"
 const { useNavigate } = ReactRouterDOM
 const { useState, useEffect, useRef } = React
 
-export function MailList({ onSetcmpType, emails, onOpenMail, onToggleIsRead, onRemoveMail, onToggleIsStared, updateMailLabels, children }) {
+export function MailList({ saveChanges, onSetcmpType, emails, onOpenMail, onRemoveMail, updateMailLabels, children }) {
 
     const [openLabelPicker, setOpenLabelPicker] = useState(null)
-    console.log(openLabelPicker);
+    // console.log(openLabelPicker);
 
     const navigate = useNavigate()
 
@@ -44,12 +44,12 @@ export function MailList({ onSetcmpType, emails, onOpenMail, onToggleIsRead, onR
                 {emails.length > 0
                     ? (
                         emails.map(mail => {
-                            return <li key={mail.id} className={`mail-preview ${mail.isRead ? '' : 'unread'}`}
+                            return <li key={mail.id} className='mail-preview'
                                 onClick={() => {
                                     onOpenMail(mail.id, (mail.sentAt) ? 'details' : 'edit')
                                     mail.sentAt ? onSetcmpType('details') : onSetcmpType('compose')
                                 }}>
-                                <div className='grip'><span className='fa grip-vertical'></span></div>
+                                {/* <div className='grip'><span className='fa grip-vertical'></span></div>
                                 <div className='mail-envelope'>
                                     <span className={`fare ${mail.isRead ? 'envelope-open' : 'envelope'}`}
                                         onClick={(event) => onToggleIsRead(event, mail.id)}></span>
@@ -66,9 +66,8 @@ export function MailList({ onSetcmpType, emails, onOpenMail, onToggleIsRead, onR
                                 <div className='mail-star'>
                                     <span className={`${mail.isStared ? 'fa star-full' : 'fare star'}`}
                                         onClick={(event) => { onToggleIsStared(event, mail.id) }}></span>
-                                </div>
-                                <MailPreview mail={mail}
-                                />
+                                </div> */}
+                                <MailPreview currMail={mail} saveChanges={saveChanges} />
                                 <div className='more-list-btns'>
                                     <span className='fare note-sticky'
                                         onClick={(event) => onMailToNote(event, mail)}
