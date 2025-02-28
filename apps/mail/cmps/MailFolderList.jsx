@@ -1,6 +1,6 @@
 
 
-export function MailFolderList({ onSetcmpType, onSetStatusInFilterBy, filterBy, unreadEmailsNum }) {
+export function MailFolderList({ onSetcmpType, onSetStatusInFilterBy, filterBy, unreadEmailsCount }) {
 
     const { status } = filterBy
     return (
@@ -11,12 +11,12 @@ export function MailFolderList({ onSetcmpType, onSetStatusInFilterBy, filterBy, 
             <ul className='clean-list'>
 
                 <li className={status === 'inbox' ? 'active' : ''}
-                    style={unreadEmailsNum && unreadEmailsNum.inbox > 0 ? { fontWeight: 'bold' } : {}}
+                    style={unreadEmailsCount && unreadEmailsCount.inbox > 0 ? { fontWeight: 'bold' } : {}}
                     onClick={() => { onSetStatusInFilterBy('inbox'); onSetcmpType('list') }} >
                     <span className={status === 'inbox' ? 'fa envelope-open-text' : ' fa envelope-open'}></span>
                     <button>inbox</button>
                     <span className='unread-emails'>
-                        {unreadEmailsNum && unreadEmailsNum.inbox > 0 ? unreadEmailsNum.inbox : ''}
+                        {unreadEmailsCount && unreadEmailsCount.inbox > 0 ? unreadEmailsCount.inbox : ''}
                     </span>
                 </li>
                 <li className={status === 'star' ? 'active' : ''}
@@ -27,30 +27,30 @@ export function MailFolderList({ onSetcmpType, onSetStatusInFilterBy, filterBy, 
                     </span>
                 </li>
                 <li className={status === 'sent' ? 'active' : ''}
-                    style={unreadEmailsNum && unreadEmailsNum.sent > 0 ? { fontWeight: 'bold' } : {}}
+                    style={unreadEmailsCount && unreadEmailsCount.sent > 0 ? { fontWeight: 'bold' } : {}}
                     onClick={() => { onSetStatusInFilterBy('sent'); onSetcmpType('list') }}>
                     <span className={status === 'sent' ? 'fa paper-plane' : 'fare paper-plane'}></span>
                     <button>sent</button>
                     <span className='unread-emails'>
-                        {unreadEmailsNum && unreadEmailsNum.sent > 0 ? unreadEmailsNum.sent : ''}
+                        {unreadEmailsCount && unreadEmailsCount.sent > 0 ? unreadEmailsCount.sent : ''}
                     </span>
                 </li>
                 <li className={status === 'trash' ? 'active' : ''}
-                    style={unreadEmailsNum && unreadEmailsNum.trash > 0 ? { fontWeight: 'bold' } : {}}
+                    style={unreadEmailsCount && unreadEmailsCount.trash > 0 ? { fontWeight: 'bold' } : {}}
                     onClick={() => { onSetStatusInFilterBy('trash'); onSetcmpType('list') }} >
                     <span className={status === 'trash' ? 'fa trash-can' : 'fare trash-can'}></span>
                     <button>trash</button>
                     <span className='unread-emails'>
-                        {unreadEmailsNum && unreadEmailsNum.trash > 0 ? unreadEmailsNum.trash : ''}
+                        {unreadEmailsCount && unreadEmailsCount.trash > 0 ? unreadEmailsCount.trash : ''}
                     </span>
                 </li>
                 <li className={status === 'draft' ? 'active' : ''}
-                    style={unreadEmailsNum && unreadEmailsNum.draft > 0 ? { fontWeight: 'bold' } : {}}
+                    style={unreadEmailsCount && unreadEmailsCount.draft > 0 ? { fontWeight: 'bold' } : {}}
                     onClick={() => { onSetStatusInFilterBy('draft'); onSetcmpType('list') }} >
                     <span className={status === 'draft' ? 'fa file' : 'fare file'}></span>
                     <button>draft</button>
                     <span className='unread-emails'>
-                        {unreadEmailsNum && unreadEmailsNum.draft > 0 ? unreadEmailsNum.draft : ''}
+                        {unreadEmailsCount && unreadEmailsCount.draft > 0 ? unreadEmailsCount.draft : ''}
                     </span>
                 </li>
             </ul>
