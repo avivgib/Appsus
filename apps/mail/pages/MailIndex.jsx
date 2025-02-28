@@ -71,6 +71,7 @@ export function MailIndex() {
     function onRemoveMail(ev, mailId) { // DELETE
         ev.stopPropagation()
         const mail = emails.find(mail => mail.id === mailId)
+
         if (mail.removedAt) {
             mailService.remove(mailId)
                 .then(res => {
@@ -84,21 +85,26 @@ export function MailIndex() {
                 })
                 .catch(error => console.error(error))
         } else {
-            const updateMail = { ...mail, removedAt: Date.now() }
-            mailService.save(updateMail)
-                .then(updateMail => {
-                    setEmails(prev => {
-                        return prev.map(mail => (mail.id === updateMail.id) ? updateMail : mail)
-                    })
-                    setEmails(prev => prev.filter(mail => mail.id !== mailId))
-
-                    if (!mail.isRead) {
-                        updateunreadEmailsCount(-1, true, mail)
-                    }
-
-                    return onSetcmpType('list')
-                })
+            mailToTrash(mail)
         }
+    }
+
+    function mailToTrash(mail) {
+        const updateMail = { ...mail, removedAt: Date.now() }
+
+        mailService.save(updateMail)
+            .then(updateMail => {
+                setEmails(prev => {
+                    return prev.map(mail => (mail.id === updateMail.id) ? updateMail : mail)
+                })
+                setEmails(prev => prev.filter(mail => mail.id !== updateMail.id))
+
+                if (!mail.isRead) {
+                    updateunreadEmailsCount(-1, true, mail)
+                }
+
+                return onSetcmpType('list')
+            })
     }
 
     function saveChanges(mail, isReadUpdate) {  /// UPDATE
