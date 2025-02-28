@@ -1,3 +1,4 @@
+import { LabelPicker } from "../../../cmps/LabelPicker.jsx"
 import { mailService } from "../services/mail.service.js"
 
 const { useState, useEffect, useRef } = React
@@ -5,17 +6,29 @@ const { useState, useEffect, useRef } = React
 export function MailPreview({ currMail, saveChanges }) {
 
     const [mail, setMail] = useState({ ...currMail })
+    const [isLabelPickerOpen, setIsLabelPickerOpen] = useState(false)
 
 
-    function handleChanges(ev, type) {
+    function handleChanges(ev, type, labels) {
         ev.stopPropagation()
 
-        const updateMail = { ...mail, [type]: !mail[type] }
+        var updateMail = {}
+        if (type === 'lables') {
+            updateMail = { ...mail, [type]: labels }
+            setIsLabelPickerOpen(false)
+        } else {
+            updateMail = { ...mail, [type]: !mail[type] }
+        }
 
         setMail(updateMail)
 
         const isReadUpdate = (type === 'isRead') ? true : false
         saveChanges(updateMail, isReadUpdate)
+    }
+
+    function onTogglLabelPikcer(ev) {
+        ev.stopPropagation()
+        setIsLabelPickerOpen(!isLabelPickerOpen)
     }
 
     function setSentAtDateDisplay(sentAt) {
@@ -44,32 +57,39 @@ export function MailPreview({ currMail, saveChanges }) {
         }
     }
 
-    const { isRead, from, to, subject, body, sentAt, createdAt, isStared } = mail
+
+    const { createdAt, subject, body, isRead, sentAt, removedAt, isStared, lables, from, to } = mail
 
     return (
         <React.Fragment>
-            <div className='grip'><span className='fa grip-vertical'></span></div>
+            <div className='grip'>
+                {/* <span className='fa grip-vertical'></span> */}
+            </div>
+
             <div className='mail-envelope'>
                 <span
                     className={`fare ${isRead ? 'envelope-open' : 'envelope'}`}
                     onClick={(event) => handleChanges(event, 'isRead')}>
                 </span>
             </div>
-            {/* <div className={`mail-remove ${openLabelPicker === mail.id ? 'open' : ''} `}>
-                <span className='fa tag' onClick={(event) => { onTogglLabelPikcer(event, mail.id) }}>
-                    {openLabelPicker === mail.id &&
+
+            <div className={`mail-remove ${isLabelPickerOpen ? 'open' : ''} `}>
+                <span className='fa tag' onClick={onTogglLabelPikcer}>
+                    {isLabelPickerOpen &&
                         <LabelPicker
-                            onTogglLabelPikcer={onTogglLabelPikcer}
-                            onSaveLabels={onSaveLabels}
+                            lables={lables}
+                            handleChanges={handleChanges}
                         />}
                 </span>
-            </div> */}
+            </div>
+
             <div className='mail-star'>
                 <span
                     className={`${isStared ? 'fa star-full' : 'fare star'}`}
                     onClick={(event) => { handleChanges(event, 'isStared') }}>
                 </span>
             </div>
+
             <div className='icon'><img src="assets/images/use-icon.jpg" alt="use-icon" className='usr-icon' /></div>
             <div className='sent-from'>{renderMailSentFrom()}</div>
             <div className='mail-content'><span className='mail-subject'>{subject}</span> <span>{body}</span> </div>
@@ -77,6 +97,7 @@ export function MailPreview({ currMail, saveChanges }) {
             <div className='sentat' >
                 {sentAt ? setSentAtDateDisplay(sentAt) : setSentAtDateDisplay(createdAt)}
             </div>
+
         </React.Fragment >
     )
 }

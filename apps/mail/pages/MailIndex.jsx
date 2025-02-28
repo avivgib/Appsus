@@ -33,7 +33,6 @@ export function MailIndex() {
         loadUnreadStats()
     }, [])
 
-
     useEffect(() => {
         console.log(searchParams);
         if (searchParams.size > 0) {
@@ -56,7 +55,6 @@ export function MailIndex() {
     function onGoingBack(type) {
         setOpenMail(prev => ({ ...prev, [type]: null }))
     }
-
 
     function onSaveMail(mail) {
         mailService.save(mail)
@@ -125,20 +123,11 @@ export function MailIndex() {
         setSortBy(prev => ({ ...sortBy }))
     }
 
-    function updateMailLabels(mailId, labels) {
-        const mail = emails.find(mail => mail.id === mailId)
-        const updatedMail = { ...mail, lables: labels }
-        console.log(updatedMail);
-        mailService.save(updatedMail)
-            .then(updatedMail => setEmails(prev => prev.map(mail => mail.id === updatedMail.id ? updatedMail : mail)))
-            .catch(error => console.log(error))
-    }
-
     function onOpenMail(mailId, type) {
         const mail = emails.find(mail => mail.id === mailId)
         const mailUpdate = { ...mail, isRead: !mail.isRead }
 
-        saveChanges(mailUpdate, true)
+        saveChanges(mailUpdate, true) // UPDATE
         setOpenMail(prev => ({ ...prev, [type]: mailUpdate }))
     }
 
@@ -182,14 +171,12 @@ export function MailIndex() {
     }
 
     function getMailStatus(mail) {
-
         var status = ''
         const usrEmail = mailService.getUserMail()
         if (mail.from !== usrEmail && !mail.removedAt) status = 'inbox'
         else if (mail.from === usrEmail && mail.sentAt && !mail.removedAt) status = 'sent'
         else if (!mail.sentAt && !mail.removedAt) status = 'draft'
         else if (mail.removedAt) status = 'trash'
-
         return status
     }
 
@@ -215,14 +202,12 @@ export function MailIndex() {
                 onSaveMail={onSaveMail}
                 onRemoveMail={onRemoveMail}
 
-
                 searchParams={searchParams}
-                updateMailLabels={updateMailLabels}
-
                 saveChanges={saveChanges}
             >
                 <MailFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
                 <MailSort sortBy={sortBy} onSetSortBy={onSetSortBy} filterBy={filterBy} />
+
             </DynamicCmp>}
 
 

@@ -2,31 +2,28 @@
 const { useState, useEffect, useRef } = React
 
 
-export function LabelPicker({ onSaveLabels }) {
-    const [selectedLabels, setSelectedLabels] = useState([])
+export function LabelPicker({ lables, handleChanges }) {
+    const [selectedLabels, setSelectedLabels] = useState([...lables])
     console.log(selectedLabels);
 
-
     const labelPickerRef = useRef()
-    const handleClickRef = useRef(handleClickOutside)
 
     function handleClickOutside(ev) {
         if (ev.target !== labelPickerRef.current) {
-            onSaveLabels(ev, selectedLabels)
+            onSaveLabels(ev)
         }
     }
 
     useEffect(() => {
-        document.addEventListener('click', handleClickRef.current)
+        document.addEventListener('click', handleClickOutside)
 
-        return (() => {
-            document.removeEventListener('click', handleClickRef.current)
-        })
-    }, [])
+        return () => {
+            document.removeEventListener('click', handleClickOutside)
+        }
+    }, [selectedLabels])
 
 
-
-    function handleChange(ev) {
+    function updateMailLabels(ev) {
         ev.stopPropagation()
         const { name, checked } = ev.target
 
@@ -37,31 +34,33 @@ export function LabelPicker({ onSaveLabels }) {
         }
     }
 
+    function onSaveLabels(ev) {
+        console.log(selectedLabels);
+        handleChanges(ev, 'lables', selectedLabels)
+    }
+
 
     return (
-        <section className='label-picker'>
+        <section className='label-picker'
+            onClick={(event) => { event.stopPropagation() }}
+        >
             <div>Labels:</div>
 
             <ul className='clean-list'>
-                <li>
-                    <input type="checkbox" id="family" name="family" onChange={handleChange} />
-                    <label htmlFor="family">family</label>
-                </li>
-                <li>
-                    <input type="checkbox" id="work" name="work" onChange={handleChange} />
-                    <label htmlFor="work">work</label>
-                </li>
-                <li>
-                    <input type="checkbox" id="spam" name="spam" onChange={handleChange} />
-                    <label htmlFor="spam">spam</label>
-                </li>
-                <li>
-                    <input type="checkbox" id="friends" name="friends" onChange={handleChange} />
-                    <label htmlFor="friends">friends</label>
-                </li>
+                {
+                    ['family', 'work', 'spam', 'friends'].map(label => {
+                        return <li key={label}>
+                            <input type="checkbox" id={label} name={label}
+                                checked={selectedLabels.includes(label) ? true : false}
+                                onChange={updateMailLabels} />
+                            <label htmlFor={label}>{label}</label>
+                        </li>
+                    })
+                }
             </ul>
 
-            <span onClick={(event) => { onSaveLabels(event, selectedLabels) }}>save</span>
+            <span onClick={onSaveLabels}>save</span>
         </section >
     )
 }
+
