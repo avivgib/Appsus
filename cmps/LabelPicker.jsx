@@ -1,6 +1,7 @@
+import { utilService } from "../services/util.service.js";
+
 
 const { useState, useEffect, useRef } = React
-
 
 export function LabelPicker({ lables, handleChanges }) {
     const [selectedLabels, setSelectedLabels] = useState([...lables])
@@ -48,7 +49,7 @@ export function LabelPicker({ lables, handleChanges }) {
 
             <ul className='clean-list'>
                 {
-                    ['family', 'work', 'spam', 'friends'].map(label => {
+                    utilService.getLabels().map(label => {
                         return <li key={label}>
                             <input type="checkbox" id={label} name={label}
                                 checked={selectedLabels.includes(label) ? true : false}

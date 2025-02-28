@@ -15,7 +15,7 @@ export function MailDetails({ onSetcmpType, openMail, onRemoveMail, onGoingBack 
         <section className='mail-details'>
             <div className='details-header-bar flex space-between align-center '>
                 <span className='fa arrow-left' onClick={() => { onSetcmpType('list') }}></span>
-                <span className='fare trash-can' onClick={(event) => { onRemoveMail(event, id) }}></span>
+                <span className='fare trash' onClick={(event) => { onRemoveMail(event, id) }}></span>
             </div>
             <div className='mail-wrapper'>
                 <div className='mail-subject'>{subject}</div>

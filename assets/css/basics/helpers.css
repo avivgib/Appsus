@@ -53,7 +53,7 @@
     content: '\f304';
 }
 
-.fa.envelope-open-text::before {
+.fa.inbox::before {
     content: '\f658';
 }
 
@@ -69,27 +69,19 @@
     content: '\f00c';
 }
 
-.fa.star-full::before {
+.fa.star::before {
     content: '\f005';
 }
 
-.fa.file::before {
-    content: '\f005';
-}
-
-.fa.envelope-open::before {
-    content: '\f2b6';
-}
-
-.fa.paper-plane::before {
+.fa.sent::before {
     content: '\f1d8';
 }
 
-.fa.trash-can::before {
+.fa.trash::before {
     content: '\f2ed';
 }
 
-.fa.file::before {
+.fa.draft::before {
     content: '\f15b';
 }
 
@@ -119,15 +111,16 @@
     content: '\f0e0';
 }
 
-.fare.envelope-open::before {
+.fare.envelope-open::before,
+.fare.inbox::before {
     content: '\f2b6';
 }
 
-.fare.paper-plane::before {
+.fare.sent::before {
     content: '\f1d8';
 }
 
-.fare.trash-can::before {
+.fare.trash::before {
     content: '\f2ed';
 }
 
@@ -135,7 +128,7 @@
     content: '\f249';
 }
 
-.fare.file::before {
+.fare.draft::before {
     content: '\f15b';
 }
 

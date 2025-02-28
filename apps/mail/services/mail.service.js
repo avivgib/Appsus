@@ -115,6 +115,7 @@ function getDefaultSortBy() {
     }
 }
 
+
 function getEmptyMail() {
     return {
         createdAt: null,

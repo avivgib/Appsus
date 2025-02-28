@@ -8,7 +8,8 @@ export const utilService = {
     getMonthName,
     loadFromStorage,
     saveToStorage,
-    debounce
+    debounce,
+    getLabels,
 }
 
 function saveToStorage(key, val) {
@@ -82,4 +83,9 @@ function debounce(func, wait) {
             func(...args)
         }, wait)
     }
+}
+
+
+function getLabels() {
+    return ['family', 'work', 'spam', 'friends']
 }

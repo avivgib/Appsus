@@ -10,7 +10,19 @@ export function MailFolderList({ onSetcmpType, onSetStatusInFilterBy, filterBy, 
 
             <ul className='clean-list'>
 
-                <li className={status === 'inbox' ? 'active' : ''}
+                {['inbox', 'star', 'sent', 'trash', 'draft'].map(label => {
+                    return <li key={label} className={status === label ? 'active' : ''}
+                        onClick={() => { onSetStatusInFilterBy(label); onSetcmpType('list') }}
+                        style={unreadEmailsCount && unreadEmailsCount[label] > 0 ? { fontWeight: 'bold' } : {}}>
+                        <span className={status === label ? `fa ${label}` : ` fare ${label}`}></span>
+                        <button>{label}</button>
+                        <span className='unread-emails'>
+                            {unreadEmailsCount && unreadEmailsCount[label] > 0 ? unreadEmailsCount[label] : ''}
+                        </span>
+                    </li>
+                })}
+
+                {/* <li className={status === 'inbox' ? 'active' : ''}
                     style={unreadEmailsCount && unreadEmailsCount.inbox > 0 ? { fontWeight: 'bold' } : {}}
                     onClick={() => { onSetStatusInFilterBy('inbox'); onSetcmpType('list') }} >
                     <span className={status === 'inbox' ? 'fa envelope-open-text' : ' fa envelope-open'}></span>
@@ -52,7 +64,7 @@ export function MailFolderList({ onSetcmpType, onSetStatusInFilterBy, filterBy, 
                     <span className='unread-emails'>
                         {unreadEmailsCount && unreadEmailsCount.draft > 0 ? unreadEmailsCount.draft : ''}
                     </span>
-                </li>
+                </li> */}
             </ul>
         </section>
     )

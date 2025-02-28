@@ -85,7 +85,7 @@ export function MailPreview({ currMail, saveChanges }) {
 
             <div className='mail-star'>
                 <span
-                    className={`${isStared ? 'fa star-full' : 'fare star'}`}
+                    className={`${isStared ? 'fa star' : 'fare star'}`}
                     onClick={(event) => { handleChanges(event, 'isStared') }}>
                 </span>
             </div>
