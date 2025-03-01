@@ -49,6 +49,13 @@ function query(filterBy, sortBy) {
                 emails = emails.filter(mail => !mail.sentAt && !mail.removedAt)
             }
 
+
+            if (utilService.getLabels().includes(filterBy.status)) {
+                return emails = emails.filter(mail => mail.lables.includes(filterBy.status))
+            }
+
+
+
             if (filterBy.txt) {
                 const regex = new RegExp(filterBy.txt, 'i')
                 emails = emails.filter(mail => regex.test(mail.subject) || regex.test(mail.body))
@@ -150,6 +157,7 @@ function calculateUnreadMails() {
                 else if (mail.from === loggedinUser.email && mail.sentAt && !mail.removedAt && !mail.isRead) acc.sent++
                 else if (!mail.sentAt && !mail.removedAt && !mail.isRead) acc.draft++
                 else if (mail.removedAt && !mail.isRead) acc.trash++
+
                 return acc
             }, { inbox: 0, sent: 0, trash: 0, draft: 0 })
         })

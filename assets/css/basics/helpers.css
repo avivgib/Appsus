@@ -89,6 +89,26 @@
     content: '\f02b';
 }
 
+.fa.caret-right::before {
+    content: '\f0da';
+}
+
+.fa.family::before {
+    content: '\f03e';
+}
+
+.fa.spam::before {
+    content: '\f075';
+}
+
+.fa.work::before {
+    content: '\f1ad';
+}
+
+.fa.friends::before {
+    content: '\f118';
+}
+
 /* regular */
 
 .fare::before {
@@ -134,4 +154,20 @@
 
 .fare.folder-open::before {
     content: '\f07c';
+}
+
+.fare.family::before {
+    content: '\f03e';
+}
+
+.fare.spam::before {
+    content: '\f075';
+}
+
+.fare.work::before {
+    content: '\f1ad';
+}
+
+.fare.friends::before {
+    content: '\f118';
 }
