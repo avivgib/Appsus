@@ -22,6 +22,8 @@ export function MailIndex() {
     const defaultFilterByRef = useRef({ ...filterBy })
     const defaultSortByRef = useRef({ ...sortBy })
 
+    console.log(emails);
+
 
     useEffect(() => {
         loadEmails()
@@ -193,6 +195,15 @@ export function MailIndex() {
             .catch(error => console.error(error))
     }
 
+    function updateMailLabels(mailId, labels) {
+        const mail = emails.find(mail => mail.id === mailId)
+        const updatedMail = { ...mail, lables: labels }
+        console.log(updatedMail);
+        mailService.save(updatedMail)
+            .then(updatedMail => setEmails(prev => prev.map(mail => mail.id === updatedMail.id ? updatedMail : mail)))
+            .catch(error => console.log(error))
+    }
+
     return (
         <section className="mail-index main-layout">
 
@@ -215,6 +226,7 @@ export function MailIndex() {
                 onRemoveMail={onRemoveMail}
                 onToggleIsStared={onToggleIsStared}
                 searchParams={searchParams}
+                updateMailLabels={updateMailLabels}
             >
                 <MailFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
                 <MailSort sortBy={sortBy} onSetSortBy={onSetSortBy} filterBy={filterBy} />
