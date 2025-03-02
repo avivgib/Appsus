@@ -97,6 +97,10 @@
     content: '\f02b';
 }
 
+.fa.palette::before {
+    content: '\f53f';
+}
+
 /* regular */
 
 .fare::before {

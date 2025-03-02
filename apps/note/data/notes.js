@@ -4,6 +4,9 @@ export const notes = [
         createdAt: 1112222,
         type: 'NoteTxt',
         isPinned: true,
+        style: { 
+            backgroundColor: '#ffffff' 
+        },
         info: {
             title: 'Text note',
             content: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. ' +
@@ -18,6 +21,9 @@ export const notes = [
         createdAt: 1112223,
         type: 'NoteImg',
         isPinned: false,
+        style: { 
+            backgroundColor: '#ffffff' 
+        },
         info: {
             title: 'Bobi and Me',
             content: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. ' +
@@ -30,6 +36,9 @@ export const notes = [
         createdAt: 1112224,
         type: 'NoteTodos',
         isPinned: false,
+        style: { 
+            backgroundColor: '#ffffff' 
+        },
         info: {
             title: 'Get my stuff together',
             content: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. ' +
