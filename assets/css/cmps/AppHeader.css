@@ -1,8 +1,31 @@
 .app-header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 1em;
-    background: var(--bg1);
+    background: var(--bc-gl1);
+
+    font-size: 0.875rem;
+    font-family: Arial, sans-serif;
+    line-height: 1.42857142857;
+}
+
+.app-header .main-logo {
+    display: flex;
+    align-items: center;
+    text-transform: capitalize;
+    font-size: 1.57142857143em;
+    line-height: 2.18181818182em;
+}
+
+.app-header .main-logo .logo-img {
+    height: 40px;
+    width: 40px;
+    object-fit: contain;
+}
+
+.app-header .main-logo .page-name {
+    padding-inline-start: 0.36363636363em;
 }
 
 nav a {
