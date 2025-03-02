@@ -67,8 +67,40 @@
     padding-inline-start: 0.85714285714em;
 }
 
+.mail-folder li .fa.caret-right {
+    margin-inline-end: 0;
+}
+
+.mail-folder li .unread-emails:has(.arrow) {
+    transition: 200ms;
+    translate: 0% 0px;
+    rotate: 0deg;
+}
+
+.mail-folder li.active .unread-emails:has(.arrow) {
+    rotate: 90deg;
+    translate: 30% -7px;
+}
+
+
 .mail-folder li button {
     background-color: transparent;
     margin-inline-end: auto;
     font-weight: inherit;
+}
+
+.more-labels {
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: hidden;
+    transition: 200ms;
+}
+
+.more-labels>ul {
+    overflow: hidden;
+}
+
+.more-labels.open {
+    grid-template-rows: 1fr;
+    overflow: hidden;
 }

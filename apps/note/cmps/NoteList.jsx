@@ -33,7 +33,7 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onCopyNote, onSetNot
                     </div>
 
                     <section className="note-options" onClick={(e) => e.stopPropagation()}>
-                        <button className='fa trash-can' onClick={() => onRemoveNote(note.id)}></button>
+                        <button className='fare trash' onClick={() => onRemoveNote(note.id)}></button>
                         <button className='fare envelope' onClick={() => onNoteToMail(note)}></button>
                         <ColorPicker note={note} onSetNoteStyle={onSetNoteStyle} color={note.style.backgroundColor || '#ffffff'} />
                         <button className='fare copy' onClick={() => onCopyNote(note)}></button>

@@ -64,7 +64,7 @@
 }
 
 
-.emails-list .mail-preview.unread {
+.emails-list .mail-preview:has(.fare.envelope) {
     background-color: white;
 }
 
@@ -131,7 +131,7 @@
     text-align: end;
 }
 
-.emails-list .mail-preview>.mail-star .star-full {
+.emails-list .mail-preview>.mail-star:has(.fa.star) {
     color: var(--gl-font5);
 }
 

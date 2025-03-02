@@ -53,7 +53,7 @@
     content: '\f304';
 }
 
-.fa.envelope-open-text::before {
+.fa.inbox::before {
     content: '\f658';
 }
 
@@ -69,32 +69,44 @@
     content: '\f00c';
 }
 
-.fa.star-full::before {
+.fa.star::before {
     content: '\f005';
 }
 
-.fa.file::before {
-    content: '\f005';
-}
-
-.fa.envelope-open::before {
-    content: '\f2b6';
-}
-
-.fa.paper-plane::before {
+.fa.sent::before {
     content: '\f1d8';
 }
 
-.fa.trash-can::before {
+.fa.trash::before {
     content: '\f2ed';
 }
 
-.fa.file::before {
+.fa.draft::before {
     content: '\f15b';
 }
 
 .fa.tag::before {
     content: '\f02b';
+}
+
+.fa.caret-right::before {
+    content: '\f0da';
+}
+
+.fa.family::before {
+    content: '\f03e';
+}
+
+.fa.spam::before {
+    content: '\f075';
+}
+
+.fa.work::before {
+    content: '\f1ad';
+}
+
+.fa.friends::before {
+    content: '\f118';
 }
 
 .fa.palette::before {
@@ -123,15 +135,16 @@
     content: '\f0e0';
 }
 
-.fare.envelope-open::before {
+.fare.envelope-open::before,
+.fare.inbox::before {
     content: '\f2b6';
 }
 
-.fare.paper-plane::before {
+.fare.sent::before {
     content: '\f1d8';
 }
 
-.fare.trash-can::before {
+.fare.trash::before {
     content: '\f2ed';
 }
 
@@ -139,12 +152,28 @@
     content: '\f249';
 }
 
-.fare.file::before {
+.fare.draft::before {
     content: '\f15b';
 }
 
 .fare.folder-open::before {
     content: '\f07c';
+}
+
+.fare.family::before {
+    content: '\f03e';
+}
+
+.fare.spam::before {
+    content: '\f075';
+}
+
+.fare.work::before {
+    content: '\f1ad';
+}
+
+.fare.friends::before {
+    content: '\f118';
 }
 .fare.copy::before {
     content: '\f0c5';

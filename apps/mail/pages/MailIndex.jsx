@@ -11,18 +11,19 @@ const { useSearchParams } = ReactRouterDOM
 
 export function MailIndex() {
 
-    const [searchParams, setSearchParams] = useSearchParams()
     const [emails, setEmails] = useState(null)
-    const [cmpType, setCmpType] = useState('list')
-    const [openMail, setOpenMail] = useState({ details: null, edit: null })
-    const [unreadEmailsNum, setUnreadEmailsNum] = useState(null)
+    const [unreadEmailsCount, setUnreadEmailsCount] = useState(null)
+
     const [filterBy, setFilterBy] = useState({ ...mailService.getDefaultFilterBy() })
     const [sortBy, setSortBy] = useState({ ...mailService.getDefaultSortBy() })
 
+    const [openMail, setOpenMail] = useState({ details: null, edit: null })
+
+    const [cmpType, setCmpType] = useState('list')
+    const [searchParams, setSearchParams] = useSearchParams()
+
     const defaultFilterByRef = useRef({ ...filterBy })
     const defaultSortByRef = useRef({ ...sortBy })
-
-    console.log(emails);
 
 
     useEffect(() => {
@@ -33,63 +34,38 @@ export function MailIndex() {
         loadUnreadStats()
     }, [])
 
-
     useEffect(() => {
-        console.log(searchParams);
         if (searchParams.size > 0) {
             setCmpType('compose')
         }
     }, [searchParams])
 
-
-    function loadEmails() {
+    function loadEmails() { // LIST
         mailService.query(filterBy, sortBy)
             .then(emails => setEmails(emails))
             .catch(error => console.error(error))
     }
 
-    function loadUnreadStats() {
+    function loadUnreadStats() { // LIST
         mailService.calculateUnreadMails()
-            .then(res => setUnreadEmailsNum(res))
+            .then(res => setUnreadEmailsCount(res))
     }
 
-    function onOpenMail(mailId, type) {
-        const mail = emails.find(mail => mail.id === mailId)
-        if (!mail.isRead) onToggleIsRead(null, mailId)
-
-        setOpenMail(prev => ({ ...prev, [type]: mail }))
-    }
-
-    function onGoingBack(type) {
-        setOpenMail(prev => ({ ...prev, [type]: null }))
-    }
-
-    function onToggleIsRead(ev, mailId) {
-        if (ev) {
-            ev.stopPropagation()
-        }
-        const currMail = emails.find(mail => mail.id === mailId)
-
-        mailService.save({ ...currMail, isRead: !currMail.isRead })
-            .then(currMail => {
-                setEmails(prev => {
-                    return prev.map(mail => (mail.id === currMail.id) ? currMail : mail)
-                })
-
-                updateUnreadEmailsNum(currMail.isRead ? -1 : 1, false, currMail)
-            })
-            .catch(error => console.error(error))
-    }
-
-    function onSaveMail(mail) {
+    function onSaveMail(mail) {  // CREATE 
         mailService.save(mail)
-            .then(mail => {
-                if (mail.sentAt && filterBy.status === 'sent') {
-                    setEmails(prev => ([mail, ...prev]))
+            .then(currMail => {
+                if (currMail.sentAt && filterBy.status === 'sent') {
+                    setEmails(prev => ([currMail, ...prev]))
                 }
 
-                if (!mail.isRead) {
-                    updateUnreadEmailsNum(1, false, mail)
+                if (!currMail.sentAt && !filterBy.status !== 'sent' || currMail.id && !filterBy.status !== 'inbox') {
+                    setEmails(prev => {
+                        return prev.map(mail => (mail.id === currMail.id) ? currMail : mail)
+                    })
+                }
+
+                if (!currMail.isRead) {
+                    updateunreadEmailsCount(1, false, currMail)
                 }
 
                 onSetcmpType('list')
@@ -98,79 +74,135 @@ export function MailIndex() {
             .catch(error => console.log(error))
     }
 
-    function onSetStatusInFilterBy(statusType) {
-        setFilterBy(prev => ({ ...defaultFilterByRef.current, status: statusType }))
-        setSortBy(prev => ({ ...defaultSortByRef.current }))
+    function autoSave(mail) {
+        return mailService.save(mail)
+            .then(currMail => {
+
+
+                if (currMail.id && !filterBy.status !== 'sent' || currMail.id && !filterBy.status !== 'inbox') {
+                    setEmails(prev => {
+                        return prev.map(mail => (mail.id === currMail.id) ? currMail : mail)
+                    })
+                }
+
+                if (!currMail.isRead) {
+                    updateunreadEmailsCount(1, false, mail)
+                }
+
+
+                return currMail
+            })
+            .catch(error => console.log(error))
     }
 
-    function onSetcmpType(cmpType) {
-        setCmpType(cmpType)
-    }
-
-    function onRemoveMail(ev, mailId) {
+    function onRemoveMail(ev, mailId) { // DELETE
         ev.stopPropagation()
         const mail = emails.find(mail => mail.id === mailId)
+
         if (mail.removedAt) {
             mailService.remove(mailId)
                 .then(res => {
                     setEmails(prev => prev.filter(mail => mail.id !== mailId))
 
                     if (!mail.isRead) {
-                        updateUnreadEmailsNum(-1, false, mail)
+                        updateunreadEmailsCount(-1, false, mail)
                     }
 
                     return onSetcmpType('list')
                 })
                 .catch(error => console.error(error))
         } else {
-            const updateMail = { ...mail, removedAt: Date.now() }
-            mailService.save(updateMail)
-                .then(updateMail => {
-                    setEmails(prev => {
-                        return prev.map(mail => (mail.id === updateMail.id) ? updateMail : mail)
-                    })
-                    setEmails(prev => prev.filter(mail => mail.id !== mailId))
-
-                    if (!mail.isRead) {
-                        updateUnreadEmailsNum(-1, true, mail)
-                    }
-
-                    return onSetcmpType('list')
-                })
+            mailToTrash(mail)
         }
     }
 
-    function updateUnreadEmailsNum(dif, isToTrash, mail) {
-        const status = getMailStatus(mail)
-        console.log(mail);
-        console.log(unreadEmailsNum[status]);
 
+    function mailToTrash(mail) {
+        const updateMail = { ...mail, removedAt: Date.now() }
+
+        mailService.save(updateMail)
+            .then(updateMail => {
+                setEmails(prev => {
+                    return prev.map(mail => (mail.id === updateMail.id) ? updateMail : mail)
+                })
+                setEmails(prev => prev.filter(mail => mail.id !== updateMail.id))
+
+                if (!mail.isRead) {
+                    updateunreadEmailsCount(-1, true, mail)
+                }
+
+                return onSetcmpType('list')
+            })
+    }
+
+    function saveChanges(mail, isReadUpdate) {  /// UPDATE
+
+        if (isReadUpdate) {
+            updateunreadEmailsCount(mail.isRead ? -1 : 1, false, mail)
+        }
+
+        mailService.save(mail)
+            .then(currMail => {
+                setEmails(prev => {
+                    return prev.map(mail => (mail.id === currMail.id) ? currMail : mail)
+                })
+            })
+            .catch(error => console.error(error))
+    }
+
+    /// open and close mail fnc
+
+    function onOpenMail(mailId, type) { //READ
+        const mail = emails.find(mail => mail.id === mailId)
+
+        const mailUpdate = (mail.isRead) ? { ...mail } : { ...mail, isRead: true }
+
+        console.log(mailUpdate.isRead);
+
+        saveChanges(mailUpdate, mailUpdate.isRead) // UPDATE
+        setOpenMail(prev => ({ ...prev, [type]: mailUpdate }))
+    }
+
+    function onGoingBack(type) {
+        setOpenMail(prev => ({ ...prev, [type]: null }))
+    }
+
+    /// update the read unread mail stats
+
+    function updateunreadEmailsCount(dif, isToTrash, mail) {
+        const status = getMailStatus(mail)
+
+        // console.log(mail);
+        // console.log(unreadEmailsCount[status]);
+
+        if (unreadEmailsCount[status] + dif > emails.length ||
+            unreadEmailsCount[status] + dif < 0) return
 
         if (isToTrash) {
-            setUnreadEmailsNum(prev => ({
+            setUnreadEmailsCount(prev => ({
                 ...prev,
-                [status]: unreadEmailsNum[status] + dif,
-                trash: unreadEmailsNum.trash + 1
+                [status]: unreadEmailsCount[status] + dif,
+                trash: unreadEmailsCount.trash + 1
             }))
         } else {
-            setUnreadEmailsNum(prev => ({
+            setUnreadEmailsCount(prev => ({
                 ...prev,
-                [status]: unreadEmailsNum[status] + dif
+                [status]: unreadEmailsCount[status] + dif
             }))
         }
     }
 
     function getMailStatus(mail) {
-
         var status = ''
         const usrEmail = mailService.getUserMail()
         if (mail.from !== usrEmail && !mail.removedAt) status = 'inbox'
         else if (mail.from === usrEmail && mail.sentAt && !mail.removedAt) status = 'sent'
         else if (!mail.sentAt && !mail.removedAt) status = 'draft'
         else if (mail.removedAt) status = 'trash'
-
         return status
     }
+
+    /// filter & sort fnc
 
     function onSetFilterBy(filterBy) {
         setFilterBy(prev => ({ ...filterBy }))
@@ -180,29 +212,18 @@ export function MailIndex() {
         setSortBy(prev => ({ ...sortBy }))
     }
 
-    function onToggleIsStared(ev, mailId) {
-        if (ev) {
-            ev.stopPropagation()
-        }
-        const currMail = emails.find(mail => mail.id === mailId)
-
-        mailService.save({ ...currMail, isStared: !currMail.isStared })
-            .then(currMail => {
-                setEmails(prev => {
-                    return prev.map(mail => (mail.id === currMail.id) ? currMail : mail)
-                })
-            })
-            .catch(error => console.error(error))
+    // When a folder is selected, an action updates the status but resets the filter and sort
+    function onSetStatusInFilterBy(statusType) {
+        setFilterBy(prev => ({ ...defaultFilterByRef.current, status: statusType }))
+        setSortBy(prev => ({ ...defaultSortByRef.current }))
     }
 
-    function updateMailLabels(mailId, labels) {
-        const mail = emails.find(mail => mail.id === mailId)
-        const updatedMail = { ...mail, lables: labels }
-        console.log(updatedMail);
-        mailService.save(updatedMail)
-            .then(updatedMail => setEmails(prev => prev.map(mail => mail.id === updatedMail.id ? updatedMail : mail)))
-            .catch(error => console.log(error))
+    // set the DynamicCmp type
+
+    function onSetcmpType(cmpType) {
+        setCmpType(cmpType)
     }
+
 
     return (
         <section className="mail-index main-layout">
@@ -211,25 +232,29 @@ export function MailIndex() {
                 onSetcmpType={onSetcmpType}
                 onSetStatusInFilterBy={onSetStatusInFilterBy}
                 filterBy={filterBy}
-                unreadEmailsNum={unreadEmailsNum} />
+                unreadEmailsCount={unreadEmailsCount}
+            />
 
 
             {emails && <DynamicCmp
                 cmpType={cmpType}
                 onSetcmpType={onSetcmpType}
                 emails={emails}
+
                 onOpenMail={onOpenMail}
-                onToggleIsRead={onToggleIsRead}
                 openMail={openMail}
                 onGoingBack={onGoingBack}
+
                 onSaveMail={onSaveMail}
+                autoSave={autoSave}
                 onRemoveMail={onRemoveMail}
-                onToggleIsStared={onToggleIsStared}
+
                 searchParams={searchParams}
-                updateMailLabels={updateMailLabels}
+                saveChanges={saveChanges}
             >
                 <MailFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
                 <MailSort sortBy={sortBy} onSetSortBy={onSetSortBy} filterBy={filterBy} />
+
             </DynamicCmp>}
 
 
