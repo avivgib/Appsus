@@ -20,7 +20,6 @@ export function EditModal({ note, onClose, onSave }) {
 
         if (notesAreDifferent) {
             onSave(editedNote)
-            setTimeout(onClose, 1500)
         } else {
             onClose()
         }

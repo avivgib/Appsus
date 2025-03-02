@@ -21,6 +21,7 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     max-width: 500px;
     width: 90%;
+    transition: opacity 0.3s ease;
 }
 
 .modal-body {

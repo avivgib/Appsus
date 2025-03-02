@@ -77,8 +77,6 @@ export function NoteIndex() {
     }
 
     function onSaveEditedNote(updatedNote) {
-        console.log('Removing note with id:', noteId)
-        console.log('Current notes:', notes)
         noteService.save(updatedNote)
             .then(savedNote => {
                 setNotes(prevNotes => prevNotes.map(note => note.id === savedNote.id ? savedNote : note))
