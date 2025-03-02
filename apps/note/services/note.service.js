@@ -40,9 +40,12 @@ function getDefaultFilter() {
         createdAt: null,
         type: '',
         isPinned: false,
-        info: { 
+        style: { 
+            backgroundColor: '#ffffff' 
+        },
+        info: {
             title: '',
-            content: '' 
+            content: ''
         },
     }
 }
@@ -53,6 +56,9 @@ function getEmptyNote(id = '', createdAt = '', type = '', isPinned = false) {
         createdAt,
         type,
         isPinned,
+        style: { 
+            backgroundColor: '#ffffff' 
+        },
         info: {
             title: '',
             content: ''

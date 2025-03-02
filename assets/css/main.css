@@ -11,10 +11,12 @@
 @import './cmps/LabelPicker.css';
 
 /* NOTES */
+@import './apps/note/NoteComposer.css';
 @import './apps/note/NotePreview.css';
+@import './apps/note/EditModal.css';
 @import './apps/note/NoteList.css';
 @import './apps/note/NoteIndex.css';
-@import './apps/note/EditModal.css';
+@import './apps/note/ColorPicker.css';
 
 /* MAIL */
 @import './apps/mail/MailIndex.css';

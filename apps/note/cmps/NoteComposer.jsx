@@ -4,7 +4,7 @@ const { useState, useEffect, useRef } = React
 const { useSearchParams } = ReactRouterDOM
 
 
-export function InputSection({ onSaveNote }) {
+export function NoteComposer({ onSaveNote }) {
     const [newNote, setNewNote] = useState(noteService.getEmptyNote())
     const [isFullInputOpen, setIsFullInputOpen] = useState(false)
     console.log(newNote);
@@ -15,23 +15,22 @@ export function InputSection({ onSaveNote }) {
     const [searchParams, setSearchParams] = useSearchParams()
     console.log(searchParams);
 
-
     useEffect(() => {
         if (searchParams.size > 0) {
             setNoteToMail(searchParams)
         }
-    }, [searchParams])
 
+        setSearchParams({})
+    }, [searchParams])
 
     function setNoteToMail(searchParams) {
         console.log(searchParams);
         const subject = searchParams.get('subject') || ''
         const body = searchParams.get('body') || ''
         console.log(subject, body);
+        toggleAddInput()
         setNewNote(prev => ({ ...prev, info: { ...prev.info, title: subject, content: body } }))
     }
-
-
 
     useEffect(() => {
         function handleClickOutside({ target }) {
@@ -82,9 +81,12 @@ export function InputSection({ onSaveNote }) {
 
             {/* <div
                 contentEditable="true"
-                name="content"
-                onChange={handleChangeInfo}
+                className="content-input"
+                data-placeholder="Take a note..."
+                onInput={(e) => handleChangeInfo({ target: { name: "content", value: e.target.innerText } })}
+                suppressContentEditableWarning={true}
             ></div> */}
+
         </div>
     )
 }
