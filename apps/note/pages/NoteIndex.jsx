@@ -22,12 +22,15 @@ export function NoteIndex() {
     }
 
     function onSaveNote(newNote) {
-        const title = newNote.info.title.trim()
-        const content = newNote.info.content.trim()
+        if (!newNote.info.title.trim() && !newNote.info.content.trim()) return
 
-        if (!title && !content) return
-
-        const noteToSave = { ...newNote, createdAt: Date.now(), backgroundColor: '#ffffff'}
+        const noteToSave = {
+            ...newNote,
+            createdAt: Date.now(),
+            style: {
+                backgroundColor: '#ffffff', ...newNote.style
+            }
+        }
 
         noteService.save(noteToSave)
             .then(savedNote => {
@@ -50,6 +53,21 @@ export function NoteIndex() {
             .catch(() => showErrorMsg('Problem trashed'))
     }
 
+    function onCopyNote(note) {
+        const newNote = structuredClone(note)
+        newNote.id = ''
+        newNote.info.title = `Copy of ${note.info.title}`
+        newNote.createdAt = Date.now()
+        newNote.style = { backgroundColor: '#ffffff', ...note.style }
+
+        noteService.save(newNote)
+            .then(savedNote => {
+                setNotes(prevNotes => [savedNote, ...prevNotes])
+                showSuccessMsg('Note copied')
+            })
+            .catch(() => showErrorMsg('Error copying note'))
+    }
+
     function onEditNote(note) {
         setSelectedNote(note)
     }
@@ -59,6 +77,8 @@ export function NoteIndex() {
     }
 
     function onSaveEditedNote(updatedNote) {
+        console.log('Removing note with id:', noteId)
+        console.log('Current notes:', notes)
         noteService.save(updatedNote)
             .then(savedNote => {
                 setNotes(prevNotes => prevNotes.map(note => note.id === savedNote.id ? savedNote : note))
@@ -66,6 +86,15 @@ export function NoteIndex() {
                 onCloseModal()
             })
             .catch(() => showErrorMsg("Error updating note"))
+    }
+
+    function onSetNoteStyle(updatedNote) {
+        noteService.save(updatedNote)
+            .then(savedNote => {
+                setNotes(prev => prev.map(note => note.id === savedNote.id ? savedNote : note))
+                showSuccessMsg('Note updated')
+            })
+            .catch(() => showErrorMsg('Error updating note'))
     }
 
     return (
@@ -79,6 +108,8 @@ export function NoteIndex() {
                 notes={notes}
                 onRemoveNote={onRemoveNote}
                 onEditNote={onEditNote}
+                onCopyNote={onCopyNote}
+                onSetNoteStyle={onSetNoteStyle}
             />
 
             {selectedNote && (

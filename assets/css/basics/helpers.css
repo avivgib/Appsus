@@ -146,3 +146,6 @@
 .fare.folder-open::before {
     content: '\f07c';
 }
+.fare.copy::before {
+    content: '\f0c5';
+}

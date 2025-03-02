@@ -6,7 +6,7 @@ import { showSuccessMsg, showErrorMsg } from "../../../services/event-bus.servic
 const { useState, useEffect } = React
 const { useNavigate } = ReactRouterDOM
 
-export function NoteList({ notes, onRemoveNote, onEditNote }) {
+export function NoteList({ notes, onRemoveNote, onEditNote, onCopyNote, onSetNoteStyle }) {
     const [updatedNotes, setUpdatedNotes] = useState(notes)
     const navigate = useNavigate()
 
@@ -19,22 +19,9 @@ export function NoteList({ notes, onRemoveNote, onEditNote }) {
         navigate(`/mail?title=${title}&content=${content}`)
     }
 
-    function onSetNoteStyle(updatedNote) {
-        setUpdatedNotes(prevNotes =>
-            prevNotes.map(note => note.id === updatedNote.id ? updatedNote : note)
-        )
-        onUpdateNote(updatedNote)
-    }
-
-    function onUpdateNote(updatedNote) {
-        noteService.save(updatedNote)
-            .then(() => showSuccessMsg('Note updated'))
-            .catch(() => showErrorMsg('Error updating note'))
-    }
-
     return (
         <section className='note-list'>
-            {updatedNotes.map(note => (
+            {notes.map(note => (
                 <article
                     key={note.id}
                     className='note-card'
@@ -46,13 +33,10 @@ export function NoteList({ notes, onRemoveNote, onEditNote }) {
                     </div>
 
                     <section className="note-options" onClick={(e) => e.stopPropagation()}>
-                        <button className='fare trash-can' onClick={() => onRemoveNote(note.id)}></button>
+                        <button className='fa trash-can' onClick={() => onRemoveNote(note.id)}></button>
                         <button className='fare envelope' onClick={() => onNoteToMail(note)}></button>
-                        <ColorPicker
-                            note={note}
-                            onSetNoteStyle={onSetNoteStyle}
-                            color={note.style.backgroundColor}
-                        />
+                        <ColorPicker note={note} onSetNoteStyle={onSetNoteStyle} color={note.style.backgroundColor || '#ffffff'} />
+                        <button className='fare copy' onClick={() => onCopyNote(note)}></button>
                     </section>
                 </article>
             ))}

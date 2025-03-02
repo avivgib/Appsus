@@ -1,6 +1,8 @@
  /* note list */
 
  .note-list {
+    width: 100%;
+    column-count: auto;
     column-width: 240px;
     column-gap: 10px;
     margin-top: 20px;
@@ -8,7 +10,7 @@
 }
 
 .note-card {
-    display: inline-block;
+    /* display: inline-block; */
     width: 240px;
     break-inside: avoid;
     margin-bottom: 10px;
