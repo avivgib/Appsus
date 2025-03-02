@@ -128,7 +128,7 @@ function getEmptyMail() {
         createdAt: null,
         subject: '',
         body: '',
-        isRead: '',
+        isRead: true,
         sentAt: null,
         removedAt: null,
         isStared: null,

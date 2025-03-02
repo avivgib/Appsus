@@ -2,7 +2,7 @@
 import { mailService } from "../services/mail.service.js";
 const { useState, useEffect, useRef } = React
 
-export function MailCompose({ onSetcmpType, onSaveMail, openMail, onGoingBack, searchParams }) {
+export function MailCompose({ onSetcmpType, onSaveMail, autoSave, openMail, onGoingBack, searchParams }) {
 
     const [newMail, setNewMail] = useState({ ...mailService.getEmptyMail(), createdAt: Date.now() })
     console.log(newMail);
@@ -36,19 +36,26 @@ export function MailCompose({ onSetcmpType, onSaveMail, openMail, onGoingBack, s
         setNewMail(prev => ({ ...openMail }))
     }
 
-    // const autoSaveRef = useRef()
+    const autoSaveRef = useRef()
 
-    // useEffect(() => {
-    //     autoSaveRef.current = setInterval(onAutoSave, 5000)
-    //     return (() => {
-    //         clearInterval(autoSaveRef.current)
-    //     })
-    // }, [])
+    useEffect(() => {
+        autoSaveRef.current = setInterval(onAutoSave, 5000)
 
-    // function onAutoSave() {
-    //     console.log('auto save');
-    //     onSaveMail(newMail, true)
-    // }
+        return (() => {
+            clearInterval(autoSaveRef.current)
+        })
+    }, [newMail])
+
+    function onAutoSave() {
+        console.log('auto save');
+        autoSave(newMail)
+            .then(mail => {
+                console.log(newMail);
+                if (!newMail.id) {
+                    setNewMail(prev => ({ ...prev, id: mail.id }))
+                }
+            })
+    }
 
     function handleChange({ target }) {
         const { name, value } = target

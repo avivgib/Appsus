@@ -53,17 +53,44 @@ export function MailIndex() {
 
     function onSaveMail(mail) {  // CREATE 
         mailService.save(mail)
-            .then(mail => {
-                if (mail.sentAt && filterBy.status === 'sent') {
-                    setEmails(prev => ([mail, ...prev]))
+            .then(currMail => {
+                if (currMail.sentAt && filterBy.status === 'sent') {
+                    setEmails(prev => ([currMail, ...prev]))
                 }
 
-                if (!mail.isRead) {
-                    updateunreadEmailsCount(1, false, mail)
+                if (!currMail.sentAt && !filterBy.status !== 'sent' || currMail.id && !filterBy.status !== 'inbox') {
+                    setEmails(prev => {
+                        return prev.map(mail => (mail.id === currMail.id) ? currMail : mail)
+                    })
+                }
+
+                if (!currMail.isRead) {
+                    updateunreadEmailsCount(1, false, currMail)
                 }
 
                 onSetcmpType('list')
                 return
+            })
+            .catch(error => console.log(error))
+    }
+
+    function autoSave(mail) {
+        return mailService.save(mail)
+            .then(currMail => {
+
+
+                if (currMail.id && !filterBy.status !== 'sent' || currMail.id && !filterBy.status !== 'inbox') {
+                    setEmails(prev => {
+                        return prev.map(mail => (mail.id === currMail.id) ? currMail : mail)
+                    })
+                }
+
+                if (!currMail.isRead) {
+                    updateunreadEmailsCount(1, false, mail)
+                }
+
+
+                return currMail
             })
             .catch(error => console.log(error))
     }
@@ -88,6 +115,7 @@ export function MailIndex() {
             mailToTrash(mail)
         }
     }
+
 
     function mailToTrash(mail) {
         const updateMail = { ...mail, removedAt: Date.now() }
@@ -218,6 +246,7 @@ export function MailIndex() {
                 onGoingBack={onGoingBack}
 
                 onSaveMail={onSaveMail}
+                autoSave={autoSave}
                 onRemoveMail={onRemoveMail}
 
                 searchParams={searchParams}
