@@ -51,7 +51,7 @@ function query(filterBy, sortBy) {
 
 
             if (utilService.getLabels().includes(filterBy.status)) {
-                return emails = emails.filter(mail => mail.lables.includes(filterBy.status))
+                return emails = emails.filter(mail => mail.labels.includes(filterBy.status))
             }
 
 
@@ -112,7 +112,7 @@ function getDefaultFilterBy() {
         txt: '',
         isRead: '',
         isStared: null,
-        lables: [],
+        labels: [],
     }
 }
 
@@ -132,7 +132,7 @@ function getEmptyMail() {
         sentAt: null,
         removedAt: null,
         isStared: null,
-        lables: [],
+        labels: [],
         from: loggedinUser.email,
         to: ''
     }
@@ -174,7 +174,7 @@ function _getEmailsDemoData() {
             sentAt: Date.now(),
             removedAt: null,
             isStared: true,
-            lables: [],
+            labels: [],
             from: 'newsletter@example.com',
             to: 'user@appsus.com'
         },
@@ -187,7 +187,7 @@ function _getEmailsDemoData() {
             sentAt: 1738368000000,
             removedAt: null,
             isStared: null,
-            lables: [],
+            labels: [],
             from: 'hr@example.com',
             to: 'user@appsus.com'
         },
@@ -197,7 +197,7 @@ function _getEmailsDemoData() {
             subject: 'Invoice #12345',
             body: 'Please find attached the invoice for your recent purchase. Let us know if you have any questions.',
             isRead: false,
-            lables: [],
+            labels: [],
             sentAt: 1708172800000,
             removedAt: 1708172800000,
             isStared: true,
@@ -213,7 +213,7 @@ function _getEmailsDemoData() {
             sentAt: null,
             removedAt: null,
             isStared: null,
-            lables: [],
+            labels: [],
             from: 'user@appsus.com',
             to: 'manager@example.com'
         }, {
@@ -225,7 +225,7 @@ function _getEmailsDemoData() {
             sentAt: 1708086400000,
             removedAt: null,
             isStared: null,
-            lables: [],
+            labels: [],
             from: 'user@appsus.com',
             to: 'manager@example.com'
         }

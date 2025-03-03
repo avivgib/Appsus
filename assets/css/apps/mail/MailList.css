@@ -170,6 +170,10 @@
     min-width: 0;
 }
 
+.emails-list .mail-preview>.mail-content>.mail-label {
+    display: none;
+}
+
 .emails-list .mail-preview>.mail-content>span {
     text-overflow: ellipsis;
     overflow: hidden;
@@ -294,6 +298,18 @@
         flex-direction: row;
         color: var(--gl-font2);
     }
+
+    .emails-list .mail-preview>.mail-content>.mail-label {
+        display: flex;
+        overflow: visible;
+        font-size: 0.85714285714em;
+        margin-inline: 0.16666666666em;
+        background-color: var(--gl-shadow1);
+        padding: 0.16666666666em;
+        border-radius: 5px;
+        align-self: center;
+    }
+
 
     .emails-list .mail-preview>.mail-content>.mail-subject {
         overflow: visible;

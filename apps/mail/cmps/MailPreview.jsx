@@ -13,7 +13,7 @@ export function MailPreview({ currMail, saveChanges }) {
         ev.stopPropagation()
 
         var updateMail = {}
-        if (type === 'lables') {
+        if (type === 'labels') {
             updateMail = { ...mail, [type]: labels }
             setIsLabelPickerOpen(false)
         } else {
@@ -58,7 +58,8 @@ export function MailPreview({ currMail, saveChanges }) {
     }
 
 
-    const { createdAt, subject, body, isRead, sentAt, removedAt, isStared, lables, from, to } = mail
+    const { createdAt, subject, body, isRead, sentAt, removedAt, isStared, labels, from, to } = mail
+
 
     return (
         <React.Fragment>
@@ -77,7 +78,7 @@ export function MailPreview({ currMail, saveChanges }) {
                 <span className='fa tag' onClick={onTogglLabelPikcer}>
                     {isLabelPickerOpen &&
                         <LabelPicker
-                            lables={lables}
+                            labels={labels}
                             handleChanges={handleChanges}
                         />}
                 </span>
@@ -92,7 +93,14 @@ export function MailPreview({ currMail, saveChanges }) {
 
             <div className='icon'><img src="assets/images/use-icon.jpg" alt="use-icon" className='usr-icon' /></div>
             <div className='sent-from'>{renderMailSentFrom()}</div>
-            <div className='mail-content'><span className='mail-subject'>{subject}</span> <span>{body}</span> </div>
+            <div className='mail-content'>
+                {labels.length > 0
+                    ? labels.map(label => {
+                        return <span key={label} className='mail-label'>{label}</span>
+                    })
+                    : ''}
+                <span className='mail-subject'>{subject}</span>
+                <span>{body}</span> </div>
             <div className='gap'></div>
             <div className='sentat' >
                 {sentAt ? setSentAtDateDisplay(sentAt) : setSentAtDateDisplay(createdAt)}

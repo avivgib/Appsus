@@ -37,6 +37,10 @@
     }
 }
 
+.mail-folder>.add-email-btn>.add-email-content {
+    white-space: nowrap;
+}
+
 .mail-folder>.add-email-btn>.fa.pen {
     display: flex;
     justify-content: center;
