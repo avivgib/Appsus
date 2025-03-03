@@ -14,8 +14,8 @@ export function EditModal({ note, onClose, onSave }) {
         const textarea = textareaRef.current
         const modalContent = modalContentRef.current
         if (textarea && modalContent) {
-            textarea.style.height = "auto";
-            textarea.style.height = `${textarea.scrollHeight}px`;
+            textarea.style.height = "auto"
+            textarea.style.height = `${textarea.scrollHeight}px`
         }
 
         const titleInputHeight = modalContent.querySelector('input').offsetHeight
@@ -45,8 +45,8 @@ export function EditModal({ note, onClose, onSave }) {
     }
 
     function handleContentSize(event) {
-        event.target.style.height = "auto";
-        event.target.style.height = `${event.target.scrollHeight}px`;
+        event.target.style.height = "auto"
+        event.target.style.height = `${event.target.scrollHeight}px`
         adjustModalHeight()
     }
 

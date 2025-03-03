@@ -1,11 +1,11 @@
-import { utilService } from "../services/util.service.js";
+import { utilService } from "../services/util.service.js"
 
 
 const { useState, useEffect, useRef } = React
 
 export function LabelPicker({ lables, handleChanges }) {
     const [selectedLabels, setSelectedLabels] = useState([...lables])
-    console.log(selectedLabels);
+    console.log(selectedLabels)
 
     const labelPickerRef = useRef()
 
@@ -36,7 +36,7 @@ export function LabelPicker({ lables, handleChanges }) {
     }
 
     function onSaveLabels(ev) {
-        console.log(selectedLabels);
+        console.log(selectedLabels)
         handleChanges(ev, 'lables', selectedLabels)
     }
 

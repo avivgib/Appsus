@@ -1,17 +1,35 @@
 /* note list */
 .note-list {
     width: 100%;
-    column-count: auto;
-    column-width: 240px;
-    column-gap: 10px;
     margin-top: 20px;
     direction: ltr;
+}
+
+.pinned-section,
+.others-section {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-size: 0.875rem; /* 14px */
+    font-weight: 500;
+    color: #5f6368;
+    margin: 0 0 10px 10px;
+    text-align: left;
+}
+
+.pinned-section .notes-container,
+.others-section .notes-container {
+    column-count: auto;
+    column-width: 240px;
+    column-gap: 0;
 }
 
 .note-card {
     width: 240px;
     break-inside: avoid;
-    margin-bottom: 10px;
+    margin-bottom: 0;
     border: 1px solid #e0e0e0;
     padding: 16px;
     border-radius: 8px;
