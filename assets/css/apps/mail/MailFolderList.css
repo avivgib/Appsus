@@ -6,8 +6,10 @@
 
     line-height: 1.42857142857;
 
-    width: 187px;
+    width: 13.3571428571em;
     height: 631px;
+
+    transition: 200ms;
 }
 
 .mail-folder button {
@@ -17,6 +19,7 @@
 
 .mail-folder>.add-email-btn {
     display: flex;
+    justify-content: center;
     align-items: center;
 
     margin-block-start: 0.57142857142em;
@@ -34,14 +37,20 @@
     }
 }
 
-.mail-folder>.add-email-btn>span {
-    width: 1.71428571429em;
+.mail-folder>.add-email-btn>.fa.pen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 2.85714285714em;
+    font-size: 1.42857142857em;
+    aspect-ratio: 1/1;
 }
 
 .mail-folder li {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
 
     height: 2.28571428571em;
     padding: 0 1.85714285714em 0 0.85714285714em;
@@ -65,6 +74,8 @@
 .mail-folder li .fare {
     margin-inline-end: 1.28571428571em;
     padding-inline-start: 0.85714285714em;
+    align-self: center;
+    font-weight: normal;
 }
 
 .mail-folder li .fa.caret-right {
@@ -72,12 +83,12 @@
 }
 
 .mail-folder li .unread-emails:has(.arrow) {
-    transition: 200ms;
     translate: 0% 0px;
     rotate: 0deg;
+    transition: 200ms;
 }
 
-.mail-folder li.active .unread-emails:has(.arrow) {
+.mail-folder li.click .unread-emails:has(.arrow) {
     rotate: 90deg;
     translate: 30% -7px;
 }
@@ -103,4 +114,146 @@
 .more-labels.open {
     grid-template-rows: 1fr;
     overflow: hidden;
+}
+
+
+/* close folders */
+
+body:has(.folders-close) .mail-folder {
+    width: 5em;
+}
+
+body:has(.folders-close) .mail-folder>.add-email-btn {
+    padding: 0;
+}
+
+body:has(.folders-close) .mail-folder>.add-email-btn>.add-email-content {
+    display: none;
+    white-space: nowrap;
+}
+
+body:has(.folders-close) .mail-folder li {
+    justify-content: center;
+
+    position: relative;
+    border-radius: 50%;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+}
+
+body:has(.folders-close) .mail-folder li:before {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    border-radius: 50%;
+    content: '';
+    height: 2.14285714286em;
+    width: 2.14285714286em;
+}
+
+body:has(.folders-close) .mail-folder li:hover:before {
+    display: block;
+    background-color: var(--gl-shadow1);
+}
+
+body:has(.folders-close) .mail-folder li.active:before {
+    display: block;
+    background-color: var(--g-btn3);
+}
+
+
+body:has(.folders-close) .mail-folder li:has(.unread-num)::after {
+    content: '';
+    position: absolute;
+    top: 20%;
+    right: 25%;
+    translate: -25% -20%;
+
+    border-radius: 50%;
+
+    height: 0.57142857142em;
+    width: 0.57142857142em;
+    background-color: var(--gl-font7);
+}
+
+body:has(.folders-close) .mail-folder li .fa,
+body:has(.folders-close) .mail-folder li .fare {
+    padding-inline-start: 0;
+    margin: 0;
+    z-index: 1;
+}
+
+body:has(.folders-close) .mail-folder li button {
+    display: none;
+}
+
+body:has(.folders-close) .unread-emails {
+    position: relative;
+    display: none;
+}
+
+/* close folders: hover */
+
+body:has(.folders-close) .mail-folder:hover {
+    width: 13.3571428571em;
+}
+
+body:has(.folders-close) .mail-folder:hover>.add-email-btn {
+    padding-inline-end: 1.71428571429em;
+}
+
+body:has(.folders-close) .mail-folder:hover>.add-email-btn>.add-email-content {
+    display: flex;
+}
+
+body:has(.folders-close) .mail-folder:hover li {
+    justify-content: space-between;
+
+    position: relative;
+    margin-inline-end: 0.71428571428em;
+    padding: 0 1.85714285714em 0 0.85714285714em;
+    border-radius: 0 20px 20px 0;
+
+    &:hover {
+        background-color: var(--gl-shadow1);
+    }
+}
+
+body:has(.folders-close) .mail-folder:hover li.active {
+    background-color: var(--g-btn3);
+    color: var(--gl-font4);
+    font-weight: bold;
+}
+
+body:has(.folders-close) .mail-folder:hover li:hover:before,
+body:has(.folders-close) .mail-folder:hover li.active:before {
+    display: none;
+}
+
+body:has(.folders-close) .mail-folder:hover li .fa,
+body:has(.folders-close) .mail-folder:hover li .fare {
+    margin-inline-end: 1.28571428571em;
+    padding-inline-start: 0.85714285714em;
+    z-index: 0;
+    font-weight: normal;
+}
+
+
+body:has(.folders-close) .mail-folder:hover li:has(.unread-num)::after {
+    display: none;
+}
+
+body:has(.folders-close) .mail-folder:hover li button {
+    display: flex;
+}
+
+body:has(.folders-close) .mail-folder:hover .unread-emails {
+    display: flex;
+}
+
+body:has(.folders-close) .mail-folder:hover li .fa.caret-right {
+    margin-inline-end: 0;
 }

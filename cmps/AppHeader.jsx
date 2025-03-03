@@ -4,6 +4,7 @@ const { useState, useEffect, useRef } = React
 export function AppHeader() {
 
     const [currPage, setCurrPage] = useState(null)
+    const [isFoldersClose, setIsFoldersClose] = useState(false)
     const location = useLocation()
 
     useEffect(() => {
@@ -15,13 +16,22 @@ export function AppHeader() {
     function onSetCurrPage(pathname) {
         setCurrPage(pathname)
     }
+    function onClosefolders() {
+        setIsFoldersClose(prev => prev = !isFoldersClose)
+    }
 
     return <header className="app-header">
-        <Link to={currPage || '/'}>
-            <div className='main-logo'>
-                <DynamicLogo currPage={currPage} />
-            </div>
-        </Link>
+        <div className='flex align-center'>
+            <button
+                className={`bars-btn fa bars ${isFoldersClose ? 'folders-close' : ''}`}
+                onClick={onClosefolders}
+            ></button>
+            <Link to={currPage || '/'}>
+                <div className='main-logo'>
+                    <DynamicLogo currPage={currPage} />
+                </div>
+            </Link>
+        </div>
 
         <nav>
             <NavLink to="/">Home</NavLink>

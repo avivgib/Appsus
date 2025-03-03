@@ -113,6 +113,10 @@
     content: '\f53f';
 }
 
+.fa.bars::before {
+    content: '\f0c9';
+}
+
 /* regular */
 
 .fare::before {
@@ -175,6 +179,7 @@
 .fare.friends::before {
     content: '\f118';
 }
+
 .fare.copy::before {
     content: '\f0c5';
 }
