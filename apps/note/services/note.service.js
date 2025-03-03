@@ -15,9 +15,20 @@ export const noteService = {
     getEmptyNote
 }
 
-function query() {
+function query(filterBy) {
+    console.log('filterBy', filterBy);
+
     console.log('Fetching notes from storage...')
     return storageService.query(NOTES_KEY)
+        .then(notes => {
+
+            if (filterBy.txt) {
+                const regex = new RegExp(filterBy.txt, 'i')
+                notes = notes.filter(note => regex.test(note.info.title) || regex.test(note.info.content))
+            }
+
+            return notes
+        })
 }
 
 function get(noteId) {
@@ -36,8 +47,7 @@ function save(note) {
 
 function getDefaultFilter() {
     return {
-        title: '',
-        content: ''
+        txt: ''
     }
 }
 

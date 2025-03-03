@@ -1,9 +1,20 @@
+import { utilService } from "../../../services/util.service.js";
+
 const { useState, useEffect, useRef } = React
-export function SearchNotes({ filterBy, onSetFilter, onSearchFocus }) {
+
+export function NoteFilter({ filterBy, onSetFilter, onSearchFocus }) {
+
     const [isFocused, setIsFocused] = useState(false)
     const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
+    console.log(filterByToEdit);
 
-    function onSearchNotes({value}) {
+    const filterDebounce = useRef(utilService.debounce(onSetFilter, 1000))
+
+    useEffect(() => {
+        filterDebounce.current(filterByToEdit)
+    }, [filterByToEdit])
+
+    function onSearchNotes({ value }) {
         onSearchNotes(value)
     }
 
@@ -34,7 +45,8 @@ export function SearchNotes({ filterBy, onSetFilter, onSearchFocus }) {
                 <input
                     type="search"
                     placeholder="Search"
-                    // value={title}
+                    // value={filterBy.txt}
+                    name='txt'
                     onChange={handleChange}
                     onFocus={handleFocus}
                     onBlur={handleBlur}

@@ -3,7 +3,7 @@ import { noteService } from "../services/note.service.js"
 import { NoteList } from "../cmps/NoteList.jsx"
 import { NoteComposer } from "../cmps/NoteComposer.jsx"
 import { EditModal } from "../cmps/EditModal.jsx"
-import { SearchNotes } from "../cmps/SearchNotes.jsx"
+import { NoteFilter } from "../cmps/NoteFilter.jsx"
 
 const { useState, useEffect } = React
 
@@ -11,13 +11,14 @@ export function NoteIndex() {
     const [notes, setNotes] = useState([])
     const [selectedNote, setSelectedNote] = useState(null)
     const [isSearchFocused, setIsSearchFocused] = useState(false)
+    const [filterBy, setFilterBy] = useState({ ...noteService.getDefaultFilter() })
 
     useEffect(() => {
         loadNotes()
-    }, [])
+    }, [filterBy])
 
     function loadNotes() {
-        noteService.query()
+        noteService.query(filterBy)
             .then(setNotes)
             .catch(() => setNotes([]))
     }
@@ -107,11 +108,8 @@ export function NoteIndex() {
             .catch(() => showErrorMsg('Error updating note'))
     }
 
-    const [filterBy, setFilterBy] = 
-    useState(noteService.getDefaultFilter())
-
     function onSetFilter(filterBy) {
-        setFilterBy({ ...filterBy })
+        setFilterBy(prev => ({ ...filterBy }))
     }
 
     function onSearchFocus(isFocused) {
@@ -120,8 +118,8 @@ export function NoteIndex() {
 
     return (
         <section className="container">
-            <SearchNotes
-                filterBy={filterBy} 
+            <NoteFilter
+                filterBy={filterBy}
                 onSetFilter={onSetFilter}
                 onSearchFocus={onSearchFocus}
             />
