@@ -36,17 +36,8 @@ function save(note) {
 
 function getDefaultFilter() {
     return {
-        id: '',
-        createdAt: null,
-        type: '',
-        isPinned: false,
-        style: { 
-            backgroundColor: '#ffffff' 
-        },
-        info: {
-            title: '',
-            content: ''
-        },
+        title: '',
+        content: ''
     }
 }
 
@@ -56,8 +47,8 @@ function getEmptyNote(id = '', createdAt = '', type = '', isPinned = false) {
         createdAt,
         type,
         isPinned,
-        style: { 
-            backgroundColor: '#ffffff' 
+        style: {
+            backgroundColor: '#ffffff'
         },
         info: {
             title: '',
@@ -76,19 +67,19 @@ function _createNotes() {
     }
 }
 
-// function _filterNotes(notes, filterBy) {
-//     if (filterBy.type) {
-//         notes = notes.filter(note => note.createdAt > filterBy.createdAt)
-//     }
+function _filterNotes(notes, filterBy) {
+    if (filterBy.type) {
+        notes = notes.filter(note => note.createdAt > filterBy.createdAt)
+    }
 
-//     if (filterBy.title) {
-//         const regExp = new RegExp(filterBy.title, 'i')
-//         notes = notes.filter(note => regExp.test(note.info.title))
-//     }
+    if (filterBy.title) {
+        const regExp = new RegExp(filterBy.title, 'i')
+        notes = notes.filter(note => regExp.test(note.info.title))
+    }
 
-//     if (filterBy.createdAt) {
-//         notes = notes.filter(note => note.createdAt > filterBy.createdAt)
-//     }
+    if (filterBy.createdAt) {
+        notes = notes.filter(note => note.createdAt > filterBy.createdAt)
+    }
 
-//     return notes
-// }
+    return notes
+}
