@@ -1,11 +1,33 @@
-const { Link, NavLink, useLocation } = ReactRouterDOM
+import { MailFilter } from "../apps/mail/cmps/MailFilter.jsx"
+import { mailService } from "../apps/mail/services/mail.service.js"
+
+
+const { Link, NavLink, useLocation, useSearchParams } = ReactRouterDOM
 const { useState, useEffect, useRef } = React
 
 export function AppHeader() {
 
     const [currPage, setCurrPage] = useState(null)
     const [isFoldersClose, setIsFoldersClose] = useState(false)
+
+    const [searchParams, setSearchParams] = useSearchParams()
+    const [filterBy, setFilterBy] = useState({ ...mailService.getFilterFromSearchParams(searchParams) })
     const location = useLocation()
+
+    useEffect(() => {
+        setSearchParams(filterBy)
+    }, [filterBy])
+
+    useEffect(() => {
+        const isStatus = searchParams.get('status') ? true : false
+        if (isStatus) {
+            setFilterBy(prev => ({ ...mailService.getFilterFromSearchParams(searchParams) }))
+        }
+    }, [searchParams])
+
+    function onSetFilterBy(editFilterBy) {
+        setFilterBy(editFilterBy)
+    }
 
     useEffect(() => {
         if (location.pathname) {
@@ -32,6 +54,8 @@ export function AppHeader() {
                 </div>
             </Link>
         </div>
+
+        {currPage === '/mail' && <MailFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />}
 
         <nav>
             <NavLink to="/">Home</NavLink>

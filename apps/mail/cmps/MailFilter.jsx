@@ -49,8 +49,8 @@ export function MailFilter({ filterBy, onSetFilterBy }) {
 
         setEditFilterBy(prev => ({ ...prev, [name]: value }))
 
-        if (filterBy.status) {
-            setEditFilterBy(prev => ({ ...prev, status: '' }))
+        if (editFilterBy.status || editFilterBy.txt) {
+            setEditFilterBy(prev => ({ ...prev, status: null }))
         }
     }
 
@@ -63,17 +63,17 @@ export function MailFilter({ filterBy, onSetFilterBy }) {
         <section className='mail-filter flex align-center'>
             <div className='main-search flex align-center'>
                 <span className='fa magnifying-glass'></span>
-                <input type="search" name='txt' placeholder='Email search' value={txt} onChange={onSetEditFilterBy} />
+                <input type="search" name='txt' placeholder='Email search' value={txt || ''} onChange={onSetEditFilterBy} />
                 <span
                     className={`rest-btn fa x ${editFilterBy.txt ? 'show' : ''}`}
                     onClick={onRestTxt}></span>
             </div>
 
-            <select name="isRead" id='isRead' value={isRead} onChange={onSetEditFilterBy} >
+            {/* <select name="isRead" id='isRead' value={isRead} onChange={onSetEditFilterBy} >
                 <option value=''>All Mails</option>
                 <option value='true'>{ischecked === 'true' ? ' ✓ ' : ''}  Read</option>
                 <option value='false'>{ischecked === 'false' ? ' ✓ ' : ''} Unread</option>
-            </select>
+            </select> */}
         </section>
     )
 }

@@ -11,6 +11,7 @@ export const mailService = {
     getUserMail,
     calculateUnreadMails,
     getDefaultSortBy,
+    getFilterFromSearchParams,
 }
 
 const EMAILS_KEY = 'emails_key'
@@ -114,6 +115,23 @@ function getDefaultFilterBy() {
         isStared: null,
         labels: [],
     }
+}
+
+function getFilterFromSearchParams(searchParams) {
+
+    const defaultFilterBy = { ...getDefaultFilterBy() }
+    const filterBy = {}
+
+    for (const field in defaultFilterBy) {
+        if (field === 'status') {
+            filterBy[field] = searchParams.get(`${field}`) || ''
+        } else {
+            filterBy[field] = searchParams.get(`${field}`) || defaultFilterBy[field]
+        }
+
+    }
+
+    return filterBy
 }
 
 function getDefaultSortBy() {

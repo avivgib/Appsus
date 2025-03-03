@@ -14,19 +14,26 @@ export function MailIndex() {
     const [emails, setEmails] = useState(null)
     const [unreadEmailsCount, setUnreadEmailsCount] = useState(null)
 
-    const [filterBy, setFilterBy] = useState({ ...mailService.getDefaultFilterBy() })
+    const [searchParams, setSearchParams] = useSearchParams()
+    const [filterBy, setFilterBy] = useState({ ...mailService.getFilterFromSearchParams(searchParams) })
+
     const [sortBy, setSortBy] = useState({ ...mailService.getDefaultSortBy() })
 
     const [openMail, setOpenMail] = useState({ details: null, edit: null })
 
     const [cmpType, setCmpType] = useState('list')
-    const [searchParams, setSearchParams] = useSearchParams()
 
-    const defaultFilterByRef = useRef({ ...filterBy })
+    const defaultFilterByRef = useRef({ ...mailService.getDefaultFilterBy() })
     const defaultSortByRef = useRef({ ...sortBy })
 
+    console.log(filterBy);
 
     useEffect(() => {
+        setFilterBy(prev => ({ ...mailService.getFilterFromSearchParams(searchParams) }))
+    }, [searchParams])
+
+    useEffect(() => {
+        setSearchParams(filterBy)
         loadEmails()
     }, [filterBy, sortBy])
 
@@ -34,11 +41,6 @@ export function MailIndex() {
         loadUnreadStats()
     }, [])
 
-    useEffect(() => {
-        if (searchParams.size > 0) {
-            setCmpType('compose')
-        }
-    }, [searchParams])
 
     function loadEmails() { // LIST
         mailService.query(filterBy, sortBy)
@@ -252,7 +254,7 @@ export function MailIndex() {
                 searchParams={searchParams}
                 saveChanges={saveChanges}
             >
-                <MailFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
+                {/* <MailFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} /> */}
                 <MailSort sortBy={sortBy} onSetSortBy={onSetSortBy} filterBy={filterBy} />
 
             </DynamicCmp>}
