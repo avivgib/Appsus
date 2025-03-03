@@ -4,14 +4,18 @@ import { NoteList } from "../cmps/NoteList.jsx"
 import { NoteComposer } from "../cmps/NoteComposer.jsx"
 import { EditModal } from "../cmps/EditModal.jsx"
 import { NoteFilter } from "../cmps/NoteFilter.jsx"
+import { NoteSearchCategory } from "../cmps/NoteSearchCategory.jsx"
 
-const { useState, useEffect } = React
+
+const { useState, useEffect, useRef } = React
 
 export function NoteIndex() {
     const [notes, setNotes] = useState([])
     const [selectedNote, setSelectedNote] = useState(null)
     const [isSearchFocused, setIsSearchFocused] = useState(false)
     const [filterBy, setFilterBy] = useState({ ...noteService.getDefaultFilter() })
+
+    const DefaultFilterRef = useRef({ ...filterBy })
 
     useEffect(() => {
         loadNotes()
@@ -114,6 +118,10 @@ export function NoteIndex() {
 
     function onSearchFocus(isFocused) {
         setIsSearchFocused(isFocused)
+
+        if (isFocused) {
+            setFilterBy(prev => ({ ...DefaultFilterRef }))
+        }
     }
 
     return (
@@ -129,14 +137,14 @@ export function NoteIndex() {
             />
 
             <h1>Notes app</h1>
-            <NoteList
+            {!isSearchFocused && <NoteList
                 notes={notes}
                 onRemoveNote={onRemoveNote}
                 onEditNote={onEditNote}
                 onCopyNote={onCopyNote}
                 onTogglePin={onTogglePin}
                 onSetBackgroundColor={onSetBackgroundColor}
-            />
+            />}
 
             {selectedNote && (
                 <EditModal
@@ -145,6 +153,13 @@ export function NoteIndex() {
                     onSave={onSaveEditedNote}
                 />
             )}
+
+            {isSearchFocused && <NoteSearchCategory
+                filterBy={filterBy}
+                onSetFilter={onSetFilter}
+                onSearchFocus={onSearchFocus}
+            />}
+
         </section>
     )
 }

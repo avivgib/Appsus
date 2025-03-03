@@ -12,7 +12,8 @@ export const noteService = {
     remove,
     save,
     getDefaultFilter,
-    getEmptyNote
+    getEmptyNote,
+    getNotesColorStats
 }
 
 function query(filterBy) {
@@ -25,6 +26,10 @@ function query(filterBy) {
             if (filterBy.txt) {
                 const regex = new RegExp(filterBy.txt, 'i')
                 notes = notes.filter(note => regex.test(note.info.title) || regex.test(note.info.content))
+            }
+
+            if (filterBy.color) {
+                notes = notes.filter(note => filterBy.color === note.style.backgroundColor)
             }
 
             return notes
@@ -47,7 +52,8 @@ function save(note) {
 
 function getDefaultFilter() {
     return {
-        txt: ''
+        txt: '',
+        color: ''
     }
 }
 
@@ -65,6 +71,18 @@ function getEmptyNote(id = '', createdAt = '', type = '', isPinned = false) {
             content: ''
         }
     }
+}
+
+function getNotesColorStats() {
+    return storageService.query(NOTES_KEY)
+        .then(notes => {
+            console.log('notes:', notes)
+            return notes.reduce((acc, note) => {
+                const { backgroundColor } = note.style
+                if (!acc.includes(backgroundColor)) acc.push(backgroundColor)
+                return acc
+            }, [])
+        })
 }
 
 // ~~~~~~~~~~~~~~~~ LOCAL FUNCTIONS ~~~~~~~~~~~~~~~~~~~ //

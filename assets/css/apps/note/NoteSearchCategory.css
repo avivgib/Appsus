@@ -1,0 +1,51 @@
+.colors-category {
+    width: 100%;
+    background-color: #fff;
+    font-weight: 500;
+    margin: 16px 80px;
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    /* overflow: hidden; */
+    margin-block-end: 2em;
+    animation: fadeInUp 400ms;
+}
+
+.colors-category>.colors-picker {
+    display: flex;
+    justify-content: start;
+    height: 68px;
+}
+
+.colors-category>.colors-picker input {
+    display: none;
+}
+
+.colors-category>.colors-picker .color-pick {
+    position: relative;
+    display: block;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    margin: 14px;
+    border: 1px solid rgba(0, 0, 0, 0.42);
+    cursor: pointer;
+
+    &:hover {
+        border: 1px solid rgba(0, 0, 0, 0.8);
+    }
+}
+
+.colors-category>.colors-picker .color-pick::after {
+    position: absolute;
+    bottom: -100%;
+    content: attr(data-color);
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px;
+    color: white;
+    border-radius: 2px;
+    opacity: 0;
+    transition: 200ms;
+}
+
+.colors-category>.colors-picker .color-pick:hover::after {
+    opacity: 1;
+}

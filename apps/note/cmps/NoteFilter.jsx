@@ -48,8 +48,8 @@ export function NoteFilter({ filterBy, onSetFilter, onSearchFocus }) {
                     // value={filterBy.txt}
                     name='txt'
                     onChange={handleChange}
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
+                    onClick={handleFocus}
+                // onBlur={handleBlur}
                 />
             </section>
 
