@@ -113,6 +113,14 @@
     content: '\f53f';
 }
 
+.fa.thumbtack::before {
+    content: '\f08d';
+}
+
+.fa.thumbtack-slash::before {
+    content: '\e68f';
+}
+
 /* regular */
 
 .fare::before {

@@ -1,26 +1,28 @@
 import { NotePreview } from "./NotePreview.jsx"
 import { ColorPicker } from "./ColorPicker.jsx"
-import { noteService } from "../services/note.service.js"
-import { showSuccessMsg, showErrorMsg } from "../../../services/event-bus.service.js"
 
-const { useState, useEffect } = React
+// const { useState, useEffect } = React
 const { useNavigate } = ReactRouterDOM
 
-export function NoteList({ notes, onRemoveNote, onEditNote, onCopyNote, onSetNoteStyle }) {
-    const [updatedNotes, setUpdatedNotes] = useState(notes)
+export function NoteList({ notes, onRemoveNote, onEditNote, onCopyNote, onTogglePin, onSetBackgroundColor }) {
     const navigate = useNavigate()
-
-    useEffect(() => {
-        setUpdatedNotes(notes)
-    }, [notes])
 
     function onNoteToMail(note) {
         const { title, content } = note.info
         navigate(`/mail?title=${title}&content=${content}`)
     }
 
+    function onPinNote(noteId) {
+        const noteToUpdate = notes.find(note => note.id === noteId)
+        if (noteToUpdate) {
+            const updatedNote = { ...noteToUpdate, isPinned: !noteToUpdate.isPinned }
+            onTogglePin(updatedNote)
+        }
+    }
+
     return (
         <section className='note-list'>
+
             {notes.map(note => (
                 <article
                     key={note.id}
@@ -33,9 +35,17 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onCopyNote, onSetNot
                     </div>
 
                     <section className="note-options" onClick={(e) => e.stopPropagation()}>
+                        <button
+                            className={`pin-btn fa ${note.isPinned ? 'thumbtack' : 'thumbtack-slash'}`}
+                            onClick={() => onPinNote(note.id)}
+                        ></button>
                         <button className='fare trash' onClick={() => onRemoveNote(note.id)}></button>
                         <button className='fare envelope' onClick={() => onNoteToMail(note)}></button>
-                        <ColorPicker note={note} onSetNoteStyle={onSetNoteStyle} color={note.style.backgroundColor || '#ffffff'} />
+                        <ColorPicker
+                            note={note}
+                            onSetBackgroundColor={onSetBackgroundColor}
+                            color={note.style.backgroundColor || '#ffffff'}
+                        />
                         <button className='fare copy' onClick={() => onCopyNote(note)}></button>
                     </section>
                 </article>
@@ -43,3 +53,5 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onCopyNote, onSetNot
         </section>
     )
 }
+
+

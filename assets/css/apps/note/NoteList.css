@@ -1,6 +1,5 @@
- /* note list */
-
- .note-list {
+/* note list */
+.note-list {
     width: 100%;
     column-count: auto;
     column-width: 240px;
@@ -10,29 +9,56 @@
 }
 
 .note-card {
-    /* display: inline-block; */
     width: 240px;
     break-inside: avoid;
     margin-bottom: 10px;
-    
     border: 1px solid #e0e0e0;
     padding: 16px;
     border-radius: 8px;
     background: #ffffff;
     transition: all 0.3s ease-in-out;
-
     word-wrap: break-word;
     overflow-wrap: break-word;
+    position: relative;
 }
 
 .note-details {
+    padding-right: 25px;
+}
 
+.note-details h3 {
+    margin: 0;
+    padding-right: 25px;
+    display: inline-block;
 }
 
 .note-options {
-
+    display: flex;
+    gap: 10px;
+    padding-top: 10px;
 }
 
+.pin-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.note-options button:not(.pin-btn) {
+    width: 20px;
+    height: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
 
  /* .psado {
      position: relative;
