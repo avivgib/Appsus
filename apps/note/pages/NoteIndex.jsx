@@ -14,7 +14,6 @@ export function NoteIndex() {
         loadNotes()
     }, [])
 
-
     function loadNotes() {
         noteService.query()
             .then(setNotes)
@@ -36,10 +35,8 @@ export function NoteIndex() {
             .then(savedNote => {
                 setNotes(prevNotes => [savedNote, ...prevNotes])
                 showSuccessMsg(noteToSave.id ? 'Note Edited' : 'Note Added')
-                // setNewNote(noteService.getEmptyNote())
             })
             .catch(() => {
-                // setNewNote(noteToSave)
                 showErrorMsg(noteToSave.id ? 'Problem editing note' : 'Problem adding note')
             })
     }
@@ -76,21 +73,34 @@ export function NoteIndex() {
         setSelectedNote(null)
     }
 
+    function updateNotes(prevNotes, savedNote) {
+        return prevNotes.map(note => note.id === savedNote.id ? savedNote : note)
+    }
+
     function onSaveEditedNote(updatedNote) {
         noteService.save(updatedNote)
             .then(savedNote => {
-                setNotes(prevNotes => prevNotes.map(note => note.id === savedNote.id ? savedNote : note))
+                setNotes(prev => updateNotes(prev, savedNote))
                 showSuccessMsg("Note updated")
                 onCloseModal()
             })
             .catch(() => showErrorMsg("Error updating note"))
     }
 
-    function onSetNoteStyle(updatedNote) {
+    function onTogglePin(updatedNote) {
         noteService.save(updatedNote)
             .then(savedNote => {
-                setNotes(prev => prev.map(note => note.id === savedNote.id ? savedNote : note))
-                showSuccessMsg('Note updated')
+                setNotes(prev => updateNotes(prev, savedNote))
+                showSuccessMsg(savedNote.isPinned ? 'Note pinned' : 'Note unpinned')
+            })
+            .catch(() => showErrorMsg('Error updating note'))
+    }
+
+    function onSetBackgroundColor(updatedNote) {
+        noteService.save(updatedNote)
+            .then(savedNote => {
+                setNotes(prev => updateNotes(prev, savedNote))
+                showSuccessMsg('Note color updated')
             })
             .catch(() => showErrorMsg('Error updating note'))
     }
@@ -107,7 +117,8 @@ export function NoteIndex() {
                 onRemoveNote={onRemoveNote}
                 onEditNote={onEditNote}
                 onCopyNote={onCopyNote}
-                onSetNoteStyle={onSetNoteStyle}
+                onTogglePin={onTogglePin}
+                onSetBackgroundColor={onSetBackgroundColor}
             />
 
             {selectedNote && (

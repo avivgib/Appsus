@@ -47,4 +47,4 @@ export const notes = [
                 'Various versions have evolved over the years, sometimes by accident, sometimes on purpose.'
         }
     }
-];
+]

@@ -1,6 +1,6 @@
 // note service
-import { storageService } from "../../../services/async-storage.service.js";
-import { utilService } from "../../../services/util.service.js";
+import { storageService } from "../../../services/async-storage.service.js"
+import { utilService } from "../../../services/util.service.js"
 import { notes as defaultNotes } from "../data/notes.js"
 
 const NOTES_KEY = 'notes'
@@ -16,7 +16,7 @@ export const noteService = {
 }
 
 function query() {
-    console.log('Fetching notes from storage...');
+    console.log('Fetching notes from storage...')
     return storageService.query(NOTES_KEY)
 }
 

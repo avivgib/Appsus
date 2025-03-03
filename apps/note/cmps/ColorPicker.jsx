@@ -1,6 +1,6 @@
 const { useState, useRef, useEffect } = React
 
-export function ColorPicker({ note, onSetNoteStyle, color }) {
+export function ColorPicker({ note, onSetBackgroundColor, color }) {
     const [isOpen, setIsOpen] = useState(false)
     const [selectedColor, setSelectedColor] = useState(color)
     const pickerRef = useRef(null)
@@ -28,7 +28,7 @@ export function ColorPicker({ note, onSetNoteStyle, color }) {
     function onSetColor(newColor) {
         if (newColor === selectedColor) return
         setSelectedColor(newColor)
-        onSetNoteStyle({ ...note, style: { ...note.style, backgroundColor: newColor } })
+        onSetBackgroundColor({ ...note, style: { ...note.style, backgroundColor: newColor } })
     }
 
     return (

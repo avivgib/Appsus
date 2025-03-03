@@ -117,6 +117,14 @@
     content: '\f0c9';
 }
 
+.fa.thumbtack::before {
+    content: '\f08d';
+}
+
+.fa.thumbtack-slash::before {
+    content: '\e68f';
+}
+
 /* regular */
 
 .fare::before {
