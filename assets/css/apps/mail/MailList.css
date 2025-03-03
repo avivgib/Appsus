@@ -192,7 +192,7 @@
     text-wrap: nowrap;
 }
 
-@media (min-width: 700px) {
+@media (min-width: 850px) {
 
     .emails-list .mail-preview {
         display: flex;

@@ -1,0 +1,28 @@
+.mail-side-nav {
+    grid-area: 1/3;
+
+    font-size: 0.875rem;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.42857142857;
+
+    padding: 0.92857142857em;
+}
+
+.mail-side-nav>a {
+    padding: 0.35714285714em;
+    text-align: center;
+    object-fit: contain;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    transition: 200ms;
+
+    &:hover {
+        background-color: var(--gl-shadow1);
+    }
+}
+
+.mail-side-nav>a>img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}

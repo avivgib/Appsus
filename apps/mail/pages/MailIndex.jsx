@@ -3,6 +3,7 @@ import { MailDetails } from '../cmps/MailDetails.jsx';
 import { MailFilter } from '../cmps/MailFilter.jsx';
 import { MailFolderList } from '../cmps/MailFolderList.jsx';
 import { MailList } from '../cmps/MailList.jsx';
+import { MailSideNav } from '../cmps/MailSideNav.jsx';
 import { MailSort } from '../cmps/MailSort.jsx';
 import { mailService } from '../services/mail.service.js'
 
@@ -226,7 +227,7 @@ export function MailIndex() {
 
 
     return (
-        <section className="mail-index main-layout">
+        <section className="mail-index main-gmail-layout">
 
             <MailFolderList
                 onSetcmpType={onSetcmpType}
@@ -259,6 +260,8 @@ export function MailIndex() {
 
 
             {!emails && <img className='loader' src="assets/images/loading.gif" alt="load" />}
+
+            <MailSideNav />
 
         </section>
     )

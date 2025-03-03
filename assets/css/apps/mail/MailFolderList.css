@@ -6,8 +6,7 @@
 
     line-height: 1.42857142857;
 
-    width: 13.3571428571em;
-    height: 631px;
+    width: 18.2857142857em;
 
     transition: 200ms;
 }
@@ -61,7 +60,7 @@
     border-radius: 0 20px 20px 0;
     cursor: pointer;
 
-    margin-inline-end: 0.71428571428em;
+    margin-inline-end: 1.14285714286em;
 
     &:hover {
         background-color: var(--gl-shadow1);
@@ -202,7 +201,7 @@ body:has(.folders-close) .unread-emails {
 /* close folders: hover */
 
 body:has(.folders-close) .mail-folder:hover {
-    width: 13.3571428571em;
+    width: 18.2857142857em;
 }
 
 body:has(.folders-close) .mail-folder:hover>.add-email-btn {
@@ -217,7 +216,7 @@ body:has(.folders-close) .mail-folder:hover li {
     justify-content: space-between;
 
     position: relative;
-    margin-inline-end: 0.71428571428em;
+    margin-inline-end: 1.14285714286em;
     padding: 0 1.85714285714em 0 0.85714285714em;
     border-radius: 0 20px 20px 0;
 

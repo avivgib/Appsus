@@ -1,10 +1,11 @@
 .mail-index {
     background-color: var(--bc-gl1);
+    height: calc(100vh - var(--header-height))
 }
 
-.main-layout {
+.main-gmail-layout {
     display: grid;
-    grid-template-columns: max-content 1fr;
+    grid-template-columns: max-content 1fr max-content;
 }
 
 .loader {
