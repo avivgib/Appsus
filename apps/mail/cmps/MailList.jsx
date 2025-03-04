@@ -33,7 +33,7 @@ export function MailList({ emails, saveChanges, onSetcmpType, onOpenMail, onRemo
         const updateMail = { ...mail, [type]: labels }
 
         setIsLabelPickerOpen(null)
-        saveChanges(updateMail)
+        saveChanges(updateMail, false, 'labels')
     }
 
     return (

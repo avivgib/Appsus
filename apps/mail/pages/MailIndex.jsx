@@ -1,3 +1,4 @@
+import { showErrorMsg, showSuccessMsg } from '../../../services/event-bus.service.js';
 import { MailCompose } from '../cmps/MailCompose.jsx';
 import { MailDetails } from '../cmps/MailDetails.jsx';
 import { MailFilter } from '../cmps/MailFilter.jsx';
@@ -6,6 +7,7 @@ import { MailList } from '../cmps/MailList.jsx';
 import { MailSideNav } from '../cmps/MailSideNav.jsx';
 import { MailSort } from '../cmps/MailSort.jsx';
 import { mailService } from '../services/mail.service.js'
+
 
 const { useState, useEffect, useRef } = React
 const { useSearchParams } = ReactRouterDOM
@@ -70,10 +72,19 @@ export function MailIndex() {
                     updateunreadEmailsCount(1, false, currMail)
                 }
 
+                if (currMail.sentAt) {
+                    showSuccessMsg('The mail has been sent')
+                } else {
+                    showSuccessMsg('The mail has been saved')
+                }
+
                 onSetcmpType('list')
                 return
             })
-            .catch(error => console.log(error))
+            .catch(error => {
+                console.log(error)
+                showErrorMsg(`couldn't sent mail`)
+            })
     }
 
     function autoSave(mail) {
@@ -110,9 +121,13 @@ export function MailIndex() {
                         updateunreadEmailsCount(-1, false, mail)
                     }
 
+                    showSuccessMsg('The mail has been removed')
                     return onSetcmpType('list')
                 })
-                .catch(error => console.error(error))
+                .catch(error => {
+                    console.error(error)
+                    showErrorMsg(`couldn't remove mail`)
+                })
         } else {
             mailToTrash(mail)
         }
@@ -133,12 +148,18 @@ export function MailIndex() {
                     updateunreadEmailsCount(-1, true, mail)
                 }
 
+                showSuccessMsg('The mail has been moved to the trash')
+
                 return onSetcmpType('list')
+            })
+            .catch(error => {
+                console.error(error)
+                showErrorMsg(`couldn't remove mail`)
             })
     }
 
-    function saveChanges(mail, isReadUpdate) {  /// UPDATE
-        console.log(mail);
+    function saveChanges(mail, isReadUpdate, type) {  /// UPDATE
+        console.log(type);
 
         if (isReadUpdate) {
             updateunreadEmailsCount(mail.isRead ? -1 : 1, false, mail)
@@ -149,8 +170,24 @@ export function MailIndex() {
                 setEmails(prev => {
                     return prev.map(mail => (mail.id === currMail.id) ? currMail : mail)
                 })
+
+                if (type === 'labels') {
+                    showSuccessMsg('The mail labels have been saved')
+                } else if (type === 'isRead') {
+                    const msg = (mail.isRead) ? 'The email has been marked as read' : 'The email has been marked as unread'
+                    showSuccessMsg(msg)
+                }
+
             })
-            .catch(error => console.error(error))
+            .catch(error => {
+                console.error(error)
+
+                if (type === 'labels') {
+                    showSuccessMsg(`couldn't save labels`)
+                } else if (type === 'isRead') {
+                    showSuccessMsg(`couldn't save read stats`)
+                }
+            })
     }
 
     /// open and close mail fnc

@@ -13,7 +13,7 @@ export function MailPreview({ currMail, saveChanges, children, mailLabels }) {
         setMail(updateMail)
 
         const isReadUpdate = (type === 'isRead') ? true : false
-        saveChanges(updateMail, isReadUpdate)
+        saveChanges(updateMail, isReadUpdate,type)
     }
 
 
