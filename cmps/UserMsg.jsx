@@ -21,11 +21,15 @@ export function UserMsg() {
   function closeMsg() {
     setMsg(null)
   }
-  const className = (msg)? `${msg.type} open` : '' 
+  const className = (msg) ? `${msg.type} open` : ''
   return (
     <section className={`user-msg ${className}`}>
-      <button onClick={closeMsg}>x</button>
-      {msg && msg.txt}
+      <button onClick={closeMsg}>
+        <span className='fa x'></span>
+      </button>
+      <span className='msg'>
+        {msg && msg.txt}
+      </span>
     </section>
   )
 }
