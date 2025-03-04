@@ -13,6 +13,18 @@ export function AppHeader() {
         }
     }, [location.pathname])
 
+    useEffect(() => {
+        if (location.state) {
+            if (Object.hasOwn(location.state, 'isFoldersClose')) {
+                const { isFoldersClose } = location.state
+                setIsFoldersClose(isFoldersClose)
+            }
+        }
+    }, [location.state])
+
+
+
+
     function onSetCurrPage(pathname) {
         setCurrPage(pathname)
     }

@@ -13,7 +13,6 @@ const { useSearchParams } = ReactRouterDOM
 export function MailIndex() {
 
     const [emails, setEmails] = useState(null)
-    console.log(emails);
 
     const [unreadEmailsCount, setUnreadEmailsCount] = useState(null)
 

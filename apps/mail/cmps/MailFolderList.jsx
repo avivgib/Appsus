@@ -1,8 +1,15 @@
 import { utilService } from "../../../services/util.service.js";
 
 const { useState, useEffect, useRef } = React
+const { useNavigate } = ReactRouterDOM
 
 export function MailFolderList({ onSetcmpType, onSetStatusInFilterBy, filterBy, unreadEmailsCount }) {
+
+    const navigate = useNavigate();
+
+    function onCloseNav() {
+        navigate('/mail', { state: { isFoldersClose: false } })
+    }
 
     const [isMoreLabelsOpen, setIsMoreLabelsOpen] = useState(null)
 
@@ -16,7 +23,7 @@ export function MailFolderList({ onSetcmpType, onSetStatusInFilterBy, filterBy, 
 
             <div className='folder-title'>Gmail</div>
 
-            <button className='add-email-btn' onClick={() => onSetcmpType('compose')}>
+            <button className='add-email-btn' onClick={() => { onSetcmpType('compose'); onCloseNav() }}>
                 <span className='fa pen'></span>
                 <span className='add-email-content'>new email</span>
             </button>
@@ -25,7 +32,7 @@ export function MailFolderList({ onSetcmpType, onSetStatusInFilterBy, filterBy, 
 
                 {['inbox', 'star', 'sent', 'trash', 'draft'].map(label => {
                     return <li key={label} className={status === label ? 'active' : ''}
-                        onClick={() => { onSetStatusInFilterBy(label); onSetcmpType('list') }}
+                        onClick={() => { onSetStatusInFilterBy(label); onSetcmpType('list'); onCloseNav() }}
                         style={unreadEmailsCount && unreadEmailsCount[label] > 0 ? { fontWeight: 'bold' } : {}}>
                         <span className={status === label ? `fa ${label}` : ` fare ${label}`}></span>
                         <button>{label}</button>
@@ -51,7 +58,7 @@ export function MailFolderList({ onSetcmpType, onSetStatusInFilterBy, filterBy, 
                     <ul className='clean-list'>
                         {utilService.getLabels().map(label => {
                             return <li key={label} className={status === label ? 'active' : ''}
-                                onClick={() => { onSetStatusInFilterBy(label); onSetcmpType('list') }}
+                                onClick={() => { onSetStatusInFilterBy(label); onSetcmpType('list'); onCloseNav() }}
                                 style={unreadEmailsCount && unreadEmailsCount[label] > 0 ? { fontWeight: 'bold' } : {}}>
                                 <span className={status === label ? `fa ${label}` : ` fare ${label}`}></span>
                                 <button>{label}</button>
