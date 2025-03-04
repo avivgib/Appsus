@@ -39,6 +39,9 @@ export function AppHeader() {
             <NavLink to="/mail">Mail</NavLink>
             <NavLink to="/note">Note</NavLink>
         </nav>
+
+        <div className="black-wrapper" onClick={onClosefolders}></div>
+
     </header>
 }
 

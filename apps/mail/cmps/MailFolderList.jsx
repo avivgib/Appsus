@@ -13,6 +13,9 @@ export function MailFolderList({ onSetcmpType, onSetStatusInFilterBy, filterBy, 
     const { status } = filterBy
     return (
         <section className='mail-folder '>
+
+            <div className='folder-title'>Gmail</div>
+
             <button className='add-email-btn' onClick={() => onSetcmpType('compose')}>
                 <span className='fa pen'></span>
                 <span className='add-email-content'>new email</span>

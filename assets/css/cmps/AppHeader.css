@@ -62,3 +62,23 @@ nav a.active {
     font-weight: bold;
     text-decoration: overline;
 }
+
+
+
+@media (max-width: 850px) {
+    .black-wrapper {
+        position: fixed;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.273);
+        z-index: 3;
+        cursor: pointer;
+        pointer-events: none;
+        opacity: 0;
+        transition: 200ms;
+    }
+
+    body:has(.folders-close) .black-wrapper {
+        opacity: 1;
+        pointer-events: auto;
+    }
+}

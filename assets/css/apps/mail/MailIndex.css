@@ -5,10 +5,18 @@
 
 .main-gmail-layout {
     display: grid;
-    grid-template-columns: max-content 1fr max-content;
+    grid-template-columns: 1fr;
 }
 
 .loader {
     height: 80vh;
     border-radius: 16px;
+}
+
+
+@media (min-width: 850px) {
+    .main-gmail-layout {
+        display: grid;
+        grid-template-columns: max-content 1fr max-content;
+    }
 }

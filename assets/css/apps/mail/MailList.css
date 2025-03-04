@@ -1,5 +1,4 @@
 .emails-wrapper {
-    grid-area: 1/2;
 
     width: 100%;
     font-size: 0.875rem;
@@ -193,6 +192,11 @@
 }
 
 @media (min-width: 850px) {
+
+    .emails-wrapper {
+        grid-area: 1/2;
+    }
+
 
     .emails-list .mail-preview {
         display: flex;
