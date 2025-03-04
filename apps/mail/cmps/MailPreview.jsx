@@ -1,35 +1,21 @@
-import { LabelPicker } from "../../../cmps/LabelPicker.jsx"
 import { mailService } from "../services/mail.service.js"
 
 const { useState, useEffect, useRef } = React
 
-export function MailPreview({ currMail, saveChanges }) {
+export function MailPreview({ currMail, saveChanges, children, mailLabels }) {
 
     const [mail, setMail] = useState({ ...currMail })
-    const [isLabelPickerOpen, setIsLabelPickerOpen] = useState(false)
 
-
-    function handleChanges(ev, type, labels) {
+    function handleChanges(ev, type) {
         ev.stopPropagation()
 
-        var updateMail = {}
-        if (type === 'labels') {
-            updateMail = { ...mail, [type]: labels }
-            setIsLabelPickerOpen(false)
-        } else {
-            updateMail = { ...mail, [type]: !mail[type] }
-        }
-
+        const updateMail = { ...mail, [type]: !mail[type], labels: mailLabels }
         setMail(updateMail)
 
         const isReadUpdate = (type === 'isRead') ? true : false
         saveChanges(updateMail, isReadUpdate)
     }
 
-    function onTogglLabelPikcer(ev) {
-        ev.stopPropagation()
-        setIsLabelPickerOpen(!isLabelPickerOpen)
-    }
 
     function setSentAtDateDisplay(sentAt) {
         const dateNow = Date.now()
@@ -58,7 +44,7 @@ export function MailPreview({ currMail, saveChanges }) {
     }
 
 
-    const { createdAt, subject, body, isRead, sentAt, removedAt, isStared, labels, from, to } = mail
+    const { createdAt, subject, body, isRead, sentAt, removedAt, isStared, from, to } = mail
 
 
     return (
@@ -74,15 +60,7 @@ export function MailPreview({ currMail, saveChanges }) {
                 </span>
             </div>
 
-            <div className={`mail-remove ${isLabelPickerOpen ? 'open' : ''} `}>
-                <span className='fa tag' onClick={onTogglLabelPikcer}>
-                    {isLabelPickerOpen &&
-                        <LabelPicker
-                            labels={labels}
-                            handleChanges={handleChanges}
-                        />}
-                </span>
-            </div>
+            {children}
 
             <div className='mail-star'>
                 <span
@@ -94,8 +72,8 @@ export function MailPreview({ currMail, saveChanges }) {
             <div className='icon'><img src="assets/images/use-icon.jpg" alt="use-icon" className='usr-icon' /></div>
             <div className='sent-from'>{renderMailSentFrom()}</div>
             <div className='mail-content'>
-                {labels.length > 0
-                    ? labels.map(label => {
+                {mailLabels.length > 0
+                    ? mailLabels.map(label => {
                         return <span key={label} className='mail-label'>{label}</span>
                     })
                     : ''}

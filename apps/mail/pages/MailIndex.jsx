@@ -13,6 +13,8 @@ const { useSearchParams } = ReactRouterDOM
 export function MailIndex() {
 
     const [emails, setEmails] = useState(null)
+    console.log(emails);
+
     const [unreadEmailsCount, setUnreadEmailsCount] = useState(null)
 
     const [filterBy, setFilterBy] = useState({ ...mailService.getDefaultFilterBy() })
@@ -137,6 +139,7 @@ export function MailIndex() {
     }
 
     function saveChanges(mail, isReadUpdate) {  /// UPDATE
+        console.log(mail);
 
         if (isReadUpdate) {
             updateunreadEmailsCount(mail.isRead ? -1 : 1, false, mail)

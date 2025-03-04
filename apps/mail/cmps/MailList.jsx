@@ -1,8 +1,12 @@
+import { LabelPicker } from "../../../cmps/LabelPicker.jsx"
 import { MailPreview } from "./MailPreview.jsx"
+
+const { useState, useEffect, useRef } = React
 
 const { useNavigate } = ReactRouterDOM
 
 export function MailList({ emails, saveChanges, onSetcmpType, onOpenMail, onRemoveMail, children }) {
+    const [isLabelPickerOpen, setIsLabelPickerOpen] = useState(null)
 
     const navigate = useNavigate()
 
@@ -10,6 +14,26 @@ export function MailList({ emails, saveChanges, onSetcmpType, onOpenMail, onRemo
         ev.stopPropagation()
         const { subject, body } = mail
         navigate(`/note?subject=${subject}&body=${body}`)
+    }
+
+    function onTogglLabelPikcer(ev, mailId) {
+        ev.stopPropagation()
+
+        if (isLabelPickerOpen === mailId) {
+            setIsLabelPickerOpen(null)
+        } else {
+            setIsLabelPickerOpen(mailId)
+        }
+    }
+
+    function handleChanges(ev, type, labels) {
+        ev.stopPropagation()
+
+        const mail = emails.find(mail => mail.id === isLabelPickerOpen)
+        const updateMail = { ...mail, [type]: labels }
+
+        setIsLabelPickerOpen(null)
+        saveChanges(updateMail)
     }
 
     return (
@@ -30,7 +54,18 @@ export function MailList({ emails, saveChanges, onSetcmpType, onOpenMail, onRemo
                                     mail.sentAt ? onSetcmpType('details') : onSetcmpType('compose')
                                 }}>
 
-                                <MailPreview currMail={mail} saveChanges={saveChanges} />
+                                <MailPreview currMail={mail} saveChanges={saveChanges} mailLabels={mail.labels} >
+                                    <div className={`mail-labels ${isLabelPickerOpen ? 'open' : ''} `}>
+                                        <span className='fa tag'
+                                            onClick={(event) => { onTogglLabelPikcer(event, mail.id) }}>
+                                            {isLabelPickerOpen === mail.id &&
+                                                <LabelPicker
+                                                    labels={mail.labels}
+                                                    handleChanges={handleChanges}
+                                                />}
+                                        </span>
+                                    </div>
+                                </MailPreview>
 
                                 <div className='more-list-btns'>
 

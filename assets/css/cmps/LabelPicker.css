@@ -3,13 +3,11 @@
     color: black;
     font-weight: normal;
     padding-block: 0.35714285714em;
-    grid-template-columns: 20px 1fr;
     align-items: start;
     background-color: white;
     z-index: 5;
     border-radius: 0.35714285714em;
     box-shadow: 3px 3px 10px var(--gl-shadow2);
-
     text-align: center;
 }
 
