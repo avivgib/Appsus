@@ -3,7 +3,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 1em;
-    background: var(--bc-gl1);
+    background-color: white;
 
     font-size: 0.875rem;
     font-family: Arial, sans-serif;
@@ -24,14 +24,23 @@
     object-fit: contain;
 }
 
+.app-header .main-logo:has(.gmail) .logo-img {
+    height: 35px;
+    width: 35px;
+    object-fit: contain;
+}
+
+.app-header .main-logo:has(.gmail) {
+    display: none;
+}
+
+
 .app-header .main-logo .page-name {
     padding-inline-start: 0.36363636363em;
 }
 
 .bars-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: none;
 
     background-color: transparent;
 
@@ -48,6 +57,13 @@
         background-color: var(--gl-shadow1);
     }
 }
+
+.app-header:has(.gmail) .bars-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 
 .bars-btn.folders-close {
     background-color: var(--gl-shadow1);
@@ -80,5 +96,16 @@ nav a.active {
     body:has(.folders-close) .black-wrapper {
         opacity: 1;
         pointer-events: auto;
+    }
+}
+
+@media (min-width: 850px) {
+
+    .app-header:has(.gmail) {
+        background-color: var(--bc-gl1);
+    }
+
+    .app-header .main-logo:has(.gmail) {
+        display: flex;
     }
 }

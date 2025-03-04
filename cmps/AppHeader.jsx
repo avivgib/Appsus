@@ -54,7 +54,7 @@ function DynamicLogo({ currPage }) {
             return <div className='page-name'>About</div>
         case '/mail':
             return <React.Fragment>
-                <img src="assets/images/gmail-logo.png" className='logo-img' alt="gmail" />
+                <img src="assets/images/gmail-logo.png" className='logo-img gmail' alt="gmail" />
                 <div className='page-name'>Gmail</div>
             </React.Fragment>
         case '/note':
