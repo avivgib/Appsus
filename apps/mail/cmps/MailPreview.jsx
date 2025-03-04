@@ -77,8 +77,12 @@ export function MailPreview({ currMail, saveChanges, children, mailLabels }) {
                         return <span key={label} className='mail-label'>{label}</span>
                     })
                     : ''}
-                <span className='mail-subject'>{subject}</span>
-                <span>{body}</span> </div>
+                <div className='content-line'>
+                    <span className='mail-subject'>{subject}</span>
+                    <span>{body}</span>
+                </div>
+
+            </div>
             <div className='gap'></div>
             <div className='sentat' >
                 {sentAt ? setSentAtDateDisplay(sentAt) : setSentAtDateDisplay(createdAt)}
