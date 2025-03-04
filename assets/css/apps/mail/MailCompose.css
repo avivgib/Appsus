@@ -1,4 +1,7 @@
 .new-email {
+    display: flex;
+    flex-direction: column;
+
     font-size: 0.875rem;
     font-family: Roboto, Helvetica, Arial, sans-serif;
 
@@ -8,8 +11,7 @@
     border-radius: 16px;
 
     background-color: var(--white);
-
-    height: max-content;
+    height: 95%;
 }
 
 .new-email>.new-email-titel {
@@ -24,7 +26,9 @@
 }
 
 .new-message-form {
+    display: flex;
     padding-inline: 1.14285714286em;
+    flex-grow: 1;
 }
 
 .new-message-form>input,
@@ -37,6 +41,7 @@
 }
 
 .new-message-form>textarea {
+    flex-grow: 1;
     resize: none;
 }
 

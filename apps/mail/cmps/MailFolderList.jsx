@@ -38,7 +38,7 @@ export function MailFolderList({ onSetcmpType, onSetStatusInFilterBy, filterBy, 
 
                 <li
                     className={isMoreLabelsOpen ? 'click' : ''}
-                    onClick={() => { toggleMoreLabels(); onSetcmpType('list') }}
+                    onClick={() => { toggleMoreLabels() }}
                 >
                     <span className={isMoreLabelsOpen ? `fa tag` : ` fa tag`}></span>
                     <button>labels</button>
