@@ -3,19 +3,26 @@ import { noteService } from "../services/note.service.js"
 import { NoteList } from "../cmps/NoteList.jsx"
 import { NoteComposer } from "../cmps/NoteComposer.jsx"
 import { EditModal } from "../cmps/EditModal.jsx"
+import { NoteFilter } from "../cmps/NoteFilter.jsx"
+import { NoteSearchCategory } from "../cmps/NoteSearchCategory.jsx"
 
-const { useState, useEffect } = React
+
+const { useState, useEffect, useRef } = React
 
 export function NoteIndex() {
     const [notes, setNotes] = useState([])
     const [selectedNote, setSelectedNote] = useState(null)
+    const [isSearchFocused, setIsSearchFocused] = useState(false)
+    const [filterBy, setFilterBy] = useState({ ...noteService.getDefaultFilter() })
+
+    const DefaultFilterRef = useRef({ ...filterBy })
 
     useEffect(() => {
         loadNotes()
-    }, [])
+    }, [filterBy])
 
     function loadNotes() {
-        noteService.query()
+        noteService.query(filterBy)
             .then(setNotes)
             .catch(() => setNotes([]))
     }
@@ -105,21 +112,49 @@ export function NoteIndex() {
             .catch(() => showErrorMsg('Error updating note'))
     }
 
+    function onSetFilter(filterBy) {
+        setFilterBy(prev => ({ ...filterBy }))
+    }
+
+    function onSearchFocus(isFocused) {
+        setIsSearchFocused(isFocused)
+
+        if (isFocused) {
+            setFilterBy(prev => ({ ...DefaultFilterRef }))
+        }
+    }
+
+    function onUpdateLabels(updatedNote) {
+        noteService.save(updatedNote)
+            .then(savedNote => {
+                setNotes(prev => updateNotes(prev, savedNote))
+                showSuccessMsg('Note color updated')
+            })
+            .catch(() => showErrorMsg('Error updating note'))
+    }
+
     return (
         <section className="container">
+            <NoteFilter
+                filterBy={filterBy}
+                onSetFilter={onSetFilter}
+                onSearchFocus={onSearchFocus}
+            />
+
             <NoteComposer
                 onSaveNote={onSaveNote}
             />
 
             <h1>Notes app</h1>
-            <NoteList
+            {!isSearchFocused && <NoteList
                 notes={notes}
                 onRemoveNote={onRemoveNote}
                 onEditNote={onEditNote}
                 onCopyNote={onCopyNote}
                 onTogglePin={onTogglePin}
                 onSetBackgroundColor={onSetBackgroundColor}
-            />
+                onUpdateLabels={onUpdateLabels}
+            />}
 
             {selectedNote && (
                 <EditModal
@@ -128,6 +163,13 @@ export function NoteIndex() {
                     onSave={onSaveEditedNote}
                 />
             )}
+
+            {isSearchFocused && <NoteSearchCategory
+                filterBy={filterBy}
+                onSetFilter={onSetFilter}
+                onSearchFocus={onSearchFocus}
+            />}
+
         </section>
     )
 }

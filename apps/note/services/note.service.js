@@ -12,12 +12,28 @@ export const noteService = {
     remove,
     save,
     getDefaultFilter,
-    getEmptyNote
+    getEmptyNote,
+    getNotesColorStats
 }
 
-function query() {
+function query(filterBy) {
+    console.log('filterBy', filterBy);
+
     console.log('Fetching notes from storage...')
     return storageService.query(NOTES_KEY)
+        .then(notes => {
+
+            if (filterBy.txt) {
+                const regex = new RegExp(filterBy.txt, 'i')
+                notes = notes.filter(note => regex.test(note.info.title) || regex.test(note.info.content))
+            }
+
+            if (filterBy.color) {
+                notes = notes.filter(note => filterBy.color === note.style.backgroundColor)
+            }
+
+            return notes
+        })
 }
 
 function get(noteId) {
@@ -36,17 +52,8 @@ function save(note) {
 
 function getDefaultFilter() {
     return {
-        id: '',
-        createdAt: null,
-        type: '',
-        isPinned: false,
-        style: { 
-            backgroundColor: '#ffffff' 
-        },
-        info: {
-            title: '',
-            content: ''
-        },
+        txt: '',
+        color: ''
     }
 }
 
@@ -56,14 +63,27 @@ function getEmptyNote(id = '', createdAt = '', type = '', isPinned = false) {
         createdAt,
         type,
         isPinned,
-        style: { 
-            backgroundColor: '#ffffff' 
+        style: {
+            backgroundColor: '#ffffff'
         },
         info: {
             title: '',
             content: ''
-        }
+        },
+        labels: [],
     }
+}
+
+function getNotesColorStats() {
+    return storageService.query(NOTES_KEY)
+        .then(notes => {
+            console.log('notes:', notes)
+            return notes.reduce((acc, note) => {
+                const { backgroundColor } = note.style
+                if (!acc.includes(backgroundColor)) acc.push(backgroundColor)
+                return acc
+            }, [])
+        })
 }
 
 // ~~~~~~~~~~~~~~~~ LOCAL FUNCTIONS ~~~~~~~~~~~~~~~~~~~ //
@@ -76,19 +96,19 @@ function _createNotes() {
     }
 }
 
-// function _filterNotes(notes, filterBy) {
-//     if (filterBy.type) {
-//         notes = notes.filter(note => note.createdAt > filterBy.createdAt)
-//     }
+function _filterNotes(notes, filterBy) {
+    if (filterBy.type) {
+        notes = notes.filter(note => note.createdAt > filterBy.createdAt)
+    }
 
-//     if (filterBy.title) {
-//         const regExp = new RegExp(filterBy.title, 'i')
-//         notes = notes.filter(note => regExp.test(note.info.title))
-//     }
+    if (filterBy.title) {
+        const regExp = new RegExp(filterBy.title, 'i')
+        notes = notes.filter(note => regExp.test(note.info.title))
+    }
 
-//     if (filterBy.createdAt) {
-//         notes = notes.filter(note => note.createdAt > filterBy.createdAt)
-//     }
+    if (filterBy.createdAt) {
+        notes = notes.filter(note => note.createdAt > filterBy.createdAt)
+    }
 
-//     return notes
-// }
+    return notes
+}
