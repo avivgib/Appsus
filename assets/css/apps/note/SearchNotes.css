@@ -39,6 +39,10 @@
     border-radius: 8px
 }
 
+.search-notes input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+}
+
 .search-options {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

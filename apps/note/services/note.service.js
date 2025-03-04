@@ -69,7 +69,8 @@ function getEmptyNote(id = '', createdAt = '', type = '', isPinned = false) {
         info: {
             title: '',
             content: ''
-        }
+        },
+        labels: [],
     }
 }
 

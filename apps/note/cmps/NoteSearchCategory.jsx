@@ -47,9 +47,10 @@ export function NoteSearchCategory({ filterBy, onSetFilter, onSearchFocus }) {
     if (!colors) return
     return (
         <section>
-            <div className='colors-category '>
+            {colors.length > 1 && <div className='colors-category '>
+
                 <div>colors</div>
-                {colors.length > 1 && <div className='colors-picker'>
+                <div className='colors-picker'>
                     {colors.map(color => {
                         return <div key={color}>
                             <input type="radio" id={color} name="color" value={color} onClick={handleChange} />
@@ -63,42 +64,8 @@ export function NoteSearchCategory({ filterBy, onSetFilter, onSearchFocus }) {
                         </div>
 
                     })}
-                </div>}
-
-                <div>colors</div>
-                {colors.length > 1 && <div className='colors-picker'>
-                    {colors.map(color => {
-                        return <div key={color}>
-                            <input type="radio" id={color} name="color" value={color} onClick={handleChange} />
-                            <label
-                                htmlFor={color}
-                                className='color-pick'
-                                data-color={getColorName(color)}
-                                style={{ backgroundColor: color }}
-                            >
-                            </label>
-                        </div>
-
-                    })}
-                </div>}
-
-                <div>colors</div>
-                {colors.length > 1 && <div className='colors-picker'>
-                    {colors.map(color => {
-                        return <div key={color}>
-                            <input type="radio" id={color} name="color" value={color} onClick={handleChange} />
-                            <label
-                                htmlFor={color}
-                                className='color-pick'
-                                data-color={getColorName(color)}
-                                style={{ backgroundColor: color }}
-                            >
-                            </label>
-                        </div>
-
-                    })}
-                </div>}
-            </div>
+                </div>
+            </div>}
         </section >
     )
 }

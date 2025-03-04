@@ -1,14 +1,20 @@
 import { NotePreview } from "./NotePreview.jsx"
 import { ColorPicker } from "./ColorPicker.jsx"
+import { LabelPicker } from "../../../cmps/LabelPicker.jsx"
 
 // const { useState, useEffect } = React
+const { useState, useEffect, useRef } = React
 const { useNavigate } = ReactRouterDOM
 
-export function NoteList({ notes, onRemoveNote, onEditNote, onCopyNote, onTogglePin, onSetBackgroundColor }) {
+export function NoteList({ notes, onRemoveNote, onEditNote, onCopyNote, onTogglePin, onSetBackgroundColor, onUpdateLabels }) {
     const navigate = useNavigate()
     const pinnedNotes = notes.filter(note => note.isPinned)
     const otherNotes = notes.filter(note => !note.isPinned)
-    
+
+    const [pickNote, setPickNote] = useState(null)
+    const [labels, setLabels] = useState(null)
+
+
     function onNoteToMail(note) {
         const { title, content } = note.info
         navigate(`/mail?title=${title}&content=${content}`)
@@ -20,6 +26,20 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onCopyNote, onToggle
             const updatedNote = { ...noteToUpdate, isPinned: !noteToUpdate.isPinned }
             onTogglePin(updatedNote)
         }
+    }
+
+    function onTogglLabelPikcer(noteId) {
+        setPickNote(noteId)
+        const note = notes.find(note => note.id === noteId)
+        setLabels(note.labels)
+    }
+
+    function onSetNoteLabels(ev, type, labels) {
+        const noteToUpdate = notes.find(note => note.id === pickNote)
+        noteToUpdate.labels = labels
+        console.log(noteToUpdate);
+        onUpdateLabels(noteToUpdate)
+        setPickNote(null)
     }
 
     return (
@@ -52,6 +72,13 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onCopyNote, onToggle
                                         color={note.style.backgroundColor || '#ffffff'}
                                     />
                                     <button className='fare copy' onClick={() => onCopyNote(note)}></button>
+                                    <button className='fa tag' onClick={() => onTogglLabelPikcer(note.id)} >
+                                        {pickNote === note.id &&
+                                            <LabelPicker
+                                                labels={labels}
+                                                handleChanges={onSetNoteLabels}
+                                            />}
+                                    </button>
                                 </section>
                             </article>
                         ))}
@@ -63,7 +90,7 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onCopyNote, onToggle
                 <div className="others-section">
 
                     {pinnedNotes.length > 0 && <h2 className="section-title">Others</h2>}
-                    
+
                     <div className="notes-container">
                         {otherNotes.map(note => (
                             <article
@@ -90,6 +117,13 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onCopyNote, onToggle
                                         color={note.style.backgroundColor || '#ffffff'}
                                     />
                                     <button className='fare copy' onClick={() => onCopyNote(note)}></button>
+                                    <button className='fa tag' onClick={() => onTogglLabelPikcer(note.id)} >
+                                        {pickNote === note.id &&
+                                            <LabelPicker
+                                                labels={labels}
+                                                handleChanges={onSetNoteLabels}
+                                            />}
+                                    </button>
                                 </section>
                             </article>
                         ))}

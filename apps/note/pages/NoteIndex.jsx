@@ -124,6 +124,15 @@ export function NoteIndex() {
         }
     }
 
+    function onUpdateLabels(updatedNote) {
+        noteService.save(updatedNote)
+            .then(savedNote => {
+                setNotes(prev => updateNotes(prev, savedNote))
+                showSuccessMsg('Note color updated')
+            })
+            .catch(() => showErrorMsg('Error updating note'))
+    }
+
     return (
         <section className="container">
             <NoteFilter
@@ -144,6 +153,7 @@ export function NoteIndex() {
                 onCopyNote={onCopyNote}
                 onTogglePin={onTogglePin}
                 onSetBackgroundColor={onSetBackgroundColor}
+                onUpdateLabels={onUpdateLabels}
             />}
 
             {selectedNote && (

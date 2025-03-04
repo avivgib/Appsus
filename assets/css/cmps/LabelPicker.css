@@ -1,5 +1,5 @@
 .label-picker {
-    position: fixed;
+    position: absolute;
     color: black;
     font-weight: normal;
     padding-block: 0.35714285714em;
