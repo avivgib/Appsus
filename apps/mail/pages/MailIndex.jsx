@@ -3,6 +3,7 @@ import { MailCompose } from '../cmps/MailCompose.jsx';
 import { MailDetails } from '../cmps/MailDetails.jsx';
 import { MailFilter } from '../cmps/MailFilter.jsx';
 import { MailFolderList } from '../cmps/MailFolderList.jsx';
+import { MailHeader } from '../cmps/MailHeader.jsx';
 import { MailList } from '../cmps/MailList.jsx';
 import { MailSideNav } from '../cmps/MailSideNav.jsx';
 import { MailSort } from '../cmps/MailSort.jsx';
@@ -28,6 +29,8 @@ export function MailIndex() {
 
     const defaultFilterByRef = useRef({ ...filterBy })
     const defaultSortByRef = useRef({ ...sortBy })
+
+    const [isFoldersClose, setIsFoldersClose] = useState(false)
 
     const location = useLocation()
 
@@ -269,15 +272,29 @@ export function MailIndex() {
         setCmpType(cmpType)
     }
 
+    // open and close folders
+
+    function onToggleFolders() {
+        setIsFoldersClose(prev => prev = !isFoldersClose)
+    }
+
+    function onClosefolders() {
+        setIsFoldersClose(false)
+    }
+
 
     return (
         <section className="mail-index main-gmail-layout">
+
+            <MailHeader isFoldersClose={isFoldersClose} onToggleFolders={onToggleFolders} />
+
 
             <MailFolderList
                 onSetcmpType={onSetcmpType}
                 onSetStatusInFilterBy={onSetStatusInFilterBy}
                 filterBy={filterBy}
                 unreadEmailsCount={unreadEmailsCount}
+                onClosefolders={onClosefolders}
             />
 
 

@@ -25,6 +25,7 @@
 
 /* MAIL */
 @import './apps/mail/MailIndex.css';
+@import './apps/mail//MailHeader.css';
 @import './apps/mail/MailList.css';
 @import './apps/mail/MailDetails.css';
 @import './apps/mail/MailCompose.css';
