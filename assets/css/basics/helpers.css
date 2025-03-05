@@ -125,6 +125,14 @@
     content: '\e68f';
 }
 
+.fa.play::before {
+    content: '\f04b';
+}
+
+.fa.pause::before {
+    content: '\f04c';
+}
+
 /* regular */
 
 .fare::before {

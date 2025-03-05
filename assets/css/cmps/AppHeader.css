@@ -79,12 +79,17 @@ nav a.active {
     text-decoration: overline;
 }
 
+.black-wrapper {
+    display: none;
+}
+
 
 
 @media (max-width: 850px) {
     .black-wrapper {
         position: fixed;
         inset: 0;
+        display: block;
         background-color: rgba(0, 0, 0, 0.273);
         z-index: 3;
         cursor: pointer;

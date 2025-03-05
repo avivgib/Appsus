@@ -1,0 +1,146 @@
+.slider {
+    position: relative;
+    width: 100vw;
+    height: 80vh;
+    overflow: hidden;
+}
+
+.slider .wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 80vh;
+    scroll-behavior: smooth;
+    overflow: hidden;
+}
+
+.slider .wrapper .image-container {
+    position: relative;
+
+    width: 100vw;
+    height: 80vh;
+
+    padding: 0;
+    margin: 0;
+    flex: 1 0 100vw;
+}
+
+
+.slider .wrapper .image-container>.image-content {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
+
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 1em;
+
+    translate: 0 10%;
+}
+
+.image-container>.image-content>.title {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: var(--gl-font4);
+    text-shadow: 2px 2px 0 #ffffff,
+        2px -2px 0 #ffffff,
+        -2px 2px 0 #ffffff,
+        -2px -2px 0 #ffffff,
+        2px 0px 0 #ffffff,
+        0px 2px 0 #ffffff,
+        -2px 0px 0 #ffffff,
+        0px -2px 0 #ffffff;
+}
+
+.image-container>.image-content>.subtitle {
+    font-size: 1em;
+    font-weight: bold;
+    color: var(--gl-font4);
+    text-shadow: 2px 2px 0 #ffffff,
+        2px -2px 0 #ffffff,
+        -2px 2px 0 #ffffff,
+        -2px -2px 0 #ffffff,
+        2px 0px 0 #ffffff,
+        0px 2px 0 #ffffff,
+        -2px 0px 0 #ffffff,
+        0px -2px 0 #ffffff;
+}
+
+.slider .wrapper .image-container img {
+    width: 100vw;
+    height: 80vh;
+    align-self: start;
+    object-fit: contain;
+}
+
+
+.slider>.btns {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2em;
+}
+
+
+.slider>.btns>.dot {
+    background-image: none;
+    background-color: white;
+    border: solid 3px var(--gl-font4);
+    height: 2em;
+    width: 2em;
+    border-radius: 50%;
+
+    &:hover {
+        background-color: var(--gl-font4);
+    }
+}
+
+.slider>.btns>.dot.active {
+    background-color: var(--gl-font4);
+}
+
+.slider>.btns>.pause-btn {
+    color: white;
+    background-color: var(--gl-font4);
+    border-radius: 10px;
+    aspect-ratio: 1/1;
+    align-content: center;
+}
+
+
+
+@media (min-width: 800px) {
+    .slider .wrapper .image-container>.image-content {
+        translate: none;
+    }
+
+
+    .image-container>.image-content>.title {
+        font-size: 3em;
+    }
+
+    .image-container>.image-content>.subtitle {
+        font-size: 1.5em;
+    }
+
+}
+
+@media (min-width: 1150px) {
+    .image-container>.image-content>.title {
+        font-size: 4em;
+    }
+
+    .image-container>.image-content>.subtitle {
+        font-size: 2em;
+    }
+
+}

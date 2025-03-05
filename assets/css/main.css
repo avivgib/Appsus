@@ -9,6 +9,7 @@
 @import './cmps/UserMsg.css';
 @import './cmps/AppHeader.css';
 @import './cmps/LabelPicker.css';
+@import './cmps/Slider.css';
 
 /* NOTES */
 @import './apps/note/NoteComposer.css';
