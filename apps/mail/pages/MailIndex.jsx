@@ -1,8 +1,8 @@
 import { showErrorMsg, showSuccessMsg } from '../../../services/event-bus.service.js';
 import { MailCompose } from '../cmps/MailCompose.jsx';
 import { MailDetails } from '../cmps/MailDetails.jsx';
-import { MailFilter } from '../cmps/MailFilter.jsx';
 import { MailFolderList } from '../cmps/MailFolderList.jsx';
+import { MailHeader } from '../cmps/MailHeader.jsx';
 import { MailList } from '../cmps/MailList.jsx';
 import { MailSideNav } from '../cmps/MailSideNav.jsx';
 import { MailSort } from '../cmps/MailSort.jsx';
@@ -18,20 +18,23 @@ export function MailIndex() {
 
     const [unreadEmailsCount, setUnreadEmailsCount] = useState(null)
 
-    const [filterBy, setFilterBy] = useState({ ...mailService.getDefaultFilterBy() })
+    const [searchParams, setSearchParams] = useSearchParams()
+    const [filterBy, setFilterBy] = useState({ ...mailService.getFilterFromSearchParams(searchParams) })
     const [sortBy, setSortBy] = useState({ ...mailService.getDefaultSortBy() })
 
     const [openMail, setOpenMail] = useState({ details: null, edit: null })
 
     const [cmpType, setCmpType] = useState('list')
-    const [searchParams, setSearchParams] = useSearchParams()
 
-    const defaultFilterByRef = useRef({ ...filterBy })
+    const defaultFilterByRef = useRef({ ...mailService.getDefaultFilterBy() })
     const defaultSortByRef = useRef({ ...sortBy })
+
+    const [isFoldersClose, setIsFoldersClose] = useState(false)
 
     const location = useLocation()
 
     useEffect(() => {
+        setSearchParams(filterBy)
         loadEmails()
     }, [filterBy, sortBy])
 
@@ -269,15 +272,34 @@ export function MailIndex() {
         setCmpType(cmpType)
     }
 
+    // open and close folders
+
+    function onToggleFolders() {
+        setIsFoldersClose(prev => prev = !isFoldersClose)
+    }
+
+    function onClosefolders() {
+        setIsFoldersClose(false)
+    }
+
 
     return (
         <section className="mail-index main-gmail-layout">
+
+            <MailHeader
+                isFoldersClose={isFoldersClose}
+                onToggleFolders={onToggleFolders}
+                filterBy={filterBy}
+                onSetFilterBy={onSetFilterBy}
+            />
+
 
             <MailFolderList
                 onSetcmpType={onSetcmpType}
                 onSetStatusInFilterBy={onSetStatusInFilterBy}
                 filterBy={filterBy}
                 unreadEmailsCount={unreadEmailsCount}
+                onClosefolders={onClosefolders}
             />
 
 
@@ -297,7 +319,6 @@ export function MailIndex() {
                 searchParams={searchParams}
                 saveChanges={saveChanges}
             >
-                <MailFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
                 <MailSort sortBy={sortBy} onSetSortBy={onSetSortBy} filterBy={filterBy} />
 
             </DynamicCmp>}

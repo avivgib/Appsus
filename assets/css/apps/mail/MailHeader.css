@@ -1,23 +1,24 @@
-.app-header {
+.mail-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1em;
     background-color: white;
 
-    font-size: 0.875rem;
+    font-size: 0.875em;
     font-family: roboto, Arial, sans-serif;
     line-height: 1.42857142857;
 
     max-height: 4.57142857143em;
 }
 
-.app-header:has(.keep) {
-    box-shadow: inset 0 -1px 0 rgb(198, 198, 198);
-}
 
-
-.app-header .main-logo {
+.mail-header .main-logo {
     display: flex;
     align-items: center;
     text-transform: capitalize;
@@ -25,24 +26,19 @@
     line-height: 2.18181818182em;
 }
 
-.app-header .main-logo .logo-img {
-    height: 40px;
-    width: 40px;
-    object-fit: contain;
-}
 
-.app-header .main-logo:has(.gmail) .logo-img {
+.mail-header .main-logo .logo-img {
     height: 35px;
     width: 35px;
     object-fit: contain;
 }
 
-.app-header .main-logo:has(.gmail) {
+.mail-header .main-logo {
     display: none;
 }
 
 
-.app-header .main-logo .page-name {
+.mail-header .main-logo .page-name {
     padding-inline-start: 0.36363636363em;
 }
 
@@ -65,8 +61,7 @@
     }
 }
 
-.app-header:has(.keep) .bars-btn,
-.app-header:has(.gmail) .bars-btn {
+.mail-header .bars-btn {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -77,26 +72,9 @@
     background-color: var(--gl-shadow1);
 }
 
+
 .black-wrapper {
     display: none;
-}
-
-.btn-nav {
-    position: relative;
-    display: flex;
-    padding: 12px;
-    border-radius: 50%;
-    background-color: transparent;
-
-    &:hover {
-        background-color: var(--gl-shadow1);
-    }
-}
-
-.btn-nav>.nav-point {
-    width: 15px;
-    height: 15px;
-    object-fit: contain;
 }
 
 
@@ -122,11 +100,15 @@
 
 @media (min-width: 850px) {
 
-    .app-header:has(.gmail) {
+    .mail-header {
         background-color: var(--bc-gl1);
     }
 
-    .app-header .main-logo:has(.gmail) {
+    .mail-header .main-logo {
         display: flex;
+    }
+
+    .mail-header .main-logo .page-name {
+        margin-inline-end: 3.86363636364em;
     }
 }

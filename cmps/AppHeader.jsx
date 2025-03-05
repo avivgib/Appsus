@@ -1,3 +1,5 @@
+import { NavigationBox } from "./NavigationBox.jsx"
+
 const { Link, NavLink, useLocation } = ReactRouterDOM
 const { useState, useEffect, useRef } = React
 
@@ -5,6 +7,7 @@ export function AppHeader() {
 
     const [currPage, setCurrPage] = useState(null)
     const [isFoldersClose, setIsFoldersClose] = useState(false)
+    const [isNavOpen, setIsNavOpen] = useState(false)
     const location = useLocation()
 
     useEffect(() => {
@@ -13,14 +16,16 @@ export function AppHeader() {
         }
     }, [location.pathname])
 
-    useEffect(() => {
-        if (location.state) {
-            if (Object.hasOwn(location.state, 'isFoldersClose')) {
-                const { isFoldersClose } = location.state
-                setIsFoldersClose(isFoldersClose)
-            }
-        }
-    }, [location.state])
+    // useEffect(() => {
+    //     if (location.state) {
+    //         if (Object.hasOwn(location.state, 'isFoldersClose')) {
+    //             const { isFoldersClose } = location.state
+    //             setIsFoldersClose(isFoldersClose)
+    //         }
+    //     }
+    // }, [location.state])
+
+
 
 
     function onSetCurrPage(pathname) {
@@ -28,6 +33,10 @@ export function AppHeader() {
     }
     function onClosefolders() {
         setIsFoldersClose(prev => prev = !isFoldersClose)
+    }
+
+    function onToggleNav() {
+        setIsNavOpen(prev => prev = !isNavOpen)
     }
 
     return <header className="app-header">
@@ -44,11 +53,12 @@ export function AppHeader() {
         </div>
 
         <nav>
-            <NavLink to="/">Home</NavLink>
-            <NavLink to="/about">About</NavLink>
-            <NavLink to="/mail">Mail</NavLink>
-            <NavLink to="/note">Note</NavLink>
+            <button className='btn-nav' onClick={onToggleNav}>
+                <img src="assets/images/9-point.svg" alt="point" className='nav-point' />
+                {isNavOpen && <NavigationBox onToggleNav={onToggleNav} />}
+            </button>
         </nav>
+
 
         <div className="black-wrapper" onClick={onClosefolders}></div>
 

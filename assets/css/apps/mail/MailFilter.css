@@ -1,4 +1,8 @@
 .mail-filter {
+    display: flex;
+    align-items: center;
+
+    width: 100%;
     margin: 0.57142857142em;
 }
 
@@ -10,20 +14,19 @@
     min-height: 3em;
     margin-inline: 0.625em;
     padding-inline: 0.625em;
-    width: 100%;
 
-    /* max-width: 720px; */
-    /* width: 720px; */
-
+    flex-grow: 1;
     transition: 200ms;
 }
 
 
-
 .mail-filter>.main-search>.fa {
     position: relative;
-    padding: 0.5em;
     cursor: pointer;
+}
+
+.mail-filter>.main-search>.fa.x {
+    padding: 0.5em;
 }
 
 
@@ -97,4 +100,14 @@
     color: var(--gl-font4);
     border: none;
     outline: none;
+}
+
+
+
+@media (min-width: 850px) {
+
+    .mail-filter>.main-search {
+        max-width: 720px;
+    }
+
 }

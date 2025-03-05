@@ -11,6 +11,7 @@ export const mailService = {
     getUserMail,
     calculateUnreadMails,
     getDefaultSortBy,
+    getFilterFromSearchParams,
 }
 
 const EMAILS_KEY = 'emails_key'
@@ -136,6 +137,24 @@ function getEmptyMail() {
         from: loggedinUser.email,
         to: ''
     }
+}
+
+
+function getFilterFromSearchParams(searchParams) {
+
+    const defaultFilterBy = { ...getDefaultFilterBy() }
+    const filterBy = {}
+
+    for (const field in defaultFilterBy) {
+        if (field === 'status') {
+            filterBy[field] = searchParams.get(`${field}`) || defaultFilterBy[field]
+        } else {
+            filterBy[field] = searchParams.get(`${field}`) || defaultFilterBy[field]
+        }
+
+    }
+
+    return filterBy
 }
 
 function _createBooks() {
