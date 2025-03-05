@@ -14,6 +14,8 @@
     width: 18.2857142857em;
 
     transition: 200ms;
+
+    padding-block-start: 0.57142857142em;
 }
 
 .note-folder>.folder-title {
@@ -69,10 +71,14 @@
     }
 }
 
+.note-folder li .fare,
+.note-folder li .fa {
+    font-size: 1.71428571429em;
+}
+
 .note-folder li.active {
     background-color: #fdefc5;
     color: var(--gl-font4);
-    font-weight: bold;
 }
 
 .note-folder li .fa,
@@ -117,8 +123,8 @@ body:has(.folders-close) .note-folder li:before {
     translate: -50% -50%;
     border-radius: 50%;
     content: '';
-    height: 2.14285714286em;
-    width: 2.14285714286em;
+    height: 3.42857142857em;
+    width: 3.42857142857em;
 }
 
 body:has(.folders-close) .note-folder li:hover:before {
@@ -184,7 +190,6 @@ body:has(.folders-close) .note-folder:hover li {
 body:has(.folders-close) .note-folder:hover li.active {
     background-color: #fdefc5;
     color: var(--gl-font4);
-    font-weight: bold;
 }
 
 body:has(.folders-close) .note-folder:hover li:hover:before,
