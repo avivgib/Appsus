@@ -28,7 +28,7 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onCopyNote, onToggle
         }
     }
 
-    function onTogglLabelPikcer(noteId) {
+    function onToggleLabelPicker(noteId) {
         setPickNote(noteId)
         const note = notes.find(note => note.id === noteId)
         setLabels(note.labels)
@@ -72,7 +72,7 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onCopyNote, onToggle
                                         color={note.style.backgroundColor || '#ffffff'}
                                     />
                                     <button className='fare copy' onClick={() => onCopyNote(note)}></button>
-                                    <button className='fa tag' onClick={() => onTogglLabelPikcer(note.id)} >
+                                    <button className='fa tag' onClick={() => onToggleLabelPicker(note.id)} >
                                         {pickNote === note.id &&
                                             <LabelPicker
                                                 labels={labels}
@@ -117,7 +117,7 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onCopyNote, onToggle
                                         color={note.style.backgroundColor || '#ffffff'}
                                     />
                                     <button className='fare copy' onClick={() => onCopyNote(note)}></button>
-                                    <button className='fa tag' onClick={() => onTogglLabelPikcer(note.id)} >
+                                    <button className='fa tag' onClick={() => onToggleLabelPicker(note.id)} >
                                         {pickNote === note.id &&
                                             <LabelPicker
                                                 labels={labels}

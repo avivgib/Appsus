@@ -3,38 +3,33 @@ import { utilService } from "../../../services/util.service.js";
 const { useState, useEffect, useRef } = React
 
 export function NoteFilter({ filterBy, onSetFilter, onSearchFocus }) {
-
-    const [isFocused, setIsFocused] = useState(false)
+    const [searchText, setSearchText] = useState(filterBy.txt || '');
     const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
-    console.log(filterByToEdit);
 
-    const filterDebounce = useRef(utilService.debounce(onSetFilter, 1000))
+    const filterDebounce = useRef(utilService.debounce(onSetFilter, 500))
 
     useEffect(() => {
         filterDebounce.current(filterByToEdit)
+
+        if (searchText.length > 0) {
+            onSearchFocus(false)
+        }
     }, [filterByToEdit])
 
-    function onSearchNotes({ value }) {
-        onSearchNotes(value)
-    }
-
     function handleChange({ target }) {
-
-        let { value, name: field, type } = target
-        if (type === 'number') value = +value
-        // if(type === 'checkbox') value = target.checked
-
-        setFilterByToEdit(prevFilter => ({ ...prevFilter, [field]: value }))
+        let { value, name } = target
+        setSearchText(value)
+        setFilterByToEdit(prevFilter => ({ ...prevFilter, [name]: value }))
     }
 
     function handleFocus() {
-        setIsFocused(true)
-        onSearchFocus(true) // Notify parent component
+        onSearchFocus(true)
     }
 
-    function handleBlur() {
-        setIsFocused(false)
-        onSearchFocus(false) // Notify parent component
+    function handleClear() {
+        setSearchText('')
+        setFilterByToEdit(prevFilter => ({ ...prevFilter, txt: '' }))
+        onSearchFocus(false)
     }
 
     return (
@@ -45,22 +40,19 @@ export function NoteFilter({ filterBy, onSetFilter, onSearchFocus }) {
                 <input
                     type="search"
                     placeholder="Search"
-                    // value={filterBy.txt}
                     name='txt'
+                    value={searchText}
                     onChange={handleChange}
-                    onClick={handleFocus}
-                // onBlur={handleBlur}
+                    onFocus={handleFocus}
                 />
-            </section>
 
-            {isFocused && (
-                <div className="search-options">
-                    <div className="option-square">Reminders</div>
-                    <div className="option-square">Lists</div>
-                    <div className="option-square">Images</div>
-                    <div className="option-square">Drawings</div>
-                </div>
-            )}
+                {searchText && (
+                    <button type="button" className="reset-btn" onClick={handleClear}>
+                        X
+                    </button>
+                )}
+
+            </section>
         </section>
     )
 }

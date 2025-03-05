@@ -7,13 +7,13 @@ const { useSearchParams } = ReactRouterDOM
 export function NoteComposer({ onSaveNote }) {
     const [newNote, setNewNote] = useState(noteService.getEmptyNote())
     const [isFullInputOpen, setIsFullInputOpen] = useState(false)
-    console.log(newNote);
+    // console.log(newNote);
 
     const emptyNoteRef = useRef(noteService.getEmptyNote())
     const inputContainerRef = useRef(null)
 
     const [searchParams, setSearchParams] = useSearchParams()
-    console.log(searchParams);
+    // console.log(searchParams);
 
     useEffect(() => {
         if (searchParams.size > 0) {
@@ -27,7 +27,7 @@ export function NoteComposer({ onSaveNote }) {
         console.log(searchParams);
         const subject = searchParams.get('subject') || ''
         const body = searchParams.get('body') || ''
-        console.log(subject, body);
+        // console.log(subject, body);
         toggleAddInput()
         setNewNote(prev => ({ ...prev, info: { ...prev.info, title: subject, content: body } }))
     }
