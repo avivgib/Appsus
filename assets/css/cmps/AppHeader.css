@@ -8,6 +8,8 @@
     font-size: 0.875rem;
     font-family: Arial, sans-serif;
     line-height: 1.42857142857;
+
+    max-height: 4.57142857143em;
 }
 
 .app-header:has(.keep) {

@@ -10,9 +10,11 @@
     padding: 1em;
     background-color: white;
 
-    font-size: 0.875rem;
+    font-size: 0.875em;
     font-family: Arial, sans-serif;
     line-height: 1.42857142857;
+
+    max-height: 4.57142857143em;
 }
 
 
@@ -30,7 +32,6 @@
     width: 35px;
     object-fit: contain;
 }
-
 
 .mail-header .main-logo {
     display: none;
@@ -114,5 +115,9 @@ nav a.active {
 
     .mail-header .main-logo {
         display: flex;
+    }
+
+    .mail-header .main-logo .page-name {
+        margin-inline-end: 3.86363636364em;
     }
 }

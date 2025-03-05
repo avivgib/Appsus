@@ -1,7 +1,9 @@
+import { MailFilter } from "./MailFilter.jsx"
+
 const { Link, NavLink } = ReactRouterDOM
 const { useState, useEffect, useRef } = React
 
-export function MailHeader({ isFoldersClose, onToggleFolders }) {
+export function MailHeader({ isFoldersClose, onToggleFolders, filterBy, onSetFilterBy }) {
 
     return <header className="mail-header">
         <div className='flex align-center'>
@@ -17,6 +19,8 @@ export function MailHeader({ isFoldersClose, onToggleFolders }) {
                 </div>
             </Link>
         </div>
+
+        <MailFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
 
         <nav>
             <NavLink to="/">Home</NavLink>

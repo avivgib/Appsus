@@ -69,11 +69,11 @@ export function MailFilter({ filterBy, onSetFilterBy }) {
                     onClick={onRestTxt}></span>
             </div>
 
-            <select name="isRead" id='isRead' value={isRead} onChange={onSetEditFilterBy} >
+            {/* <select name="isRead" id='isRead' value={isRead} onChange={onSetEditFilterBy} >
                 <option value=''>All Mails</option>
                 <option value='true'>{ischecked === 'true' ? ' ✓ ' : ''}  Read</option>
                 <option value='false'>{ischecked === 'false' ? ' ✓ ' : ''} Unread</option>
-            </select>
+            </select> */}
         </section>
     )
 }
