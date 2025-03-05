@@ -10,7 +10,7 @@ import { mailService } from '../services/mail.service.js'
 
 
 const { useState, useEffect, useRef } = React
-const { useSearchParams } = ReactRouterDOM
+const { useSearchParams, useLocation } = ReactRouterDOM
 
 export function MailIndex() {
 
@@ -29,6 +29,7 @@ export function MailIndex() {
     const defaultFilterByRef = useRef({ ...filterBy })
     const defaultSortByRef = useRef({ ...sortBy })
 
+    const location = useLocation()
 
     useEffect(() => {
         loadEmails()
@@ -38,11 +39,15 @@ export function MailIndex() {
         loadUnreadStats()
     }, [])
 
+
     useEffect(() => {
-        if (searchParams.size > 0) {
-            setCmpType('compose')
+        if (location.state) {
+            if (Object.hasOwn(location.state, 'noteToMail')) {
+                setCmpType('compose')
+            }
         }
-    }, [searchParams])
+    }, [location.state])
+
 
     function loadEmails() { // LIST
         mailService.query(filterBy, sortBy)

@@ -16,8 +16,7 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onCopyNote, onToggle
 
 
     function onNoteToMail(note) {
-        const { title, content } = note.info
-        navigate(`/mail?title=${title}&content=${content}`)
+        navigate('/mail', { state: { noteToMail: note } })
     }
 
     function onPinNote(noteId) {

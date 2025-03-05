@@ -1,24 +1,29 @@
 
 import { mailService } from "../services/mail.service.js";
 const { useState, useEffect, useRef } = React
+const { useLocation } = ReactRouterDOM
 
 export function MailCompose({ onSetcmpType, onSaveMail, autoSave, openMail, onGoingBack, searchParams }) {
 
     const [newMail, setNewMail] = useState({ ...mailService.getEmptyMail(), createdAt: Date.now() })
     console.log(newMail);
 
+    const location = useLocation()
+
     const formRef = useRef()
 
     useEffect(() => {
-        if (searchParams.size > 0) {
-            noteToMail(searchParams)
+        if (location.state) {
+            if (Object.hasOwn(location.state, 'noteToMail')) {
+                const { noteToMail } = location.state
+                onNoteToMail(noteToMail)
+            }
         }
-    }, [searchParams])
+    }, [location.state])
 
-    function noteToMail(searchParams) {
-        console.log(searchParams);
-        const title = searchParams.get('title') || ''
-        const content = searchParams.get('content') || ''
+    function onNoteToMail(note) {
+        console.log(note);
+        const { title, content } = note.info
         console.log(title, content);
         setNewMail(prev => ({ ...prev, subject: title, body: content }))
     }

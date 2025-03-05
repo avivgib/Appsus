@@ -1,7 +1,7 @@
 import { noteService } from "../services/note.service.js"
 
 const { useState, useEffect, useRef } = React
-const { useSearchParams } = ReactRouterDOM
+const { useSearchParams, useLocation } = ReactRouterDOM
 
 
 export function NoteComposer({ onSaveNote }) {
@@ -12,22 +12,26 @@ export function NoteComposer({ onSaveNote }) {
     const emptyNoteRef = useRef(noteService.getEmptyNote())
     const inputContainerRef = useRef(null)
 
-    const [searchParams, setSearchParams] = useSearchParams()
+    const location = useLocation()
     // console.log(searchParams);
 
+
     useEffect(() => {
-        if (searchParams.size > 0) {
-            setNoteToMail(searchParams)
+        if (location.state) {
+            if (Object.hasOwn(location.state, 'mailToNote')) {
+                const { mailToNote } = location.state
+                setNoteToMail(mailToNote)
+            }
         }
+    }, [location.state])
 
-        setSearchParams({})
-    }, [searchParams])
 
-    function setNoteToMail(searchParams) {
-        console.log(searchParams);
-        const subject = searchParams.get('subject') || ''
-        const body = searchParams.get('body') || ''
-        // console.log(subject, body);
+    function setNoteToMail(mail) {
+        console.log(mail);
+        // const subject = searchParams.get('subject') || ''
+        // const body = searchParams.get('body') || ''
+        // // console.log(subject, body);
+        const { subject, body } = mail
         toggleAddInput()
         setNewNote(prev => ({ ...prev, info: { ...prev.info, title: subject, content: body } }))
     }

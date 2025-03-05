@@ -12,8 +12,7 @@ export function MailList({ emails, saveChanges, onSetcmpType, onOpenMail, onRemo
 
     function onMailToNote(ev, mail) {
         ev.stopPropagation()
-        const { subject, body } = mail
-        navigate(`/note?subject=${subject}&body=${body}`)
+        navigate('/note', { state: { mailToNote: mail } })
     }
 
     function onTogglLabelPikcer(ev, mailId) {

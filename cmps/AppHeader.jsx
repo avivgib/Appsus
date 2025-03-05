@@ -23,8 +23,6 @@ export function AppHeader() {
     }, [location.state])
 
 
-
-
     function onSetCurrPage(pathname) {
         setCurrPage(pathname)
     }
