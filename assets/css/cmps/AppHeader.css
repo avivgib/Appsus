@@ -58,6 +58,7 @@
     }
 }
 
+.app-header:has(.keep) .bars-btn,
 .app-header:has(.gmail) .bars-btn {
     display: flex;
     justify-content: center;

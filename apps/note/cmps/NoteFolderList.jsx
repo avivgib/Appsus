@@ -11,7 +11,8 @@ export function NoteFolderList({ onSetStatusInFilterBy, filterBy }) {
                 {['notes', 'work', 'personal', 'inspiration', 'trash'].map(label => {
                     return <li key={label} className={status === label ? 'active' : ''}
                         onClick={() => onSetStatusInFilterBy(label)}>
-                        <span className={status === label ? `fa ${label}` : ` fare ${label}`}></span>
+                        <span className={(label === 'notes' || label === 'trash') ? `fare ${label}` : `fa tag`}>
+                        </span>
                         <button>{label}</button>
                         <span className='unread-emails'>
                         </span>
