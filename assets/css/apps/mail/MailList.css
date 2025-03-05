@@ -99,7 +99,7 @@
 
     /* * */
     min-width: 1.42857142857em;
-    font-size: 1.07142857143em;
+    /* font-size: 1.07142857143em; */
 }
 
 .emails-list .mail-preview>.mail-labels {
@@ -293,6 +293,7 @@
         display: flex;
         position: relative;
         color: var(--gl-font6);
+        fill: var(--gl-font6);
         font-weight: bold;
         flex-shrink: 0;
     }
@@ -301,6 +302,11 @@
     .emails-list .mail-preview:hover>.mail-star,
     .emails-list .mail-preview:hover>.mail-labels {
         color: var(--gl-font2);
+        fill: var(--gl-font6);
+    }
+
+    .emails-list .mail-preview:hover>.mail-labels>* {
+        fill: var(--gl-font6);
     }
 
 

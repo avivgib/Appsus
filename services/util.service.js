@@ -9,7 +9,7 @@ export const utilService = {
     loadFromStorage,
     saveToStorage,
     debounce,
-    getLabels,
+    getMailLabels,
     getNotesLabels
 }
 
@@ -87,7 +87,7 @@ function debounce(func, wait) {
 }
 
 
-function getLabels() {
+function getMailLabels() {
     return ['family', 'work', 'spam', 'friends']
 }
 
