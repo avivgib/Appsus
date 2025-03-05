@@ -12,10 +12,11 @@ export const mailService = {
     calculateUnreadMails,
     getDefaultSortBy,
     getFilterFromSearchParams,
+    getMailLabels,
 }
 
 const EMAILS_KEY = 'emails_key'
-_createBooks()
+_createEmails()
 
 const loggedinUser = {
     email: 'user@appsus.com',
@@ -51,7 +52,7 @@ function query(filterBy, sortBy) {
             }
 
 
-            if (utilService.getLabels().includes(filterBy.status)) {
+            if (getMailLabels().includes(filterBy.status)) {
                 return emails = emails.filter(mail => mail.labels.includes(filterBy.status))
             }
 
@@ -157,7 +158,11 @@ function getFilterFromSearchParams(searchParams) {
     return filterBy
 }
 
-function _createBooks() {
+function getMailLabels() {
+    return ['family', 'work', 'spam', 'friends']
+}
+
+function _createEmails() {
     const emails = utilService.loadFromStorage(EMAILS_KEY)
     if (!emails || !emails.length) _creatDemoEmails()
 }

@@ -139,6 +139,10 @@
 
 /* regular */
 
+.fare {
+    font-weight: inherit;
+}
+
 .fare::before {
     font-family: fare;
 }
@@ -207,4 +211,22 @@
 
 .fare.notes::before {
     content: '\f0eb';
+}
+
+/* svg */
+
+.label-full {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.label-full::before {
+    content: "";
+    width: 1em;
+    height: 1em;
+    background-image: url(../../images/label-full.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }

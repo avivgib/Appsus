@@ -2,18 +2,34 @@ import { utilService } from "../services/util.service.js"
 
 
 const { useState, useEffect, useRef } = React
+const { useLocation } = ReactRouterDOM
 
 export function LabelPicker({ labels, handleChanges }) {
+
+    const [currPage, setCurrPage] = useState(null)
+    const location = useLocation()
+
     const [selectedLabels, setSelectedLabels] = useState([...labels])
     console.log(selectedLabels);
 
     const labelPickerRef = useRef()
+
+    useEffect(() => {
+        if (location.pathname) {
+            onSetCurrPage(location.pathname)
+        }
+    }, [location.pathname])
+
+    function onSetCurrPage(pathname) {
+        setCurrPage(pathname)
+    }
 
     function handleClickOutside(ev) {
         if (ev.target !== labelPickerRef.current) {
             onSaveLabels(ev)
         }
     }
+
 
     useEffect(() => {
         document.addEventListener('click', handleClickOutside)
@@ -48,8 +64,19 @@ export function LabelPicker({ labels, handleChanges }) {
             <div>Labels:</div>
 
             <ul className='clean-list'>
-                {
+                {currPage === '/note' &&
                     utilService.getNotesLabels().map(label => {
+                        return <li key={label}>
+                            <input type="checkbox" id={label} name={label}
+                                checked={selectedLabels.includes(label) ? true : false}
+                                onChange={updateMailLabels} />
+                            <label htmlFor={label}>{label}</label>
+                        </li>
+                    })
+                }
+
+                {currPage === '/mail' &&
+                    utilService.getMailLabels().map(label => {
                         return <li key={label}>
                             <input type="checkbox" id={label} name={label}
                                 checked={selectedLabels.includes(label) ? true : false}

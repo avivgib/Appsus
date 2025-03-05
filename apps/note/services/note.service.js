@@ -92,6 +92,8 @@ function getNotesLabelStats() {
             }, []);
         });
 }
+
+
 // ~~~~~~~~~~~~~~~~ LOCAL FUNCTIONS ~~~~~~~~~~~~~~~~~~~ //
 
 

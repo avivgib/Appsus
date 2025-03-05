@@ -49,7 +49,7 @@ export function MailFolderList({ onSetcmpType, onSetStatusInFilterBy, filterBy, 
 
                 <div className={`more-labels ${isMoreLabelsOpen ? 'open' : ''}`}>
                     <ul className='clean-list'>
-                        {utilService.getLabels().map(label => {
+                        {utilService.getMailLabels().map(label => {
                             return <li key={label} className={status === label ? 'active' : ''}
                                 onClick={() => { onSetStatusInFilterBy(label); onSetcmpType('list'); onClosefolders(false) }}
                                 style={unreadEmailsCount && unreadEmailsCount[label] > 0 ? { fontWeight: 'bold' } : {}}>
