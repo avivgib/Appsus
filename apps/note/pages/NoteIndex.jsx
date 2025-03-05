@@ -5,6 +5,7 @@ import { NoteComposer } from "../cmps/NoteComposer.jsx"
 import { EditModal } from "../cmps/EditModal.jsx"
 import { NoteFilter } from "../cmps/NoteFilter.jsx"
 import { NoteSearchCategory } from "../cmps/NoteSearchCategory.jsx"
+import { NoteFolderList } from "../cmps/NoteFolderList.jsx"
 
 
 const { useState, useEffect, useRef } = React
@@ -133,42 +134,51 @@ export function NoteIndex() {
             .catch(() => showErrorMsg('Error updating label note'))
     }
 
+    function onSetStatusInFilterBy(status) {
+        setFilterBy(prev => ({ ...prev, status: status }))
+    }
+
     return (
-        <section className="container">
-            <NoteFilter
-                filterBy={filterBy}
-                onSetFilter={onSetFilter}
-                onSearchFocus={onSearchFocus}
-            />
+        <section className="container note-main-layout">
 
-            {!isSearchFocused && (
-                <React.Fragment>
-                    <NoteComposer onSaveNote={onSaveNote} />
-                    <NoteList
-                        notes={notes}
-                        onRemoveNote={onRemoveNote}
-                        onEditNote={onEditNote}
-                        onCopyNote={onCopyNote}
-                        onTogglePin={onTogglePin}
-                        onSetBackgroundColor={onSetBackgroundColor}
-                        onUpdateLabels={onUpdateLabels}
-                    />
-                </React.Fragment>
-            )}
+            <NoteFolderList onSetStatusInFilterBy={onSetStatusInFilterBy} filterBy={filterBy} />
 
-            {isSearchFocused && <NoteSearchCategory
-                filterBy={filterBy}
-                onSetFilter={onSetFilter}
-                onSearchFocus={onSearchFocus}
-            />}
-
-            {selectedNote && (
-                <EditModal
-                    note={selectedNote}
-                    onClose={onCloseModal}
-                    onSave={onSaveEditedNote}
+            <div className='main-content'>
+                <NoteFilter
+                    filterBy={filterBy}
+                    onSetFilter={onSetFilter}
+                    onSearchFocus={onSearchFocus}
                 />
-            )}
+
+                {!isSearchFocused && (
+                    <React.Fragment>
+                        <NoteComposer onSaveNote={onSaveNote} />
+                        <NoteList
+                            notes={notes}
+                            onRemoveNote={onRemoveNote}
+                            onEditNote={onEditNote}
+                            onCopyNote={onCopyNote}
+                            onTogglePin={onTogglePin}
+                            onSetBackgroundColor={onSetBackgroundColor}
+                            onUpdateLabels={onUpdateLabels}
+                        />
+                    </React.Fragment>
+                )}
+
+                {isSearchFocused && <NoteSearchCategory
+                    filterBy={filterBy}
+                    onSetFilter={onSetFilter}
+                    onSearchFocus={onSearchFocus}
+                />}
+
+                {selectedNote && (
+                    <EditModal
+                        note={selectedNote}
+                        onClose={onCloseModal}
+                        onSave={onSaveEditedNote}
+                    />
+                )}
+            </div>
 
         </section>
     )

@@ -202,4 +202,9 @@
 
 .fare.copy::before {
     content: '\f0c5';
+
+}
+
+.fare.notes::before {
+    content: '\f0eb';
 }
