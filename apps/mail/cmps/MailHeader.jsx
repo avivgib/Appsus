@@ -1,9 +1,16 @@
+import { NavigationBox } from "../../../cmps/NavigationBox.jsx"
 import { MailFilter } from "./MailFilter.jsx"
 
 const { Link, NavLink } = ReactRouterDOM
 const { useState, useEffect, useRef } = React
 
 export function MailHeader({ isFoldersClose, onToggleFolders, filterBy, onSetFilterBy }) {
+
+    const [isNavOpen, setIsNavOpen] = useState(false)
+
+    function onToggleNav() {
+        setIsNavOpen(prev => prev = !isNavOpen)
+    }
 
     return <header className="mail-header">
         <div className='flex align-center'>
@@ -23,10 +30,10 @@ export function MailHeader({ isFoldersClose, onToggleFolders, filterBy, onSetFil
         <MailFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
 
         <nav>
-            <NavLink to="/">Home</NavLink>
-            <NavLink to="/about">About</NavLink>
-            <NavLink to="/mail">Mail</NavLink>
-            <NavLink to="/note">Note</NavLink>
+            <button className='btn-nav' onClick={onToggleNav}>
+                <img src="assets/images/9-point.svg" alt="point" className='nav-point' />
+                {isNavOpen && <NavigationBox onToggleNav={onToggleNav} />}
+            </button>
         </nav>
 
         <div className="black-wrapper" onClick={onToggleFolders}></div>

@@ -11,7 +11,7 @@
     background-color: white;
 
     font-size: 0.875em;
-    font-family: Arial, sans-serif;
+    font-family: roboto, Arial, sans-serif;
     line-height: 1.42857142857;
 
     max-height: 4.57142857143em;
@@ -72,15 +72,6 @@
     background-color: var(--gl-shadow1);
 }
 
-nav a {
-    margin: .5em;
-}
-
-nav a.active {
-    color: var(--color1);
-    font-weight: bold;
-    text-decoration: overline;
-}
 
 .black-wrapper {
     display: none;

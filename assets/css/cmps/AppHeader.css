@@ -6,7 +6,7 @@
     background-color: white;
 
     font-size: 0.875rem;
-    font-family: Arial, sans-serif;
+    font-family: roboto, Arial, sans-serif;
     line-height: 1.42857142857;
 
     max-height: 4.57142857143em;
@@ -77,18 +77,26 @@
     background-color: var(--gl-shadow1);
 }
 
-nav a {
-    margin: .5em;
-}
-
-nav a.active {
-    color: var(--color1);
-    font-weight: bold;
-    text-decoration: overline;
-}
-
 .black-wrapper {
     display: none;
+}
+
+.btn-nav {
+    position: relative;
+    display: flex;
+    padding: 12px;
+    border-radius: 50%;
+    background-color: transparent;
+
+    &:hover {
+        background-color: var(--gl-shadow1);
+    }
+}
+
+.btn-nav>.nav-point {
+    width: 15px;
+    height: 15px;
+    object-fit: contain;
 }
 
 
