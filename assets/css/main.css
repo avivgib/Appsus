@@ -13,14 +13,15 @@
 @import './cmps/About.css';
 
 /* NOTES */
+@import './apps/note/NoteIndex.css';
 @import './apps/note/NoteComposer.css';
 @import './apps/note/NotePreview.css';
 @import './apps/note/EditModal.css';
 @import './apps/note/NoteList.css';
-@import './apps/note/NoteIndex.css';
 @import './apps/note/ColorPicker.css';
 @import './apps/note/SearchNotes.css';
 @import './apps/note/NoteSearchCategory.css';
+@import './apps/note/NoteFolderList.css';
 
 /* MAIL */
 @import './apps/mail/MailIndex.css';

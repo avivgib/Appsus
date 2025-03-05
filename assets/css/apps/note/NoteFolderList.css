@@ -1,0 +1,94 @@
+.note-folder {
+    grid-area: 1/1;
+
+    position: relative;
+
+    z-index: 1;
+    height: 100%;
+
+    font-size: 0.875rem;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+
+    line-height: 1.42857142857;
+
+    width: 18.2857142857em;
+
+    transition: 200ms;
+}
+
+.note-folder>.folder-title {
+    display: none;
+}
+
+.note-folder button {
+    text-transform: capitalize;
+    font-size: 0.875rem;
+}
+
+
+.note-folder>.add-enote-btn {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-block-start: 0.57142857142em;
+    margin-block-end: 1.14285714286em;
+    margin-inline-start: 0.57142857142em;
+    padding-inline-end: 1.71428571429em;
+    height: 4em;
+    min-width: 4em;
+    border-radius: 1.14285714286em;
+    background-color: var(--g-btn2);
+    transition: 200ms;
+
+    &:hover {
+        box-shadow: 5px 5px 10px var(--gl-shadow1);
+    }
+}
+
+
+.note-folder li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    height: 48px;
+    padding: 0 1.85714285714em 0 0.85714285714em;
+    border-radius: 0 20px 20px 0;
+    font-weight: 500;
+    cursor: pointer;
+
+    margin-inline-end: 1.14285714286em;
+
+    &:hover {
+        background-color: var(--gl-shadow1);
+    }
+}
+
+.note-folder li.active {
+    background-color: #fdefc5;
+    color: var(--gl-font4);
+    font-weight: bold;
+}
+
+.note-folder li .fa,
+.note-folder li .fare {
+    margin-inline-end: 1.28571428571em;
+    padding-inline-start: 0.85714285714em;
+    align-self: center;
+    font-weight: normal;
+}
+
+.note-folder li .fa.caret-right {
+    margin-inline-end: 0;
+}
+
+.note-folder li button {
+    background-color: transparent;
+    margin-inline-end: auto;
+    font-weight: inherit;
+}

@@ -44,6 +44,7 @@ function save(note) {
 
 function getDefaultFilter() {
     return {
+        status: 'notes',
         txt: '',
         color: '',
         labels: '',
@@ -103,6 +104,10 @@ function _createNotes() {
 
 function _filterNotes(notes, filterBy) {
     let filteredNotes = [...notes]
+
+    if (filterBy.status !== 'notes') {
+        filteredNotes = filteredNotes.filter(note => String(note.labels).toLowerCase().includes(filterBy.status))
+    }
 
     if (filterBy.txt) {
         const regex = new RegExp(filterBy.txt, 'i')
