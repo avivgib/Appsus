@@ -7,25 +7,16 @@ export function NoteSearchCategory({ filterBy, onSetFilter, onSearchFocus }) {
     const [labels, setLabels] = useState(null)
     const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
 
-
-    // useEffect(() => {
-    //     onSetFilter(filterByToEdit)
-    //     if (filterByToEdit.color) {
-    //         onSearchFocus(false)
-    //     }
-    //     if (filterByToEdit.labels) {
-    //         onSearchFocus(false)
-    //     }
-    // }, [filterByToEdit])
-
-
     useEffect(() => {
         if (JSON.stringify(filterByToEdit) !== JSON.stringify(filterBy)) {
             onSetFilter(filterByToEdit);
         }
-        if (filterByToEdit.color || filterByToEdit.labels) {
-            onSearchFocus(false);
-        }
+
+        setTimeout(() => {
+            if (filterByToEdit.color || filterByToEdit.labels) {
+                onSearchFocus(false);
+            }
+        }, 600)
     }, [filterByToEdit, filterBy]);
 
 
@@ -72,7 +63,6 @@ export function NoteSearchCategory({ filterBy, onSetFilter, onSearchFocus }) {
 
     function handleChange({ target }) {
         let { value, name: field } = target
-        console.log(value)
 
         setFilterByToEdit(prevFilter => ({ ...prevFilter, [field]: value }))
     }
@@ -99,6 +89,7 @@ export function NoteSearchCategory({ filterBy, onSetFilter, onSearchFocus }) {
                                     className="label-pick"
                                     data-label={label}
                                 >
+                                    <div className="label-tag fa tag"></div>
                                     <div className="label-name">{label}</div>
                                 </label>
                             </div>

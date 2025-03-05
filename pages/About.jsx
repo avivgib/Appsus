@@ -13,7 +13,7 @@ export function About() {
                         Aviv
                     </div>
                     <p className='about-me'>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio, ut, aliquam consectetur maxime dicta eum laudantium iusto quam eaque nostrum ratione mollitia quasi repellat! Sunt incidunt sit rem distinctio ratione.
+                        Hello, my name is Aviv. I'm 35 years old and a student at Coding Academy.
                     </p>
                 </div>
             </div>
