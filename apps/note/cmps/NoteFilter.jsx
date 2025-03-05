@@ -5,13 +5,14 @@ const { useState, useEffect, useRef } = React
 export function NoteFilter({ filterBy, onSetFilter, onSearchFocus }) {
     const [searchText, setSearchText] = useState(filterBy.txt || '');
     const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
+    const [isSearchFocused, setIsSearchFocused] = useState(false)
 
     const filterDebounce = useRef(utilService.debounce(onSetFilter, 500))
 
     useEffect(() => {
         filterDebounce.current(filterByToEdit)
 
-        if (searchText.length > 0) {
+        if (isSearchFocused) {
             onSearchFocus(false)
         }
     }, [filterByToEdit])
@@ -23,6 +24,7 @@ export function NoteFilter({ filterBy, onSetFilter, onSearchFocus }) {
     }
 
     function handleFocus() {
+        setIsSearchFocused(true)
         onSearchFocus(true)
     }
 
@@ -30,6 +32,7 @@ export function NoteFilter({ filterBy, onSetFilter, onSearchFocus }) {
         setSearchText('')
         setFilterByToEdit(prevFilter => ({ ...prevFilter, txt: '' }))
         onSearchFocus(false)
+        setIsSearchFocused(false)
     }
 
     return (
@@ -46,10 +49,8 @@ export function NoteFilter({ filterBy, onSetFilter, onSearchFocus }) {
                     onFocus={handleFocus}
                 />
 
-                {searchText && (
-                    <button type="button" className="reset-btn" onClick={handleClear}>
-                        X
-                    </button>
+                {(searchText || isSearchFocused) && (
+                    <button type="button" className="reset-btn fa xmark" onClick={handleClear}></button>
                 )}
 
             </section>

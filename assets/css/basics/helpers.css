@@ -133,6 +133,10 @@
     content: '\f04c';
 }
 
+.fa.xmark::before {
+    content: '\f00d';
+}
+
 /* regular */
 
 .fare::before {
