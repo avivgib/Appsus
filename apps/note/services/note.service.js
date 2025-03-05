@@ -13,26 +13,18 @@ export const noteService = {
     save,
     getDefaultFilter,
     getEmptyNote,
-    getNotesColorStats
+    getNotesColorStats,
+    getNotesLabelStats
 }
 
 function query(filterBy) {
     console.log('filterBy', filterBy);
-
-    console.log('Fetching notes from storage...')
     return storageService.query(NOTES_KEY)
         .then(notes => {
+            notes = _filterNotes(notes, filterBy);
 
-            if (filterBy.txt) {
-                const regex = new RegExp(filterBy.txt, 'i')
-                notes = notes.filter(note => regex.test(note.info.title) || regex.test(note.info.content))
-            }
-
-            if (filterBy.color) {
-                notes = notes.filter(note => filterBy.color === note.style.backgroundColor)
-            }
-
-            return notes
+            console.log('Filtered notes:', notes);
+            return notes;
         })
 }
 
@@ -53,7 +45,8 @@ function save(note) {
 function getDefaultFilter() {
     return {
         txt: '',
-        color: ''
+        color: '',
+        labels: '',
     }
 }
 
@@ -86,6 +79,18 @@ function getNotesColorStats() {
         })
 }
 
+function getNotesLabelStats() {
+    return storageService.query(NOTES_KEY)
+        .then(notes => {
+            const allLabels = notes.flatMap(note => note.labels || []);
+            return allLabels.reduce((uniqueLabels, label) => {
+                if (!uniqueLabels.includes(label)) {
+                    uniqueLabels.push(label);
+                }
+                return uniqueLabels;
+            }, []);
+        });
+}
 // ~~~~~~~~~~~~~~~~ LOCAL FUNCTIONS ~~~~~~~~~~~~~~~~~~~ //
 
 
@@ -97,18 +102,38 @@ function _createNotes() {
 }
 
 function _filterNotes(notes, filterBy) {
-    if (filterBy.type) {
-        notes = notes.filter(note => note.createdAt > filterBy.createdAt)
+    let filteredNotes = [...notes]
+
+    if (filterBy.txt) {
+        const regex = new RegExp(filterBy.txt, 'i')
+        filteredNotes = filteredNotes.filter(note => regex.test(note.info.title) || regex.test(note.info.content))
     }
 
-    if (filterBy.title) {
-        const regExp = new RegExp(filterBy.title, 'i')
-        notes = notes.filter(note => regExp.test(note.info.title))
+    if (filterBy.color) {
+        filteredNotes = filteredNotes.filter(note => filterBy.color === note.style.backgroundColor)
     }
 
-    if (filterBy.createdAt) {
-        notes = notes.filter(note => note.createdAt > filterBy.createdAt)
+    if (filterBy.labels) {
+        filteredNotes = filteredNotes.filter(note =>
+            note.labels.some(label =>
+                label.toLowerCase() === filterBy.labels.toLowerCase()
+            )
+        )
     }
 
-    return notes
+    // if (filterBy.type) {
+    //     filteredNotes = filteredNotes.filter(note => note.createdAt > filterBy.createdAt)
+    // }
+
+    // if (filterBy.title) {
+    //     const regExp = new RegExp(filterBy.title, 'i')
+    //     filteredNotes = filteredNotes.filter(note => regExp.test(note.info.title))
+    // }
+
+    // if (filterBy.createdAt) {
+    //     filteredNotes = filteredNotes.filter(note => note.createdAt > filterBy.createdAt)
+    // }
+
+    return filteredNotes
 }
+

@@ -1,30 +1,169 @@
-.colors-category {
-    width: 100%;
+.note-search-category {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Labels Category Styling */
+.labels-category {
+    width: 640px;
+    margin: 16px 80px;
     background-color: #fff;
     font-weight: 500;
-    margin: 16px 80px;
-    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
-    /* overflow: hidden; */
-    margin-block-end: 2em;
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 
+                0 1px 3px 1px rgba(60, 64, 67, 0.15);
     animation: fadeInUp 400ms;
+    overflow: visible;
 }
 
-.colors-category>.colors-picker {
+.labels-title {
+    width: 620px;
+    padding: 10px;
+}
+
+.labels-picker {
     display: flex;
-    justify-content: start;
-    height: 68px;
+    justify-content: flex-start;
+    width: 644px;
+    height: 158px;
+    gap: 6px;
+    overflow: visible;
+    
 }
 
-.colors-category>.colors-picker input {
+.labels-picker input {
     display: none;
 }
 
-.colors-category>.colors-picker .color-pick {
+.labels-picker .label-pick {
+    position: relative;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+
+    padding-bottom: 15px;
+    cursor: pointer;
+    background-color: #f2f2f2;
+    text-align: center;
+
+    background-size: 25%;
+    min-height: 155px;
+    min-width: 158px;
+    height: 98%;
+    width: 100%;
+    
+    &:hover {
+        border: 1px solid rgba(0, 0, 0, 0.8);
+    }
+}
+
+
+.label-pick .label-name {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    font-size: 1em;
+    font-weight: 500;
+    color: #333;
+}
+
+/* Colors Category Styling (unchanged from previous) */
+.colors-category {
+    width: 640px;
+    margin: 16px 80px;
+    background-color: #fff;
+    font-weight: 500;
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 
+                0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    animation: fadeInUp 400ms;
+    overflow: visible;
+}
+
+.colors-title {
+    width: 620px;
+    padding: 10px;
+}
+
+.colors-picker {
+    display: flex;
+    justify-content: flex-start;
+    width: 644px;
+    padding: 10px;
+    overflow: visible;
+}
+
+.colors-picker input {
+    display: none;
+}
+
+.colors-picker .color-pick {
     position: relative;
     display: block;
     border-radius: 50%;
-    height: 40px;
-    width: 40px;
+    height: 50px;
+    width: 50px;
+    margin: 14px;
+    border: 1px solid rgba(0, 0, 0, 0.42);
+    cursor: pointer;
+
+    &:hover {
+        border: 1px solid rgba(0, 0, 0, 0.8);
+        &::after {
+            opacity: 1;
+        }
+    }
+
+    &::after {
+        position: absolute;
+        bottom: -30px;
+        left: 50%;
+        transform: translateX(-50%);
+        content: attr(data-color);
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 5px 8px;
+        color: white;
+        border-radius: 2px;
+        opacity: 0;
+        transition: opacity 200ms;
+        white-space: nowrap;
+        z-index: 10;
+    }
+}
+
+.colors-category {
+    width: 640px;
+    height: 137px;
+    margin: 16px 80px;
+    background-color: #fff;
+    font-weight: 500;
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 
+                0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    animation: fadeInUp 400ms;
+    overflow: visible;
+}
+
+.colors-title {
+    width: 620px;
+    padding: 10px;
+}
+
+.colors-picker {
+    display: flex;
+    justify-content: flex-start;
+    width: 644px;
+    height: 80px;
+    overflow: visible;
+}
+
+.colors-picker input {
+    display: none;
+}
+
+.colors-picker .color-pick {
+    position: relative;
+    display: block;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
     margin: 14px;
     border: 1px solid rgba(0, 0, 0, 0.42);
     cursor: pointer;
@@ -34,18 +173,22 @@
     }
 }
 
-.colors-category>.colors-picker .color-pick::after {
+.colors-picker .color-pick::after {
     position: absolute;
-    bottom: -100%;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
     content: attr(data-color);
     background-color: rgba(0, 0, 0, 0.5);
-    padding: 5px;
+    padding: 5px 8px;
     color: white;
     border-radius: 2px;
     opacity: 0;
-    transition: 200ms;
+    transition: opacity 200ms;
+    white-space: nowrap; 
+    z-index: 10;
 }
 
-.colors-category>.colors-picker .color-pick:hover::after {
+.colors-picker .color-pick:hover::after {
     opacity: 1;
 }

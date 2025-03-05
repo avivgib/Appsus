@@ -120,7 +120,7 @@ export function NoteIndex() {
         setIsSearchFocused(isFocused)
 
         if (isFocused) {
-            setFilterBy(prev => ({ ...DefaultFilterRef }))
+            setFilterBy(prev => ({ ...DefaultFilterRef.current }))
         }
     }
 
@@ -128,9 +128,9 @@ export function NoteIndex() {
         noteService.save(updatedNote)
             .then(savedNote => {
                 setNotes(prev => updateNotes(prev, savedNote))
-                showSuccessMsg('Note color updated')
+                showSuccessMsg('Note label updated')
             })
-            .catch(() => showErrorMsg('Error updating note'))
+            .catch(() => showErrorMsg('Error updating label note'))
     }
 
     return (
@@ -141,19 +141,25 @@ export function NoteIndex() {
                 onSearchFocus={onSearchFocus}
             />
 
-            <NoteComposer
-                onSaveNote={onSaveNote}
-            />
+            {!isSearchFocused && (
+                <React.Fragment>
+                    <NoteComposer onSaveNote={onSaveNote} />
+                    <NoteList
+                        notes={notes}
+                        onRemoveNote={onRemoveNote}
+                        onEditNote={onEditNote}
+                        onCopyNote={onCopyNote}
+                        onTogglePin={onTogglePin}
+                        onSetBackgroundColor={onSetBackgroundColor}
+                        onUpdateLabels={onUpdateLabels}
+                    />
+                </React.Fragment>
+            )}
 
-            <h1>Notes app</h1>
-            {!isSearchFocused && <NoteList
-                notes={notes}
-                onRemoveNote={onRemoveNote}
-                onEditNote={onEditNote}
-                onCopyNote={onCopyNote}
-                onTogglePin={onTogglePin}
-                onSetBackgroundColor={onSetBackgroundColor}
-                onUpdateLabels={onUpdateLabels}
+            {isSearchFocused && <NoteSearchCategory
+                filterBy={filterBy}
+                onSetFilter={onSetFilter}
+                onSearchFocus={onSearchFocus}
             />}
 
             {selectedNote && (
@@ -163,12 +169,6 @@ export function NoteIndex() {
                     onSave={onSaveEditedNote}
                 />
             )}
-
-            {isSearchFocused && <NoteSearchCategory
-                filterBy={filterBy}
-                onSetFilter={onSetFilter}
-                onSearchFocus={onSearchFocus}
-            />}
 
         </section>
     )

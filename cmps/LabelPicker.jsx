@@ -49,7 +49,7 @@ export function LabelPicker({ labels, handleChanges }) {
 
             <ul className='clean-list'>
                 {
-                    utilService.getLabels().map(label => {
+                    utilService.getNotesLabels().map(label => {
                         return <li key={label}>
                             <input type="checkbox" id={label} name={label}
                                 checked={selectedLabels.includes(label) ? true : false}

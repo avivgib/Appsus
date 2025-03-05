@@ -10,6 +10,7 @@ export const utilService = {
     saveToStorage,
     debounce,
     getLabels,
+    getNotesLabels
 }
 
 function saveToStorage(key, val) {
@@ -88,4 +89,8 @@ function debounce(func, wait) {
 
 function getLabels() {
     return ['family', 'work', 'spam', 'friends']
+}
+
+function getNotesLabels() {
+    return ['Personal', 'Inspiration', 'Work']
 }

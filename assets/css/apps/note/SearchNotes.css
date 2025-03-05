@@ -21,6 +21,22 @@
     border-bottom: 1px solid #ccc;
 }
 
+.search-container .reset-btn {
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 1em;
+    color: #888;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.search-container .reset-btn:hover {
+    background-color: #f0f0f0;
+    color: #555;
+}
+
 .magnifying-glass {
     height: 40px;
     width: 40px;
