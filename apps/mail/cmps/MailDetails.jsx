@@ -4,6 +4,7 @@ export function MailDetails({ onSetcmpType, openMail, onRemoveMail, onGoingBack 
 
     console.log(openMail.details);
 
+    const dateOption = { month: 'long', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false }
 
     useEffect(() => {
         return (() => { onGoingBack('details') })
@@ -21,9 +22,12 @@ export function MailDetails({ onSetcmpType, openMail, onRemoveMail, onGoingBack 
                 <div className='mail-subject'>{subject}</div>
                 <div className='mail-content'>
                     <div className='icon'><img src="assets/images/use-icon.jpg" alt="use-icon" className='usr-icon' /></div>
-                    <div className='mail-header flex'>
+                    <div className='mail-head flex'>
                         <span className='mail-from'>{from}</span>
-                        <span className='mail-sentat'>{new Date(sentAt).toLocaleDateString()}</span>
+                        <span className='mail-sentat'>
+                            <span className='sentat-site'>{new Date(sentAt).toLocaleString('en-US', dateOption)}</span>
+                            <span className='sentat-mobile'>{new Date(sentAt).toLocaleDateString()}</span>
+                        </span>
                     </div>
                     <div className='mail-to'>{to}</div>
                     <div className='mail-body'><pre>{body}</pre></div>
