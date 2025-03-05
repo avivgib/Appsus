@@ -1,0 +1,86 @@
+.about {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2em;
+
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.42857142857;
+}
+
+h1 {
+    font-size: 2.14285714286em;
+}
+
+.creator-box {
+    position: relative;
+    width: 60vw;
+}
+
+.creator-img::before {
+    content: "";
+    position: absolute;
+
+    width: 130px;
+    height: 130px;
+
+    border-radius: 50%;
+    border-top: 10px solid #DB4437;
+    border-right: 10px solid #4285F4;
+    border-bottom: 10px solid #0F9D58;
+    border-left: 10px solid #F4B400;
+    animation: spin 30s linear infinite;
+}
+
+.creator-box.aviv>.creator-img img,
+.creator-box.aviv>.creator-img::before {
+    top: 50%;
+    left: 0;
+    translate: -50% -50%;
+}
+
+.creator-box.eliad>.creator-img img,
+.creator-box.eliad>.creator-img::before {
+    top: 50%;
+    right: 0;
+    translate: 50% -50%;
+}
+
+
+.creator-box>.creator-img img {
+    position: absolute;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+}
+
+.creator-box>.creator-info {
+    background-color: var(--g-btn2);
+    border-radius: 10px;
+    width: 100%;
+}
+
+.creator-box>.creator-info>.name {
+    font-weight: bold;
+    font-size: 1.42857142857em;
+}
+
+.creator-box.aviv>.creator-info {
+    padding: 0.71428571428em 1.42857142857em 0.71428571428em 5.71428571429em;
+}
+
+.creator-box.eliad>.creator-info {
+    padding: 0.71428571428em 5.71428571429em 0.71428571428em 1.42857142857em;
+}
+
+@keyframes spin {
+    from {
+        rotate: 0deg;
+    }
+
+    to {
+        rotate: 360deg;
+    }
+}
