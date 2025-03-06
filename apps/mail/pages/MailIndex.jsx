@@ -295,7 +295,9 @@ export function MailIndex() {
     }
 
     function onClosefolders() {
-        setIsFoldersClose(false)
+        if (window.innerWidth < 850) {
+            setIsFoldersClose(false)
+        }
     }
 
     function resetNoteToMail() {

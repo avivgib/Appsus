@@ -25,7 +25,7 @@ export function MailFolderList({ onSetcmpType, onSetStatusInFilterBy, filterBy, 
 
                 {['inbox', 'star', 'sent', 'trash', 'draft'].map(label => {
                     return <li key={label} className={status === label ? 'active' : ''}
-                        onClick={() => { onSetStatusInFilterBy(label); onSetcmpType('list'); onClosefolders(false) }}
+                        onClick={() => { onSetStatusInFilterBy(label); onSetcmpType('list'); onClosefolders() }}
                         style={unreadEmailsCount && unreadEmailsCount[label] > 0 ? { fontWeight: 'bold' } : {}}>
                         <span className={status === label ? `fa ${label}` : ` fare ${label}`}></span>
                         <button>{label}</button>
@@ -51,7 +51,7 @@ export function MailFolderList({ onSetcmpType, onSetStatusInFilterBy, filterBy, 
                     <ul className='clean-list'>
                         {utilService.getMailLabels().map(label => {
                             return <li key={label} className={status === label ? 'active' : ''}
-                                onClick={() => { onSetStatusInFilterBy(label); onSetcmpType('list'); onClosefolders(false) }}
+                                onClick={() => { onSetStatusInFilterBy(label); onSetcmpType('list'); onClosefolders() }}
                                 style={unreadEmailsCount && unreadEmailsCount[label] > 0 ? { fontWeight: 'bold' } : {}}>
                                 <span className={status === label ? `fa ${label}` : ` fare ${label}`}></span>
                                 <button>{label}</button>
