@@ -1,7 +1,9 @@
 /* note list */
 .note-list {
+    font-family: "Google Sans", Roboto, Arial, sans-serif;
     width: 100%;
     margin-top: 20px;
+    margin-left: 100px;
 }
 
 .pinned-section,
@@ -39,7 +41,7 @@
     position: relative;
     width: 240px;
     break-inside: avoid;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     border: 1px solid #e0e0e0;
     padding: 16px;
     border-radius: 8px;
@@ -50,14 +52,20 @@
     display: inline-block;
 }
 
-.note-details {
-    padding-right: 25px;
-}
-
 .note-details h3 {
     margin: 0;
     padding-right: 25px;
     display: inline-block;
+    font-weight: unset;
+    margin: 0px 0px 5px;
+}
+
+.note-details img {
+    border-radius: 8px;
+}
+
+.note-details iframe {
+    border-radius: 8px;
 }
 
 .note-options {
