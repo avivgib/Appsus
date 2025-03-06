@@ -70,9 +70,15 @@ export function AppHeader() {
 function DynamicLogo({ currPage }) {
     switch (currPage) {
         case '/':
-            return <div className='page-name'>Apsus</div>
+            return <React.Fragment>
+                <img src="assets/images/home-logo.png" className='logo-img' alt="home" />
+                <div className='page-name'>Apsus</div>
+            </React.Fragment>
         case '/about':
-            return <div className='page-name'>About</div>
+            return <React.Fragment>
+                <img src="assets/images/home-logo.png" className='logo-img' alt="about" />
+                <div className='page-name'>About</div>
+            </React.Fragment>
         case '/mail':
             return <React.Fragment>
                 <img src="assets/images/gmail-logo.png" className='logo-img gmail' alt="gmail" />
