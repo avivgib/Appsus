@@ -81,7 +81,7 @@ export function NoteSearchCategory({ filterBy, onSetFilter, onSearchFocus }) {
                                     id={`${label}-${index}`}
                                     name="labels"
                                     value={label}
-                                    onClick={handleChange}
+                                    onChange={handleChange}
                                     checked={filterByToEdit.labels === label}
                                 />
                                 <label
