@@ -23,8 +23,12 @@ export function MailIndex() {
     const [sortBy, setSortBy] = useState({ ...mailService.getDefaultSortBy() })
 
     const [openMail, setOpenMail] = useState({ details: null, edit: null })
+    const [noteToMail, setNoteToMail] = useState(null)
+
 
     const [cmpType, setCmpType] = useState('list')
+
+
 
     const defaultFilterByRef = useRef({ ...mailService.getDefaultFilterBy() })
     const defaultSortByRef = useRef({ ...sortBy })
@@ -46,6 +50,8 @@ export function MailIndex() {
     useEffect(() => {
         if (location.state) {
             if (Object.hasOwn(location.state, 'noteToMail')) {
+                const { noteToMail } = location.state
+                setNoteToMail(noteToMail)
                 setCmpType('compose')
             }
         }
@@ -292,6 +298,10 @@ export function MailIndex() {
         setIsFoldersClose(false)
     }
 
+    function resetNoteToMail() {
+        setNoteToMail(null)
+    }
+
 
     return (
         <section className="mail-index main-gmail-layout">
@@ -326,6 +336,8 @@ export function MailIndex() {
                 onSaveMail={onSaveMail}
                 autoSave={autoSave}
                 onRemoveMail={onRemoveMail}
+                noteToMail={noteToMail}
+                resetNoteToMail={resetNoteToMail}
 
                 searchParams={searchParams}
                 saveChanges={saveChanges}

@@ -3,7 +3,7 @@ import { mailService } from "../services/mail.service.js";
 const { useState, useEffect, useRef } = React
 const { useLocation } = ReactRouterDOM
 
-export function MailCompose({ onSetcmpType, onSaveMail, autoSave, openMail, onGoingBack }) {
+export function MailCompose({ onSetcmpType, onSaveMail, autoSave, openMail, onGoingBack, noteToMail, resetNoteToMail }) {
 
     const [newMail, setNewMail] = useState({ ...mailService.getEmptyMail(), createdAt: Date.now() })
 
@@ -11,14 +11,19 @@ export function MailCompose({ onSetcmpType, onSaveMail, autoSave, openMail, onGo
 
     const formRef = useRef()
 
+    console.log(location.state);
+
     useEffect(() => {
-        if (location.state) {
-            if (Object.hasOwn(location.state, 'noteToMail')) {
-                const { noteToMail } = location.state
-                onNoteToMail(noteToMail)
-            }
+        if (noteToMail) {
+            onNoteToMail(noteToMail)
         }
-    }, [location.state])
+
+        return (() => {
+            if (noteToMail) {
+                resetNoteToMail()
+            }
+        })
+    }, [noteToMail])
 
     function onNoteToMail(note) {
         const { title, content } = note.info
