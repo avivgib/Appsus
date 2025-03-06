@@ -6,16 +6,24 @@
     border-radius: 16px;
     height: max-content;
 
-    margin: 10px;
 
     height: 95%;
 }
 
 .emails-bar {
+    flex-direction: column;
+    align-items: start;
+
     min-height: 3.42857142857em;
     /* margin-inline-end: 1.14285714286em;
     padding-inline: 1.14285714286em; */
     background-color: white;
+}
+
+.emails-bar>.folder-name {
+    text-transform: uppercase;
+    padding: 1.07142857143em;
+    font-size: 1.14285714286em;
 }
 
 .emails-list>.emails-footer {
@@ -36,6 +44,8 @@
     color: var(--gl-font2);
 
     background-color: white;
+
+    padding-inline-end: 0.71428571428em;
 }
 
 .emails-list .mail-preview>.more-list-btns {
@@ -148,7 +158,7 @@
     display: flex;
 
     flex: 1 1 auto;
-    padding-inline-end: 0.71428571428em;
+    padding-inline-end: 1.78571428571em;
     min-width: 0;
 }
 
@@ -190,10 +200,16 @@
         grid-area: 1/2;
         display: flex;
         flex-direction: column;
+        margin: 0.71428571428em;
     }
 
     .emails-bar {
+        flex-direction: row;
         box-shadow: inset 0px -1px 0px var(--gl-shadow2);
+    }
+
+    .emails-bar>.folder-name {
+        display: none;
     }
 
     .emails-list {
@@ -206,6 +222,7 @@
         background-color: var(--gl1);
         box-shadow: inset 0 -1px 0 0 var(--gl-shadow2);
         color: var(--gl-font1);
+        padding-inline-end: 0;
     }
 
     .emails-list .mail-preview:hover {

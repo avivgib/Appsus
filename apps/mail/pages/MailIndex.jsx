@@ -315,7 +315,6 @@ export function MailIndex() {
                 defaultFilterByRef={defaultFilterByRef}
             />
 
-
             <MailFolderList
                 onSetcmpType={onSetcmpType}
                 onSetStatusInFilterBy={onSetStatusInFilterBy}
@@ -343,6 +342,8 @@ export function MailIndex() {
 
                 searchParams={searchParams}
                 saveChanges={saveChanges}
+
+                filterBy={filterBy}
             >
                 <MailSort sortBy={sortBy} onSetSortBy={onSetSortBy} filterBy={filterBy} />
 

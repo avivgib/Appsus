@@ -5,7 +5,7 @@ const { useState, useEffect, useRef } = React
 
 const { useNavigate } = ReactRouterDOM
 
-export function MailList({ emails, saveChanges, onSetcmpType, onOpenMail, onRemoveMail, children }) {
+export function MailList({ emails, saveChanges, onSetcmpType, onOpenMail, onRemoveMail, children, filterBy }) {
     const [isLabelPickerOpen, setIsLabelPickerOpen] = useState(null)
 
     const navigate = useNavigate()
@@ -39,6 +39,7 @@ export function MailList({ emails, saveChanges, onSetcmpType, onOpenMail, onRemo
         <section className='emails-wrapper'>
 
             <div className='emails-bar flex align-center'>
+                {filterBy.status && <div className='folder-name'>{filterBy.status}</div>}
                 {children}
             </div>
 
