@@ -5,9 +5,6 @@
     overflow: hidden;
     border-radius: 16px;
     height: max-content;
-
-
-    height: 95%;
 }
 
 .emails-bar {
@@ -201,6 +198,7 @@
         display: flex;
         flex-direction: column;
         margin: 0.71428571428em;
+        height: 95%;
     }
 
     .emails-bar {
