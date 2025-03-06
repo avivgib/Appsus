@@ -18,13 +18,13 @@ export const noteService = {
 }
 
 function query(filterBy) {
-    console.log('filterBy', filterBy);
+    // console.log('filterBy', filterBy)
     return storageService.query(NOTES_KEY)
         .then(notes => {
-            notes = _filterNotes(notes, filterBy);
+            notes = _filterNotes(notes, filterBy)
 
-            console.log('Filtered notes:', notes);
-            return notes;
+            // console.log('Filtered notes:', notes)
+            return notes
         })
 }
 
@@ -99,14 +99,14 @@ function getNotesColorStats() {
 function getNotesLabelStats() {
     return storageService.query(NOTES_KEY)
         .then(notes => {
-            const allLabels = notes.flatMap(note => note.labels || []);
+            const allLabels = notes.flatMap(note => note.labels || [])
             return allLabels.reduce((uniqueLabels, label) => {
                 if (!uniqueLabels.includes(label)) {
-                    uniqueLabels.push(label);
+                    uniqueLabels.push(label)
                 }
-                return uniqueLabels;
-            }, []);
-        });
+                return uniqueLabels
+            }, [])
+        })
 }
 
 // ~~~~~~~~~~~~~~~~ LOCAL FUNCTIONS ~~~~~~~~~~~~~~~~~~~ //

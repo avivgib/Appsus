@@ -93,14 +93,14 @@ export function NoteComposer({ onSaveNote }) {
     }
 
     function handleImageUpload(imageUrl) {
-        
+
         const updatedNote = {
             ...newNote,
             info: { ...newNote.info, image: imageUrl.src }
         }
 
         setNewNote(updatedNote)
-        console.log('Saving image note:', updatedNote)
+        // console.log('Saving image note:', updatedNote)
         onSaveNote(updatedNote)
             .then(() => {
                 setNewNote(emptyNoteRef.current)
@@ -170,8 +170,7 @@ export function NoteComposer({ onSaveNote }) {
                                 alt="YouTube video preview"
                                 style={{ width: '100%', height: 'auto' }}
                             />
-                        )
-                        }
+                        )}
                     </div>
                 )}
 

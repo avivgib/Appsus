@@ -1,6 +1,7 @@
 .note-search-category {
     display: flex;
     flex-direction: column;
+    margin-bottom: 100px;
 }
 
 /* Labels Category Styling */
@@ -75,7 +76,6 @@
 
 .colors-category {
     width: 650px;
-    height: 137px;
     margin: 16px 80px;
     background-color: #fff;
     font-weight: 500;
@@ -91,8 +91,9 @@
 }
 
 .colors-picker {
-    display: flex;
-    justify-content: flex-start;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    height: auto;
     width: 644px;
     padding: 10px;
     overflow: visible;

@@ -29,7 +29,7 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onCopyNote, onToggle
     function onToggleLabelPicker(noteId) {
         setActiveNote(noteId)
         const note = notes.find(note => note.id === noteId)
-        console.log('update', note);
+        // console.log('update', note)
         setLabels(Array.isArray(note.labels) ? note.labels : [])
     }
 
@@ -37,7 +37,7 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onCopyNote, onToggle
         const noteToUpdate = notes.find(note => note.id === activeNote)
         if (noteToUpdate) {
             noteToUpdate.labels = labels
-            console.log(noteToUpdate);
+            // console.log(noteToUpdate)
             onUpdateLabels(noteToUpdate)
         }
         setActiveNote(null)
