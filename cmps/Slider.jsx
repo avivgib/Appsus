@@ -58,7 +58,7 @@ export function Slider(props) {
         var move = 0
         if (activeImgRef) {
             move = imagesContainer[activeImgRef].offsetWidth * activeImgRef
-            console.log(imagesContainer[activeImgRef].offsetWidth);
+            // console.log(imagesContainer[activeImgRef].offsetWidth);
         } else {
             move = imagesContainer[activeImg].offsetWidth * activeImg
         }
@@ -71,11 +71,11 @@ export function Slider(props) {
 
     function PausePlaySlider() {
         if (isPause) {
-            console.log('stop');
+            // console.log('stop');
             clearInterval(sliderInterval.current)
-            console.log(sliderInterval.current);
+            // console.log(sliderInterval.current);
         } else {
-            console.log('play');
+            // console.log('play');
             sliderInterval.current = setInterval(onAutoSlide, 1000 * 8)
         }
     }
