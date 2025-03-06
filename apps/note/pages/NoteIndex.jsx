@@ -29,7 +29,7 @@ export function NoteIndex() {
     }
 
     function onSaveNote(newNote) {
-        if (!newNote.info.title.trim() && !newNote.info.content.trim()) return
+        if (!newNote.info.title.trim() && !newNote.info.content.trim() && !newNote.info.image) return Promise.resolve()
 
         const noteToSave = {
             ...newNote,
@@ -39,12 +39,14 @@ export function NoteIndex() {
             }
         }
 
-        noteService.save(noteToSave)
+        return noteService.save(noteToSave)
             .then(savedNote => {
                 setNotes(prevNotes => [savedNote, ...prevNotes])
                 showSuccessMsg(noteToSave.id ? 'Note Edited' : 'Note Added')
+                return savedNote
             })
-            .catch(() => {
+            .catch(err => {
+                console.error('Error saving note:', err)
                 showErrorMsg(noteToSave.id ? 'Problem editing note' : 'Problem adding note')
             })
     }
@@ -59,7 +61,7 @@ export function NoteIndex() {
     }
 
     function onCopyNote(note) {
-        const newNote = structuredClone(note)
+        const newNote = structuredClone({...note})
         newNote.id = ''
         newNote.info.title = `Copy of ${note.info.title}`
         newNote.createdAt = Date.now()

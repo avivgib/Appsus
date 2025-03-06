@@ -19,7 +19,7 @@ export function NotePreview({ note }) {
 
     const videoId = type === 'NoteVideo' ? (info.videoId || getYouTubeVideoId(info.content)) : null
 
-return (
+    return (
         <section className="note-preview">
             <h3>{info.title || 'No title'}</h3>
             {type === 'NoteVideo' && videoId ? (
@@ -42,6 +42,15 @@ return (
                         alt="YouTube video preview"
                         style={{ display: 'none', width: '100%', height: 'auto' }}
                     />
+                </div>
+            ) : type === 'NoteImg' && info.image ? (
+                <div className="image-preview">
+                    <img
+                        src={info.image}
+                        alt={info.title || 'Note image'}
+                        style={{ width: '100%', height: 'auto', maxHeight: '150px' }}
+                    />
+                    {info.content && <div className="note-content">{truncateContent(info.content)}</div>}
                 </div>
             ) : (
                 <div className="note-content">{truncateContent(info.content || '')}</div>

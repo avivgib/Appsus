@@ -3,8 +3,7 @@ import { ColorPicker } from "./ColorPicker.jsx"
 import { LabelPicker } from "../../../cmps/LabelPicker.jsx"
 import { utilService } from "../../../services/util.service.js"
 
-// const { useState, useEffect } = React
-const { useState, useEffect, useRef } = React
+const { useState } = React
 const { useNavigate } = ReactRouterDOM
 
 export function NoteList({ notes, onRemoveNote, onEditNote, onCopyNote, onTogglePin, onSetBackgroundColor, onUpdateLabels }) {
@@ -12,9 +11,8 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onCopyNote, onToggle
     const pinnedNotes = notes.filter(note => note.isPinned)
     const otherNotes = notes.filter(note => !note.isPinned)
 
-    const [pickNote, setPickNote] = useState(null)
+    const [activeNote, setActiveNote] = useState(null)
     const [labels, setLabels] = useState(utilService.getNotesLabels() || [])
-
 
     function onNoteToMail(note) {
         navigate('/mail', { state: { noteToMail: note } })
@@ -29,22 +27,23 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onCopyNote, onToggle
     }
 
     function onToggleLabelPicker(noteId) {
-        setPickNote(noteId)
+        setActiveNote(noteId)
         const note = notes.find(note => note.id === noteId)
         setLabels(Array.isArray(note.labels) ? note.labels : [])
     }
 
-    function onSetNoteLabels(ev, type, labels) {
-        const noteToUpdate = notes.find(note => note.id === pickNote)
-        noteToUpdate.labels = labels
-        console.log(noteToUpdate);
-        onUpdateLabels(noteToUpdate)
-        setPickNote(null)
+    function onSetNoteLabels(labels) {
+        const noteToUpdate = notes.find(note => note.id === activeNote)
+        if (noteToUpdate) {
+            noteToUpdate.labels = labels
+            console.log(noteToUpdate);
+            onUpdateLabels(noteToUpdate)
+        }
+        setActiveNote(null)
     }
 
     return (
         <section className='note-list'>
-
             {pinnedNotes.length > 0 && (
                 <div className="pinned-section">
                     <h2 className="section-title">Pinned</h2>
@@ -79,7 +78,7 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onCopyNote, onToggle
                                     />
                                     <button className='fare copy' onClick={() => onCopyNote(note)}></button>
                                     <button className='fa tag' onClick={() => onToggleLabelPicker(note.id)} >
-                                        {pickNote === note.id &&
+                                        {activeNote === note.id &&
                                             <LabelPicker
                                                 labels={labels}
                                                 handleChanges={onSetNoteLabels}
@@ -124,7 +123,7 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onCopyNote, onToggle
                                     />
                                     <button className='fare copy' onClick={() => onCopyNote(note)}></button>
                                     <button className='fa tag' onClick={() => onToggleLabelPicker(note.id)} >
-                                        {pickNote === note.id &&
+                                        {activeNote === note.id &&
                                             <LabelPicker
                                                 labels={labels}
                                                 handleChanges={onSetNoteLabels}

@@ -9,16 +9,18 @@
     cursor: text;
     box-shadow: 0 3px 5px rgba(0, 0, 0, .20);
     overflow: hidden;
-
 }
 
-.input-container input {
+.input-container input,
+.input-container textarea {
     border: none;
     outline: none;
+    overflow: hidden;
+    resize: none;
     padding: 12px 16px;
     font-size: 1em;
     width: 100%;
-    border-radius: 8px
+    border-radius: 8px;
 }
 
 .input-container.expanded {
@@ -27,15 +29,6 @@
 
 .title-input {
     margin-top: 5px;
-}
-
-.input-container textarea, 
-.input-container input {
-    border: none;
-    outline: none;
-    overflow: hidden;
-    resize: none;
-    width: 100%;
 }
 
  .textarea-wrapper {
@@ -57,45 +50,40 @@
     width: 100%;
 }
 
-.film-btn {
-    position: absolute;
+.video-btn {
     right: 10px;
     background: none;
     border: none;
     cursor: pointer;
     font-size: 18px;
-    color: #666;
 }
 
 .buttons-wrapper {
     display: flex;
+    justify-content: flex-end;
     align-items: center;
-    justify-content: space-between;
-    padding: 5px;
-    gap: 8px;
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
+    gap: 10px;
+    padding: 8px 16px;
 }
 
 .note-type-btns {
     display: flex;
-    gap: 8px;
+    gap: 10px; 
 }
 
 .note-type-btns button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: transparent;
     border: none;
     cursor: pointer;
     font-size: 16px;
     padding: 6px;
-    transition: transform 0.2s ease, background 0.3s ease;
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
+    transition: transform 0.2s ease, background 0.3s ease;
 }
 
 .note-type-btns button:hover {
@@ -103,28 +91,25 @@
     transform: scale(1.1);
 }
 
-.film-btn::before {
-    font-weight: 900;
+.video-btn,
+.image-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 50%;
 }
 
+.video-btn::before,
 .image-btn::before {
     font-weight: 900;
 }
 
-
-
-.save-btn {
-    background: #007BFF;
-    border: none;
-    cursor: pointer;
-    color: white;
-    font-size: 14px;
-    padding: 6px 12px;
-    border-radius: 6px;
-    transition: background 0.3s ease, transform 0.2s ease;
-}
-
-.save-btn:hover {
-    background: #0056b3;
-    transform: scale(1.05);
+.image-btn {
+    margin-left: 5px;
 }

@@ -37,13 +37,18 @@ function remove(noteId) {
 }
 
 function save(note) {
-    // NoteVideo validation
+    // Note video validation
     if (note.type === 'NoteVideo') {
         const videoId = _getYouTubeVideoId(note.info.content)
         if (!videoId) {
             return Promise.reject('Invalid YouTube video URL')
         }
         note.info.videoId = videoId
+    }
+
+    // Note image validation
+    if (note.type === 'NoteImg' && !note.info.image) {
+        console.error('Note image saved without an image')
     }
 
     return note.id
@@ -72,7 +77,8 @@ function getEmptyNote(id = '', createdAt = Date.now(), type = 'NoteTxt', isPinne
         },
         info: {
             title: '',
-            content: ''
+            content: '',
+            image: '',
         },
         labels: [],
     }
@@ -138,19 +144,6 @@ function _filterNotes(notes, filterBy) {
     if (filterBy.type) {
         filteredNotes = filteredNotes.filter(note => note.type === filterBy.type)
     }
-
-    // if (filterBy.type) {
-    //     filteredNotes = filteredNotes.filter(note => note.createdAt > filterBy.createdAt)
-    // }
-
-    // if (filterBy.title) {
-    //     const regExp = new RegExp(filterBy.title, 'i')
-    //     filteredNotes = filteredNotes.filter(note => regExp.test(note.info.title))
-    // }
-
-    // if (filterBy.createdAt) {
-    //     filteredNotes = filteredNotes.filter(note => note.createdAt > filterBy.createdAt)
-    // }
 
     return filteredNotes
 }

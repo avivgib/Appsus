@@ -1,25 +1,19 @@
 import { noteService } from "../services/note.service.js"
 
 const { useState, useEffect, useRef } = React
-const { useSearchParams, useLocation } = ReactRouterDOM
+const { useLocation } = ReactRouterDOM
 
 export function NoteComposer({ onSaveNote }) {
-    // const [newNote, setNewNote] = useState(noteService.getEmptyNote())
-    // console.log(newNote)
-
     const [isFullInputOpen, setIsFullInputOpen] = useState(false)
     const [noteType, setNoteType] = useState('NoteTxt')
-    const [newNote, setNewNote] = useState({
-        type: 'NoteTxt',
-        info: { title: '', content: '' }
-    })
+    const [newNote, setNewNote] = useState(noteService.getEmptyNote())
     const [iframeError, setIframeError] = useState(false)
 
     const emptyNoteRef = useRef(noteService.getEmptyNote())
     const inputContainerRef = useRef(null)
+    const fileInputRef = useRef(null)
 
     const location = useLocation()
-    // console.log(searchParams);
 
     useEffect(() => {
         if (location.state) {
@@ -34,7 +28,7 @@ export function NoteComposer({ onSaveNote }) {
         function handleClickOutside({ target }) {
             if (inputContainerRef.current && !inputContainerRef.current.contains(target)) {
                 setIsFullInputOpen(false)
-                if (newNote.info.title.trim() || newNote.info.content.trim()) {
+                if (newNote.info.title.trim() || newNote.info.content.trim() || newNote.info.image) {
                     onSaveNote(newNote)
                     setNewNote(prev => emptyNoteRef.current)
                 }
@@ -46,8 +40,6 @@ export function NoteComposer({ onSaveNote }) {
     }, [newNote, onSaveNote])
 
     function setNoteToMail(mail) {
-        // console.log(mail)
-
         const { subject, body } = mail
         toggleAddInput()
         setNewNote(prev => ({ ...prev, info: { ...prev.info, title: subject, content: body } }))
@@ -70,9 +62,41 @@ export function NoteComposer({ onSaveNote }) {
         setNewNote(prev => ({
             ...prev,
             type: 'NoteVideo',
-            info: { title: '', content: '' }
+            info: { title: '', content: '', image: '' }
         }))
         toggleAddInput()
+    }
+
+    function toggleToImageNote() {
+        setNoteType('NoteImg')
+        setNewNote(prev => ({
+            ...prev,
+            type: 'NoteImg',
+            info: { title: '', content: '', image: '' }
+        }))
+        toggleAddInput()
+        fileInputRef.current.click()
+    }
+
+    function handleImageUpload({ target }) {
+        const file = target.files[0]
+        if (!file) return
+
+        const imageUrl = URL.createObjectURL(file)
+        const updatedNote = {
+            ...newNote,
+            info: {...newNote.info, image: imageUrl}
+        }
+
+        setNewNote(updatedNote)
+        console.log('Saving image note:', updatedNote)
+        onSaveNote(updatedNote)
+            .then(() => {
+                setNewNote(emptyNoteRef.current)
+                setIsFullInputOpen(false)
+            })
+            .catch(err => console.error('Failed to save image note:', err))
+        target.value = null
     }
 
     function getYouTubeVideoId(url) {
@@ -89,6 +113,14 @@ export function NoteComposer({ onSaveNote }) {
             className={`input-container ${isFullInputOpen ? "expanded" : ""}`}
             onClick={() => !isFullInputOpen && toggleAddInput()}
         >
+            <input
+                type="file"
+                ref={fileInputRef}
+                style={{ display: 'none' }}
+                accept="image/*"
+                onChange={handleImageUpload}
+            />
+
             {isFullInputOpen && (
                 <input
                     name="title"
@@ -130,16 +162,40 @@ export function NoteComposer({ onSaveNote }) {
                     </div>
                 )}
 
-                <div className="buttons-wrapper">
+                {isFullInputOpen && noteType === 'NoteImg' && newNote.info.image && (
+                    <div className="image-preview">
+                        <img
+                            src={newNote.info.image}
+                            alt="Note Image"
+                            style={{ width: '100%', height: 'auto', maxHeight: '200px' }}
+                        />
+                    </div>
+                )}
+            </div>
+
+            <div className="buttons-wrapper">
+                <section className="note-type-btns">
+                    {/* video */}
                     <button
-                        className="film-btn fa film"
+                        className="video-btn fa film"
                         onClick={(e) => {
                             e.stopPropagation()
                             toggleToVideoNote()
                         }}
                         title="Create video note"
                     ></button>
-                </div>
+
+                    {/* image */}
+                    <button
+                        className="image-btn fare image"
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            toggleToImageNote()
+                        }}
+                        title="Create image note"
+                    >
+                    </button>
+                </section>
             </div>
         </div>
     )
@@ -148,7 +204,7 @@ export function NoteComposer({ onSaveNote }) {
                         <section className="note-type-btns">
                             video
                             <button
-                                className="film-btn fa film"
+                                className="video-btn fa film"
                                 onClick={(e) => {
                                     e.stopPropagation()
                                     toggleToVideoNote()
