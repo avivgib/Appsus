@@ -23,6 +23,47 @@
     color: var(--gl-font2);
 }
 
+.mail-details>.details-header-bar>.details-btn>* {
+    padding: 0.71428571428em;
+}
+
+.mail-details>.details-header-bar>.details-btn>.fa.arrow-left {
+    margin-inline-end: 1.42857142857em;
+}
+
+.mail-details>.details-header-bar>.details-btn .fa.star {
+    color: var(--g-btn1);
+}
+
+
+.mail-details>.details-header-bar .fa,
+.mail-details>.details-header-bar .fare {
+    position: relative;
+}
+
+.mail-details>.details-header-bar .fa::after,
+.mail-details>.details-header-bar .fare::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    content: '';
+    background-color: rgba(0, 0, 0, 0.1);
+    width: 1.42857142857em;
+    height: 1.42857142857em;
+    border-radius: 50%;
+    opacity: 0;
+    transition: 200ms;
+}
+
+.mail-details>.details-header-bar .fa:hover::after,
+.mail-details>.details-header-bar .fare:hover::after {
+    opacity: 1;
+    width: 2.78571428571em;
+    height: 2.78571428571em;
+}
+
+
 .mail-details>.mail-wrapper {
     padding-inline-end: 1.14285714286em;
 
@@ -38,12 +79,27 @@
 
 
 .mail-details>.mail-wrapper>.mail-subject {
+    display: flex;
+    align-items: center;
     grid-column: 2 span;
 
     padding-block-start: 0.90909090909em;
     padding-inline-start: 0.90909090909em;
     font-size: 1.57142857143em;
     line-height: 0.90909090909;
+
+    flex-wrap: wrap;
+}
+
+.mail-details>.mail-wrapper>.mail-subject>.mail-label {
+    overflow: visible;
+    font-size: 0.54545454545em;
+    margin-inline: 0.16666666666em;
+    background-color: var(--gl-shadow1);
+    color: var(--gl-font2);
+    padding: 0.27272727272em;
+    border-radius: 5px;
+    align-self: center;
 }
 
 .mail-details>.mail-wrapper>.mail-content {
@@ -109,6 +165,10 @@
 
 @media (min-width: 850px) {
 
+    .mail-details>.details-header-bar>.details-btn .fa.star {
+        color: var(--gl-font5);
+    }
+
     .mail-wrapper>.mail-content>.mail-head>.mail-sentat>.sentat-site {
         display: block;
     }
@@ -121,6 +181,5 @@
         grid-area: 3/2;
         padding-inline-start: 0;
     }
-
 
 }
