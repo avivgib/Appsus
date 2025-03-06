@@ -134,7 +134,7 @@
 
 
 .emails-list .mail-preview:has(.fare.envelope)>.sent-from,
-.emails-list .mail-preview:has(.fare.envelope)>.mail-content>.mail-subject,
+.emails-list .mail-preview:has(.fare.envelope)>.mail-content .mail-subject,
 .emails-list .mail-preview:has(.fare.envelope)>.sentat {
     font-weight: bold;
 }
