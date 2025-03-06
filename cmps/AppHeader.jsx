@@ -72,7 +72,7 @@ function DynamicLogo({ currPage }) {
         case '/':
             return <React.Fragment>
                 <img src="assets/images/home-logo.png" className='logo-img' alt="home" />
-                <div className='page-name'>Apsus</div>
+                <div className='page-name'>Appsus</div>
             </React.Fragment>
         case '/about':
             return <React.Fragment>
