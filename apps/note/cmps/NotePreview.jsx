@@ -21,7 +21,7 @@ export function NotePreview({ note }) {
 
     return (
         <section className="note-preview">
-            <h3>{info.title || 'No title'}</h3>
+            <h3>{info.title}</h3>
             {type === 'NoteVideo' && videoId ? (
                 <div className="video-preview">
                     <iframe
@@ -48,7 +48,7 @@ export function NotePreview({ note }) {
                     <img
                         src={info.image}
                         alt={info.title || 'Note image'}
-                        style={{ width: '100%', height: 'auto', maxHeight: '150px' }}
+                        style={{ width: '100%', height: 'auto', maxHeight: 'max-content' }}
                     />
                     {info.content && <div className="note-content">{truncateContent(info.content)}</div>}
                 </div>

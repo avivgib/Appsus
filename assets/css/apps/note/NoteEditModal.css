@@ -23,7 +23,6 @@
 
 .modal-body input {
     width: 100%;
-    margin-bottom: 10px;
     padding: 8px;
 }
 
@@ -38,9 +37,10 @@
 .modal-body {
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
     max-height: calc(80vh - 60px);
     overflow: auto;
-    gap: 10px;
+    overflow-y: auto;
 }
 
 .modal-overlay.show {
@@ -51,7 +51,7 @@
 .modal-content {
     display: flex;
     flex-direction: column;
-    height: max-content;
+    height: 100%;
 }
 
 .modal-overlay.show .modal-content {
@@ -59,7 +59,8 @@
 }
 
 .modal-footer {
-    padding: 10px;
+    padding-block: 4px;
+    padding-inline: 16px;
     text-align: right;
 }
 
@@ -71,9 +72,13 @@
     cursor: pointer;
 }
 
-.modal-footer button.cancel {
-    background-color: #f44336;
-    color: white;
+.modal-footer .edit-close-btn {
+    background-color: #ffffff;
+
+}
+
+.modal-footer .edit-close-btn:hover {
+    background-color: rgb(233, 233, 233);
 }
 
 .modal-content textarea, 
@@ -83,4 +88,41 @@
     overflow: hidden;
     resize: none;
     width: 100%;
+}
+
+.modal-content input {
+    font-size: 22px;
+    padding: 16px 15px 12px;
+}
+
+.modal-content textarea {
+    padding: 4px 16px 12px;
+}
+
+.image-container {
+    position: relative;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.note-image {
+    max-width: 94%;
+    border-radius: 8px;
+    display: block;
+    margin: auto;
+}
+
+.delete-image-btn {
+    position: absolute;
+    top: 3px;
+    right: 18px;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 100px;
+}
+
+.no-image-available {
+    align-self: center;
+    font-size: xx-large;
 }
