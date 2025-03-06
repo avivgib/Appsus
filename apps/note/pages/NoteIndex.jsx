@@ -61,7 +61,7 @@ export function NoteIndex() {
     }
 
     function onCopyNote(note) {
-        const newNote = structuredClone({...note})
+        const newNote = structuredClone({ ...note })
         newNote.id = ''
         newNote.info.title = `Copy of ${note.info.title}`
         newNote.createdAt = Date.now()
@@ -137,6 +137,7 @@ export function NoteIndex() {
     }
 
     function onSetStatusInFilterBy(status) {
+        onSearchFocus(false)
         setFilterBy(prev => ({ ...prev, status: status }))
     }
 

@@ -78,14 +78,25 @@ export function NoteComposer({ onSaveNote }) {
         fileInputRef.current.click()
     }
 
-    function handleImageUpload({ target }) {
-        const file = target.files[0]
-        if (!file) return
 
-        const imageUrl = URL.createObjectURL(file)
+    function uploadImage(ev) {
+        loadImageFromInput(ev, handleImageUpload)
+    }
+    function loadImageFromInput(ev, onImageReady) {
+        var reader = new FileReader()
+        reader.onload = function (event) {
+            var img = new Image()
+            img.onload = () => onImageReady(img)
+            img.src = event.target.result
+        }
+        reader.readAsDataURL(ev.target.files[0])
+    }
+
+    function handleImageUpload(imageUrl) {
+        
         const updatedNote = {
             ...newNote,
-            info: {...newNote.info, image: imageUrl}
+            info: { ...newNote.info, image: imageUrl.src }
         }
 
         setNewNote(updatedNote)
@@ -96,8 +107,10 @@ export function NoteComposer({ onSaveNote }) {
                 setIsFullInputOpen(false)
             })
             .catch(err => console.error('Failed to save image note:', err))
-        target.value = null
+        // target.value = null
     }
+
+
 
     function getYouTubeVideoId(url) {
         const regExp = /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
@@ -118,7 +131,7 @@ export function NoteComposer({ onSaveNote }) {
                 ref={fileInputRef}
                 style={{ display: 'none' }}
                 accept="image/*"
-                onChange={handleImageUpload}
+                onChange={uploadImage}
             />
 
             {isFullInputOpen && (
