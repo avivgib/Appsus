@@ -4,7 +4,7 @@ import { MailFilter } from "./MailFilter.jsx"
 const { Link, NavLink } = ReactRouterDOM
 const { useState, useEffect, useRef } = React
 
-export function MailHeader({ isFoldersClose, onToggleFolders, filterBy, onSetFilterBy }) {
+export function MailHeader({ isFoldersClose, onToggleFolders, filterBy, onSetFilterBy, defaultFilterByRef }) {
 
     const [isNavOpen, setIsNavOpen] = useState(false)
 
@@ -32,7 +32,7 @@ export function MailHeader({ isFoldersClose, onToggleFolders, filterBy, onSetFil
         <nav>
             <button className='btn-nav' onClick={onToggleNav}>
                 <img src="assets/images/9-point.svg" alt="point" className='nav-point' />
-                {isNavOpen && <NavigationBox onToggleNav={onToggleNav} />}
+                {isNavOpen && <NavigationBox onToggleNav={onToggleNav} defaultFilterByRef={defaultFilterByRef} />}
             </button>
         </nav>
 

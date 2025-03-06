@@ -29,7 +29,6 @@ export function MailIndex() {
     const [cmpType, setCmpType] = useState('list')
 
 
-
     const defaultFilterByRef = useRef({ ...mailService.getDefaultFilterBy() })
     const defaultSortByRef = useRef({ ...sortBy })
 
@@ -313,6 +312,7 @@ export function MailIndex() {
                 onToggleFolders={onToggleFolders}
                 filterBy={filterBy}
                 onSetFilterBy={onSetFilterBy}
+                defaultFilterByRef={defaultFilterByRef}
             />
 
 

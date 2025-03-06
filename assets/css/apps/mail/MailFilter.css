@@ -23,10 +23,12 @@
 .mail-filter>.main-search>.fa {
     position: relative;
     cursor: pointer;
+    padding-inline: 0.5em;
 }
 
 .mail-filter>.main-search>.fa.x {
     padding: 0.5em;
+    margin: 0.35714285714em;
 }
 
 
@@ -102,12 +104,62 @@
     outline: none;
 }
 
+.more-filters-btn {
+    position: relative;
+}
+
+.more-filtes-box {
+    position: absolute;
+    top: 150%;
+    right: 0;
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 1em;
+    background-color: white;
+    z-index: 3;
+    padding: 10px;
+    width: 300px;
+    place-items: start;
+    max-width: 720px;
+    outline: 1px solid var(--gl-shadow1);
+    box-shadow: 2px 2px 10px var(--gl-shadow1);
+    accent-color: var(--g-btn1);
+}
+
+.more-filtes-box>input {
+    width: 100%;
+    border: none;
+    outline: none;
+    border-block-end: 2px solid var(--gl-shadow1);
+
+    &:focus {
+        border-block-end: 2px solid var(--g-btn1);
+    }
+}
+
+.more-filtes-box>button {
+    grid-column: 1 / -1;
+    place-self: end;
+    color: var(--white);
+    background-color: var(--g-btn1);
+    padding: 0.57142857142em;
+    border-radius: 10px;
+
+    &:hover {
+        box-shadow: 3px 3px 5px var(--gl-shadow2);
+        filter: brightness(1.07);
+    }
+}
 
 
 @media (min-width: 850px) {
 
     .mail-filter>.main-search {
         max-width: 720px;
+    }
+
+    .more-filtes-box {
+        width: 50vw;
     }
 
 }

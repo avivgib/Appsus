@@ -51,3 +51,7 @@ textarea {
     font-family: inherit;
     font-size: inherit;
 }
+
+.highlight {
+    background-color: yellow;
+}
