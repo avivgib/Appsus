@@ -1,5 +1,5 @@
 
-export function NoteFolderList({ onSetStatusInFilterBy, filterBy }) {
+export function NoteFolderList({ onSetStatusInFilterBy, filterBy, onClosefolders }) {
 
 
     const { status } = filterBy
@@ -10,7 +10,7 @@ export function NoteFolderList({ onSetStatusInFilterBy, filterBy }) {
 
                 {['notes', 'work', 'personal', 'inspiration', 'trash'].map(label => {
                     return <li key={label} className={status === label ? 'active' : ''}
-                        onClick={() => onSetStatusInFilterBy(label)}>
+                        onClick={() => { onSetStatusInFilterBy(label); onClosefolders() }}>
                         <span className={(label === 'notes' || label === 'trash') ? `fare ${label}` : `fa tag`}>
                         </span>
                         <button>{label}</button>

@@ -3,9 +3,9 @@ import { noteService } from "../services/note.service.js"
 import { NoteList } from "../cmps/NoteList.jsx"
 import { NoteComposer } from "../cmps/NoteComposer.jsx"
 import { NoteEditModal } from "../cmps/NoteEditModal.jsx"
-import { NoteFilter } from "../cmps/NoteFilter.jsx"
 import { NoteSearchCategory } from "../cmps/NoteSearchCategory.jsx"
 import { NoteFolderList } from "../cmps/NoteFolderList.jsx"
+import { NoteHeader } from "../cmps/NoteHeader.jsx"
 
 
 const { useState, useEffect, useRef } = React
@@ -17,6 +17,7 @@ export function NoteIndex() {
     const [filterBy, setFilterBy] = useState({ ...noteService.getDefaultFilter() })
 
     const DefaultFilterRef = useRef({ ...filterBy })
+    const [isFoldersClose, setIsFoldersClose] = useState(false)
 
     useEffect(() => {
         loadNotes()
@@ -141,17 +142,32 @@ export function NoteIndex() {
         setFilterBy(prev => ({ ...prev, status: status }))
     }
 
+
+    function onToggleFolders() {
+        setIsFoldersClose(prev => prev = !isFoldersClose)
+    }
+
+    function onClosefolders() {
+        if (window.innerWidth < 850) {
+            setIsFoldersClose(false)
+        }
+    }
+
+
     return (
         <section className="container note-main-layout">
 
-            <NoteFolderList onSetStatusInFilterBy={onSetStatusInFilterBy} filterBy={filterBy} />
+            <NoteHeader
+                filterBy={filterBy}
+                onSetFilter={onSetFilter}
+                onSearchFocus={onSearchFocus}
+                onToggleFolders={onToggleFolders}
+                isFoldersClose={isFoldersClose}
+            />
+
+            <NoteFolderList onSetStatusInFilterBy={onSetStatusInFilterBy} filterBy={filterBy} onClosefolders={onClosefolders} />
 
             <div className='main-content'>
-                <NoteFilter
-                    filterBy={filterBy}
-                    onSetFilter={onSetFilter}
-                    onSearchFocus={onSearchFocus}
-                />
 
                 {!isSearchFocused && (
                     <React.Fragment>
