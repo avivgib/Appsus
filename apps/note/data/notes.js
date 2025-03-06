@@ -27,9 +27,7 @@ export const notes = [
         },
         info: {
             title: 'Bobi and Me',
-            content: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. ' +
-                'The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters. ' +
-                'Various versions have evolved over the years, sometimes by accident, sometimes on purpose.'
+            content: 'It is a long established fact that a reader will be distracted by the readable more-or-less normal.'
         },
         labels: []
     },
@@ -43,10 +41,7 @@ export const notes = [
         },
         info: {
             title: 'Get my stuff together',
-            content: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. ' +
-                'The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters. ' +
-                'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. ' +
-                'Various versions have evolved over the years, sometimes by accident, sometimes on purpose.'
+            content: 'It is a long note.'
         },
         labels: []
     }

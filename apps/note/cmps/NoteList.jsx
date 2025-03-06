@@ -1,6 +1,7 @@
 import { NotePreview } from "./NotePreview.jsx"
 import { ColorPicker } from "./ColorPicker.jsx"
 import { LabelPicker } from "../../../cmps/LabelPicker.jsx"
+import { utilService } from "../../../services/util.service.js"
 
 // const { useState, useEffect } = React
 const { useState, useEffect, useRef } = React
@@ -12,7 +13,7 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onCopyNote, onToggle
     const otherNotes = notes.filter(note => !note.isPinned)
 
     const [pickNote, setPickNote] = useState(null)
-    const [labels, setLabels] = useState(null)
+    const [labels, setLabels] = useState(utilService.getNotesLabels() || [])
 
 
     function onNoteToMail(note) {
@@ -30,7 +31,7 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onCopyNote, onToggle
     function onToggleLabelPicker(noteId) {
         setPickNote(noteId)
         const note = notes.find(note => note.id === noteId)
-        setLabels(note.labels)
+        setLabels(Array.isArray(note.labels) ? note.labels : [])
     }
 
     function onSetNoteLabels(ev, type, labels) {
@@ -62,7 +63,6 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onCopyNote, onToggle
                                         onPinNote(note.id)
                                     }}
                                     style={{ position: 'absolute', top: '8px', right: '8px' }}
-                                    data-action={note.isPinned ? 'Unpin note' : 'Pin note'}
                                 ></button>
 
                                 <div className="note-details">
@@ -70,15 +70,15 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onCopyNote, onToggle
                                 </div>
 
                                 <section className="note-options" onClick={(e) => e.stopPropagation()}>
-                                    <button data-action="Remove" className='fare trash' onClick={() => onRemoveNote(note.id)}></button>
-                                    <button data-action="Send to Mail" className='fare envelope' onClick={() => onNoteToMail(note)}></button>
+                                    <button className='fare trash' onClick={() => onRemoveNote(note.id)}></button>
+                                    <button className='fare envelope' onClick={() => onNoteToMail(note)}></button>
                                     <ColorPicker
                                         note={note}
                                         onSetBackgroundColor={onSetBackgroundColor}
                                         color={note.style.backgroundColor || '#ffffff'}
                                     />
-                                    <button data-action="Copy" className='fare copy' onClick={() => onCopyNote(note)}></button>
-                                    <button data-action="Add label" className='fa tag' onClick={() => onToggleLabelPicker(note.id)} >
+                                    <button className='fare copy' onClick={() => onCopyNote(note)}></button>
+                                    <button className='fa tag' onClick={() => onToggleLabelPicker(note.id)} >
                                         {pickNote === note.id &&
                                             <LabelPicker
                                                 labels={labels}
@@ -115,15 +115,15 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onCopyNote, onToggle
                                         className={`pin-btn fa ${note.isPinned ? 'thumbtack' : 'thumbtack-slash'}`}
                                         onClick={() => onPinNote(note.id)}
                                     ></button>
-                                    <button data-action="Remove" className='fare trash' onClick={() => onRemoveNote(note.id)}></button>
-                                    <button data-action="Send to Mail" className='fare envelope' onClick={() => onNoteToMail(note)}></button>
+                                    <button className='fare trash' onClick={() => onRemoveNote(note.id)}></button>
+                                    <button className='fare envelope' onClick={() => onNoteToMail(note)}></button>
                                     <ColorPicker
                                         note={note}
                                         onSetBackgroundColor={onSetBackgroundColor}
                                         color={note.style.backgroundColor || '#ffffff'}
                                     />
-                                    <button data-action="Copy" className='fare copy' onClick={() => onCopyNote(note)}></button>
-                                    <button data-action="Add label" className='fa tag' onClick={() => onToggleLabelPicker(note.id)} >
+                                    <button className='fare copy' onClick={() => onCopyNote(note)}></button>
+                                    <button className='fa tag' onClick={() => onToggleLabelPicker(note.id)} >
                                         {pickNote === note.id &&
                                             <LabelPicker
                                                 labels={labels}
