@@ -21,13 +21,12 @@
 }
 
 .labels-picker {
-    display: flex;
-    justify-content: flex-start;
-    width: 644px;
-    height: 158px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     gap: 6px;
+    width: 644px;
+    height: auto;
     overflow: visible;
-    
 }
 
 .labels-picker input {
@@ -52,7 +51,7 @@
     width: 100%;
     
     &:hover {
-        border: 1px solid rgba(0, 0, 0, 0.8);
+        background-color: #cccccc;
     }
 }
 
