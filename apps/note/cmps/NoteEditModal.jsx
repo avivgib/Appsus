@@ -1,6 +1,6 @@
 const { useState, useEffect, useRef } = React
 
-export function EditModal({ note, onClose, onSave }) {
+export function NoteEditModal({ note, onClose, onSave }) {
     const [editedNote, setEditedNote] = useState(note)
     const textareaRef = useRef(null)
     const modalContentRef = useRef(null)

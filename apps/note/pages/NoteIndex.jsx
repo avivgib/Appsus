@@ -2,7 +2,7 @@ import { showErrorMsg, showSuccessMsg } from "../../../services/event-bus.servic
 import { noteService } from "../services/note.service.js"
 import { NoteList } from "../cmps/NoteList.jsx"
 import { NoteComposer } from "../cmps/NoteComposer.jsx"
-import { EditModal } from "../cmps/EditModal.jsx"
+import { NoteEditModal } from "../cmps/NoteEditModal.jsx"
 import { NoteFilter } from "../cmps/NoteFilter.jsx"
 import { NoteSearchCategory } from "../cmps/NoteSearchCategory.jsx"
 import { NoteFolderList } from "../cmps/NoteFolderList.jsx"
@@ -175,7 +175,7 @@ export function NoteIndex() {
                 />}
 
                 {selectedNote && (
-                    <EditModal
+                    <NoteEditModal
                         note={selectedNote}
                         onClose={onCloseModal}
                         onSave={onSaveEditedNote}
