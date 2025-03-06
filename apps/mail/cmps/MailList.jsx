@@ -74,8 +74,6 @@ export function MailList({ emails, saveChanges, onSetcmpType, onOpenMail, onRemo
 
                                     <span className='fare trash'
                                         onClick={(event) => { onRemoveMail(event, mail.id) }}></span>
-
-                                    <span className='fare folder-open'></span>
                                 </div>
                             </li>
                         })
