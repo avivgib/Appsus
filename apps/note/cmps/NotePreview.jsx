@@ -3,7 +3,7 @@ export function NotePreview({ note }) {
         return <section className="note-preview"><h3>No Title</h3><div className="note-content">No Content</div></section>
     }
 
-    const { info } = note
+    const { info, type } = note
 
     function truncateContent(content) {
         const maxLength = 400
@@ -11,10 +11,41 @@ export function NotePreview({ note }) {
         return content.length >= maxLength ? content.slice(0, lengthToSlice) + '...' : content
     }
 
-    return (
+    function getYouTubeVideoId(url) {
+        const regExp = /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
+        const match = url.match(regExp)
+        return match ? match[1] : null
+    }
+
+    const videoId = type === 'NoteVideo' ? (info.videoId || getYouTubeVideoId(info.content)) : null
+
+return (
         <section className="note-preview">
-            <h3>{info.title || 'No Title'}</h3>
-            <div className="note-content">{truncateContent(info.content || '')}</div>
+            <h3>{info.title || 'No title'}</h3>
+            {type === 'NoteVideo' && videoId ? (
+                <div className="video-preview">
+                    <iframe
+                        width="100%"
+                        height="150"
+                        src={`https://www.youtube.com/embed/${videoId}`}
+                        title="YouTube video preview"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        onError={(e) => {
+                            e.target.style.display = 'none'
+                            e.target.nextSibling.style.display = 'block'
+                        }}
+                    ></iframe>
+                    <img
+                        src={`https://img.youtube.com/vi/${videoId}/mqdefault.jpg`}
+                        alt="YouTube video preview"
+                        style={{ display: 'none', width: '100%', height: 'auto' }}
+                    />
+                </div>
+            ) : (
+                <div className="note-content">{truncateContent(info.content || '')}</div>
+            )}
         </section>
     )
 }

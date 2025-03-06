@@ -141,6 +141,14 @@
     content: '\f054';
 }
 
+.fa.xmark::before {
+    content: '\f00d';
+}
+
+.fa.film::before {
+    content: '\f008';
+}
+
 /* regular */
 
 .fare {
@@ -215,6 +223,14 @@
 
 .fare.notes::before {
     content: '\f0eb';
+}
+
+.fare.image::before {
+    content: '\f03e';
+}
+
+.fare.square-check::before {
+    content: '\f14a';
 }
 
 /* svg */

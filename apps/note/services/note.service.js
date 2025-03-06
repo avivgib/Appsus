@@ -37,9 +37,18 @@ function remove(noteId) {
 }
 
 function save(note) {
+    // NoteVideo validation
+    if (note.type === 'NoteVideo') {
+        const videoId = _getYouTubeVideoId(note.info.content)
+        if (!videoId) {
+            return Promise.reject('Invalid YouTube video URL')
+        }
+        note.info.videoId = videoId
+    }
+
     return note.id
         ? storageService.put(NOTES_KEY, note)
-        : storageService.post(NOTES_KEY, note)
+        : storageService.post(NOTES_KEY, { ...note, createdAt: Date.now() })
 }
 
 function getDefaultFilter() {
@@ -48,10 +57,11 @@ function getDefaultFilter() {
         txt: '',
         color: '',
         labels: '',
+        type: '',
     }
 }
 
-function getEmptyNote(id = '', createdAt = '', type = '', isPinned = false) {
+function getEmptyNote(id = '', createdAt = Date.now(), type = 'NoteTxt', isPinned = false) {
     return {
         id,
         createdAt,
@@ -93,10 +103,7 @@ function getNotesLabelStats() {
         });
 }
 
-
 // ~~~~~~~~~~~~~~~~ LOCAL FUNCTIONS ~~~~~~~~~~~~~~~~~~~ //
-
-
 function _createNotes() {
     let notes = utilService.loadFromStorage(NOTES_KEY)
     if (!notes || !notes.length) {
@@ -128,6 +135,10 @@ function _filterNotes(notes, filterBy) {
         )
     }
 
+    if (filterBy.type) {
+        filteredNotes = filteredNotes.filter(note => note.type === filterBy.type)
+    }
+
     // if (filterBy.type) {
     //     filteredNotes = filteredNotes.filter(note => note.createdAt > filterBy.createdAt)
     // }
@@ -144,3 +155,8 @@ function _filterNotes(notes, filterBy) {
     return filteredNotes
 }
 
+function _getYouTubeVideoId(url) {
+    const regExp = /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
+    const match = url.match(regExp)
+    return match ? match[1] : null
+}
