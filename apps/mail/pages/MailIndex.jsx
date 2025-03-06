@@ -167,7 +167,6 @@ export function MailIndex() {
     }
 
     function saveChanges(mail, isReadUpdate, type) {  /// UPDATE
-        console.log(type);
 
         if (isReadUpdate) {
             updateunreadEmailsCount(mail.isRead ? -1 : 1, false, mail)
@@ -205,14 +204,25 @@ export function MailIndex() {
 
         const mailUpdate = (mail.isRead) ? { ...mail } : { ...mail, isRead: true }
 
-        console.log(mailUpdate.isRead);
 
-        saveChanges(mailUpdate, mailUpdate.isRead) // UPDATE
+        if (mail.isRead === false) {
+            saveChanges(mailUpdate, mailUpdate.isRead)  // UPDATE
+        }
+
         setOpenMail(prev => ({ ...prev, [type]: mailUpdate }))
     }
 
     function onGoingBack(type) {
         setOpenMail(prev => ({ ...prev, [type]: null }))
+    }
+
+    function onNavigateBetweenEmails(mailId, dif) {
+        const Idx = emails.findIndex(mail => mail.id === mailId)
+        var currIdx = Idx + dif
+        if (currIdx < 0) currIdx = emails.length - 1
+        else if (currIdx > emails.length - 1) currIdx = 0
+        const currMailId = emails[currIdx].id
+        onOpenMail(currMailId, 'details')
     }
 
     /// update the read unread mail stats
@@ -311,6 +321,7 @@ export function MailIndex() {
                 onOpenMail={onOpenMail}
                 openMail={openMail}
                 onGoingBack={onGoingBack}
+                onNavigateBetweenEmails={onNavigateBetweenEmails}
 
                 onSaveMail={onSaveMail}
                 autoSave={autoSave}

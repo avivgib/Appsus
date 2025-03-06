@@ -3,10 +3,9 @@ import { mailService } from "../services/mail.service.js";
 const { useState, useEffect, useRef } = React
 const { useLocation } = ReactRouterDOM
 
-export function MailCompose({ onSetcmpType, onSaveMail, autoSave, openMail, onGoingBack, searchParams }) {
+export function MailCompose({ onSetcmpType, onSaveMail, autoSave, openMail, onGoingBack }) {
 
     const [newMail, setNewMail] = useState({ ...mailService.getEmptyMail(), createdAt: Date.now() })
-    console.log(newMail);
 
     const location = useLocation()
 
@@ -22,9 +21,7 @@ export function MailCompose({ onSetcmpType, onSaveMail, autoSave, openMail, onGo
     }, [location.state])
 
     function onNoteToMail(note) {
-        console.log(note);
         const { title, content } = note.info
-        console.log(title, content);
         setNewMail(prev => ({ ...prev, subject: title, body: content }))
     }
 
@@ -55,7 +52,6 @@ export function MailCompose({ onSetcmpType, onSaveMail, autoSave, openMail, onGo
         console.log('auto save');
         autoSave(newMail)
             .then(mail => {
-                console.log(newMail);
                 if (!newMail.id) {
                     setNewMail(prev => ({ ...prev, id: mail.id }))
                 }

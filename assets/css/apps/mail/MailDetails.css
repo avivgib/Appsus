@@ -23,6 +23,7 @@
     color: var(--gl-font2);
 }
 
+.mail-details>.details-header-bar>.mail-navigation-btn>*,
 .mail-details>.details-header-bar>.details-btn>* {
     padding: 0.71428571428em;
 }

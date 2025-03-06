@@ -2,11 +2,17 @@ import { LabelPicker } from "../../../cmps/LabelPicker.jsx"
 
 const { useState, useEffect, useRef } = React
 
-export function MailDetails({ onSetcmpType, openMail, onRemoveMail, onGoingBack, saveChanges }) {
+export function MailDetails({ onSetcmpType, openMail, onRemoveMail, onGoingBack, saveChanges, onNavigateBetweenEmails }) {
 
     const [mailDetails, setMailDetails] = useState({ ...openMail.details })
     const [isLabelPickerOpen, setIsLabelPickerOpen] = useState(false)
 
+    useEffect(() => {
+        if (openMail.details.id !== mailDetails.id) {
+            setMailDetails(prev => ({ ...openMail.details }))
+        }
+
+    }, [onRemoveMail])
 
     function handleChanges(ev, type, labels) {
         ev.stopPropagation()
@@ -67,6 +73,11 @@ export function MailDetails({ onSetcmpType, openMail, onRemoveMail, onGoingBack,
 
                     <span className='fare trash' onClick={(event) => { onRemoveMail(event, id) }}></span>
 
+                </div>
+
+                <div className='mail-navigation-btn'>
+                    <span className='fa chevron-left' onClick={() => { onNavigateBetweenEmails(id, -1) }}></span>
+                    <span className='fa chevron-right' onClick={() => { onNavigateBetweenEmails(id, 1) }}></span>
                 </div>
             </div>
             <div className='mail-wrapper'>
