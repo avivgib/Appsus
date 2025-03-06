@@ -38,9 +38,7 @@
     color: #555;
 }
 
-.magnifying-glass {
-    height: 40px;
-    width: 40px;
+.search-notes .magnifying-glass {
     font-size: 1.2em;
     color: #888;
     margin: 3px;

@@ -57,20 +57,28 @@ function query(filterBy, sortBy) {
             }
 
 
-
             if (filterBy.txt) {
                 const regex = new RegExp(filterBy.txt, 'i')
                 emails = emails.filter(mail => regex.test(mail.subject) || regex.test(mail.body))
             }
 
-            if (filterBy.isRead !== '') {
-                if (filterBy.isRead) {
-                    emails = emails.filter(mail => mail.isRead)
-                } else {
-                    emails = emails.filter(mail => !mail.isRead)
-                }
+            if (filterBy.from) {
+                const regex = new RegExp(filterBy.from, 'i')
+                emails = emails.filter(mail => regex.test(mail.from))
             }
 
+            if (filterBy.subject) {
+                const regex = new RegExp(filterBy.subject, 'i')
+                emails = emails.filter(mail => regex.test(mail.subject))
+            }
+
+            if (filterBy.isRead) {
+                emails = emails.filter(mail => mail.isRead)
+            }
+
+            if (filterBy.isStared) {
+                emails = emails.filter(mail => mail.isStared)
+            }
 
             if (sortBy.date) {
                 emails = emails.sort((e1, e2) => {
@@ -87,6 +95,7 @@ function query(filterBy, sortBy) {
             return emails
         })
 }
+
 
 function getUserMail() {
     return loggedinUser.email
@@ -112,8 +121,9 @@ function getDefaultFilterBy() {
     return {
         status: 'inbox',
         txt: '',
-        isRead: '',
-        isStared: null,
+        isRead: false,
+        isStared: false,
+        from: '',
         labels: [],
     }
 }
@@ -149,6 +159,9 @@ function getFilterFromSearchParams(searchParams) {
     for (const field in defaultFilterBy) {
         if (field === 'status') {
             filterBy[field] = searchParams.get(`${field}`) || defaultFilterBy[field]
+        } else if (field === 'isRead' || field === 'isStared') {
+            const res = (searchParams.get(`${field}`) === 'true') ? true : defaultFilterBy[field]
+            filterBy[field] = res
         } else {
             filterBy[field] = searchParams.get(`${field}`) || defaultFilterBy[field]
         }
@@ -210,7 +223,7 @@ function _getEmailsDemoData() {
             isRead: true,
             sentAt: 1738368000000,
             removedAt: null,
-            isStared: null,
+            isStared: false,
             labels: [],
             from: 'hr@example.com',
             to: 'user@appsus.com'
@@ -236,7 +249,7 @@ function _getEmailsDemoData() {
             isRead: true,
             sentAt: null,
             removedAt: null,
-            isStared: null,
+            isStared: false,
             labels: [],
             from: 'user@appsus.com',
             to: 'manager@example.com'
@@ -248,7 +261,7 @@ function _getEmailsDemoData() {
             isRead: false,
             sentAt: 1708086400000,
             removedAt: null,
-            isStared: null,
+            isStared: false,
             labels: [],
             from: 'user@appsus.com',
             to: 'manager@example.com'

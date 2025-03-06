@@ -1,19 +1,21 @@
 import { utilService } from "../../../services/util.service.js"
+import { MoreFilters } from "../../note/cmps/MoreFilters.jsx"
 
 const { useState, useEffect, useRef } = React
 
-export function MailFilter({ filterBy, onSetFilterBy }) {
+export function MailFilter({ filterBy, onSetFilterBy, defaultFilterByRef }) {
     const [editFilterBy, setEditFilterBy] = useState({ ...filterBy })
-    const [ischecked, setIschecked] = useState('')
+    const [isMoreFiltersOpen, setIsMoreFiltersOpen] = useState(false)
+    // const [ischecked, setIschecked] = useState('')
 
 
-    const filterDebounce = useRef(utilService.debounce(onSetFilterBy, 1000))
+    const filterDebounce = useRef(utilService.debounce(onSetFilterBy, 500))
 
     // rest the editFilterBy if filterBy get status
     useEffect(() => {
         if (filterBy.status !== '') {
             setEditFilterBy(prev => ({ ...filterBy }))
-            setIschecked('')
+            // setIschecked('')
         }
     }, [filterBy.status])
 
@@ -26,26 +28,8 @@ export function MailFilter({ filterBy, onSetFilterBy }) {
     function onSetEditFilterBy(ev) {
         var { value, type, name, checked } = ev.target
 
-
         if (type === 'number') value = +value
         if (type === 'checkbox') value = checked
-
-        if (name === 'isRead') {
-            switch (value) {
-                case 'true':
-                    setIschecked('true')
-                    value = true
-                    break
-                case 'false':
-                    setIschecked('false')
-                    value = false
-                    break
-                case '':
-                    setIschecked('')
-                    value = ''
-                    break
-            }
-        }
 
         setEditFilterBy(prev => ({ ...prev, [name]: value }))
 
@@ -58,7 +42,15 @@ export function MailFilter({ filterBy, onSetFilterBy }) {
         setEditFilterBy(prev => ({ ...prev, txt: '' }))
     }
 
-    const { txt, isRead } = editFilterBy
+    function onOpenMoreFilters() {
+        setIsMoreFiltersOpen(!isMoreFiltersOpen)
+    }
+
+    function onResetFilter() {
+        setEditFilterBy(prev => ({ ...defaultFilterByRef }))
+    }
+
+    const { txt } = editFilterBy
     return (
         <section className='mail-filter flex align-center'>
             <div className='main-search flex align-center'>
@@ -67,13 +59,21 @@ export function MailFilter({ filterBy, onSetFilterBy }) {
                 <span
                     className={`rest-btn fa x ${editFilterBy.txt ? 'show' : ''}`}
                     onClick={onRestTxt}></span>
+                <span
+                    className='more-filters-btn fa bars'
+                    onClick={onOpenMoreFilters}>
+                    {isMoreFiltersOpen && <MoreFilters
+                        editFilterBy={editFilterBy}
+                        onSetEditFilterBy={onSetEditFilterBy}
+                        onResetFilter={onResetFilter}
+                        onOpenMoreFilters={onOpenMoreFilters}
+                    />}
+                </span>
+
             </div>
 
-            {/* <select name="isRead" id='isRead' value={isRead} onChange={onSetEditFilterBy} >
-                <option value=''>All Mails</option>
-                <option value='true'>{ischecked === 'true' ? ' ✓ ' : ''}  Read</option>
-                <option value='false'>{ischecked === 'false' ? ' ✓ ' : ''} Unread</option>
-            </select> */}
+
+
         </section>
     )
 }
