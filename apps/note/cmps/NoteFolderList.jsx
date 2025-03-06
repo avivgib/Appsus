@@ -6,6 +6,9 @@ export function NoteFolderList({ onSetStatusInFilterBy, filterBy, onClosefolders
 
     return (
         <section className='note-folder'>
+
+            <div className='note-folder-title'>Keep</div>
+
             <ul className='clean-list'>
 
                 {['notes', 'work', 'personal', 'inspiration', 'trash'].map(label => {

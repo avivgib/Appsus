@@ -1,9 +1,11 @@
 .note-folder {
-    grid-area: 1/1;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
 
-    position: relative;
-
-    z-index: 1;
+    background-color: white;
+    z-index: 10;
     height: 100%;
 
     font-size: 0.875rem;
@@ -11,11 +13,12 @@
 
     line-height: 1.42857142857;
 
-    width: 18.2857142857em;
 
     transition: 200ms;
 
-    padding-block-start: 0.57142857142em;
+    font-size: 1.42857142857em;
+
+    border-radius: 0px 20px 20px 0;
 }
 
 .note-folder>.folder-title {
@@ -52,16 +55,28 @@
     }
 }
 
+.note-folder>.add-note-btn>.add-note-content {
+    white-space: nowrap;
+}
+
+.note-folder>.add-note-btn>.fa.pen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 2.85714285714em;
+    font-size: 1.42857142857em;
+    aspect-ratio: 1/1;
+}
 
 .note-folder li {
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    height: 48px;
+    height: 2.28571428571em;
     padding: 0 1.85714285714em 0 0.85714285714em;
     border-radius: 0 20px 20px 0;
-    font-weight: 500;
     cursor: pointer;
 
     margin-inline-end: 1.14285714286em;
@@ -71,14 +86,10 @@
     }
 }
 
-.note-folder li .fare,
-.note-folder li .fa {
-    font-size: 1.71428571429em;
-}
-
 .note-folder li.active {
     background-color: #fdefc5;
     color: var(--gl-font4);
+    font-weight: bold;
 }
 
 .note-folder li .fa,
@@ -93,131 +104,291 @@
     margin-inline-end: 0;
 }
 
+.note-folder li .unread-notes:has(.arrow) {
+    translate: 0% 0px;
+    rotate: 0deg;
+    transition: 200ms;
+}
+
+.note-folder li.click .unread-notes:has(.arrow) {
+    rotate: 90deg;
+    translate: 30% -7px;
+}
+
+
 .note-folder li button {
     background-color: transparent;
     margin-inline-end: auto;
     font-weight: inherit;
 }
 
-/* close folders */
-
-body:has(.folders-close) .note-folder {
-    width: 5em;
+.more-labels {
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: hidden;
+    transition: 200ms;
 }
 
-body:has(.folders-close) .note-folder li {
-    justify-content: center;
-
-    position: relative;
-    border-radius: 50%;
-    margin: 0;
-    padding: 0;
-    background-color: transparent;
+.more-labels>ul {
+    overflow: hidden;
 }
 
-body:has(.folders-close) .note-folder li:before {
-    display: none;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    translate: -50% -50%;
-    border-radius: 50%;
-    content: '';
-    height: 3.42857142857em;
-    width: 3.42857142857em;
+.more-labels.open {
+    grid-template-rows: 1fr;
+    overflow: hidden;
 }
 
-body:has(.folders-close) .note-folder li:hover:before {
-    display: block;
-    background-color: var(--gl-shadow1);
-}
+@media (max-width: 850px) {
+    body:not(.folders-close) .note-folder {
+        transform: translateX(-100%);
+    }
 
-body:has(.folders-close) .note-folder li.active:before {
-    display: block;
-    background-color: #fdefc5;
-}
+    body:has(.folders-close) .note-folder {
+        transform: translateX(0);
+    }
 
+    .note-folder {
+        justify-content: center;
+    }
 
-body:has(.folders-close) .note-folder li:has(.unread-num)::after {
-    content: '';
-    position: absolute;
-    top: 20%;
-    right: 25%;
-    translate: -25% -20%;
+    .note-folder>.note-folder-title {
+        display: flex;
+        padding-block: 1.07142857143em;
+        font-size: 20px;
+        padding-inline-start: 0.85714285714em;
+        color: var(--gl-font3);
+        box-shadow: inset 0px -1px 1px var(--gl-shadow1);
+    }
 
-    border-radius: 50%;
-
-    height: 0.57142857142em;
-    width: 0.57142857142em;
-    background-color: var(--gl-font7);
-}
-
-body:has(.folders-close) .note-folder li .fa,
-body:has(.folders-close) .note-folder li .fare {
-    padding-inline-start: 0;
-    margin: 0;
-    z-index: 1;
-}
-
-body:has(.folders-close) .note-folder li button {
-    display: none;
-}
-
-body:has(.folders-close) .unread-notes {
-    position: relative;
-    display: none;
-}
-
-/* close folders: hover */
-
-body:has(.folders-close) .note-folder:hover {
-    width: 18.2857142857em;
-}
-
-body:has(.folders-close) .note-folder:hover li {
-    justify-content: space-between;
-
-    position: relative;
-    margin-inline-end: 1.14285714286em;
-    padding: 0 1.85714285714em 0 0.85714285714em;
-    border-radius: 0 20px 20px 0;
-
-    &:hover {
-        background-color: var(--gl-shadow1);
+    .note-folder li {
+        border-radius: 20px;
+        margin: 0.71428571428em;
     }
 }
 
-body:has(.folders-close) .note-folder:hover li.active {
-    background-color: #fdefc5;
-    color: var(--gl-font4);
-}
 
-body:has(.folders-close) .note-folder:hover li:hover:before,
-body:has(.folders-close) .note-folder:hover li.active:before {
-    display: none;
-}
+@media (min-width: 850px) {
+    .note-folder {
+        grid-area: 1/1;
 
-body:has(.folders-close) .note-folder:hover li .fa,
-body:has(.folders-close) .note-folder:hover li .fare {
-    margin-inline-end: 1.28571428571em;
-    padding-inline-start: 0.85714285714em;
-    z-index: 0;
-    font-weight: normal;
-}
+        position: relative;
+
+        z-index: 1;
+        height: 100%;
+
+        font-size: 0.875rem;
+        font-family: Roboto, Helvetica, Arial, sans-serif;
+
+        line-height: 1.42857142857;
+
+        width: 18.2857142857em;
+
+        transition: 200ms;
+
+        padding-block-start: 0.57142857142em;
+    }
+
+    .note-folder>.note-folder-title {
+        display: none;
+    }
+
+    .note-folder button {
+        text-transform: capitalize;
+        font-size: 0.875rem;
+    }
 
 
-body:has(.folders-close) .note-folder:hover li:has(.unread-num)::after {
-    display: none;
-}
+    .note-folder>.add-note-btn {
+        position: fixed;
+        bottom: 0;
+        left: 0;
 
-body:has(.folders-close) .note-folder:hover li button {
-    display: flex;
-}
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
-body:has(.folders-close) .note-folder:hover .unread-notes {
-    display: flex;
-}
+        margin-block-start: 0.57142857142em;
+        margin-block-end: 1.14285714286em;
+        margin-inline-start: 0.57142857142em;
+        padding-inline-end: 1.71428571429em;
+        height: 4em;
+        min-width: 4em;
+        border-radius: 1.14285714286em;
+        background-color: var(--g-btn2);
+        transition: 200ms;
 
-body:has(.folders-close) .note-folder:hover li .fa.caret-right {
-    margin-inline-end: 0;
+        &:hover {
+            box-shadow: 5px 5px 10px var(--gl-shadow1);
+        }
+    }
+
+
+    .note-folder li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        height: 48px;
+        padding: 0 1.85714285714em 0 0.85714285714em;
+        border-radius: 0 20px 20px 0;
+        font-weight: 500;
+        cursor: pointer;
+
+        margin-inline-end: 1.14285714286em;
+
+        &:hover {
+            background-color: var(--gl-shadow1);
+        }
+    }
+
+    .note-folder li .fare,
+    .note-folder li .fa {
+        font-size: 1.71428571429em;
+    }
+
+    .note-folder li.active {
+        background-color: #fdefc5;
+        color: var(--gl-font4);
+    }
+
+    .note-folder li .fa,
+    .note-folder li .fare {
+        margin-inline-end: 1.28571428571em;
+        padding-inline-start: 0.85714285714em;
+        align-self: center;
+        font-weight: normal;
+    }
+
+    .note-folder li .fa.caret-right {
+        margin-inline-end: 0;
+    }
+
+    .note-folder li button {
+        background-color: transparent;
+        margin-inline-end: auto;
+        font-weight: inherit;
+    }
+
+    /* close folders */
+
+    body:has(.folders-close) .note-folder {
+        width: 5em;
+    }
+
+    body:has(.folders-close) .note-folder li {
+        justify-content: center;
+
+        position: relative;
+        border-radius: 50%;
+        margin: 0;
+        padding: 0;
+        background-color: transparent;
+    }
+
+    body:has(.folders-close) .note-folder li:before {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        translate: -50% -50%;
+        border-radius: 50%;
+        content: '';
+        height: 3.42857142857em;
+        width: 3.42857142857em;
+    }
+
+    body:has(.folders-close) .note-folder li:hover:before {
+        display: block;
+        background-color: var(--gl-shadow1);
+    }
+
+    body:has(.folders-close) .note-folder li.active:before {
+        display: block;
+        background-color: #fdefc5;
+    }
+
+
+    body:has(.folders-close) .note-folder li:has(.unread-num)::after {
+        content: '';
+        position: absolute;
+        top: 20%;
+        right: 25%;
+        translate: -25% -20%;
+
+        border-radius: 50%;
+
+        height: 0.57142857142em;
+        width: 0.57142857142em;
+        background-color: var(--gl-font7);
+    }
+
+    body:has(.folders-close) .note-folder li .fa,
+    body:has(.folders-close) .note-folder li .fare {
+        padding-inline-start: 0;
+        margin: 0;
+        z-index: 1;
+    }
+
+    body:has(.folders-close) .note-folder li button {
+        display: none;
+    }
+
+    body:has(.folders-close) .unread-notes {
+        position: relative;
+        display: none;
+    }
+
+    /* close folders: hover */
+
+    body:has(.folders-close) .note-folder:hover {
+        width: 18.2857142857em;
+    }
+
+    body:has(.folders-close) .note-folder:hover li {
+        justify-content: space-between;
+
+        position: relative;
+        margin-inline-end: 1.14285714286em;
+        padding: 0 1.85714285714em 0 0.85714285714em;
+        border-radius: 0 20px 20px 0;
+
+        &:hover {
+            background-color: var(--gl-shadow1);
+        }
+    }
+
+    body:has(.folders-close) .note-folder:hover li.active {
+        background-color: #fdefc5;
+        color: var(--gl-font4);
+    }
+
+    body:has(.folders-close) .note-folder:hover li:hover:before,
+    body:has(.folders-close) .note-folder:hover li.active:before {
+        display: none;
+    }
+
+    body:has(.folders-close) .note-folder:hover li .fa,
+    body:has(.folders-close) .note-folder:hover li .fare {
+        margin-inline-end: 1.28571428571em;
+        padding-inline-start: 0.85714285714em;
+        z-index: 0;
+        font-weight: normal;
+    }
+
+
+    body:has(.folders-close) .note-folder:hover li:has(.unread-num)::after {
+        display: none;
+    }
+
+    body:has(.folders-close) .note-folder:hover li button {
+        display: flex;
+    }
+
+    body:has(.folders-close) .note-folder:hover .unread-notes {
+        display: flex;
+    }
+
+    body:has(.folders-close) .note-folder:hover li .fa.caret-right {
+        margin-inline-end: 0;
+    }
 }
