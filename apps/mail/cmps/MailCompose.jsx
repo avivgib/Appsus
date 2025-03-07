@@ -7,6 +7,7 @@ export function MailCompose({ onSetcmpType, onSaveMail, autoSave, openMail, onGo
     const [newMail, setNewMail] = useState({ ...mailService.getEmptyMail(), createdAt: Date.now() })
 
     const formRef = useRef()
+    const autoSaveRef = useRef()
 
     useEffect(() => {
         if (noteToMail) {
@@ -34,11 +35,12 @@ export function MailCompose({ onSetcmpType, onSaveMail, autoSave, openMail, onGo
         })
     }, [openMail.edit])
 
+
     function setEditDraft(openMail) {
-        setNewMail(prev => ({ ...openMail }))
+        setNewMail({ ...openMail })
     }
 
-    const autoSaveRef = useRef()
+
 
     useEffect(() => {
         autoSaveRef.current = setInterval(onAutoSave, 5000)
@@ -75,18 +77,18 @@ export function MailCompose({ onSetcmpType, onSaveMail, autoSave, openMail, onGo
     const { to, subject, body } = newMail
 
     return (
-        <section className='new-email'>
-            <div className='new-email-titel flex space-between'>
+        <section className="new-email">
+            <div className="new-email-titel flex space-between">
                 <span>new message</span>
-                <button className='close-btn fa x' onClick={() => onSetcmpType('list')}></button>
+                <button className="close-btn fa x" onClick={() => onSetcmpType('list')}></button>
             </div>
-            <form ref={formRef} onSubmit={onSubmit} className='new-message-form flex column'>
-                <input type="email" id="email" name='to' placeholder='to' value={to} onChange={handleChange} required />
-                <input type="text" id='subject' name='subject' placeholder='subject' value={subject} onChange={handleChange} required />
-                <textarea name="body" id="body" placeholder='body' rows="10" value={body} onChange={handleChange} required></textarea>
-                <div className='mail-compose-btns flex space-between'>
-                    <button className='send-btn'>send</button>
-                    <button type='button' className='save-draft-btn' onClick={(event) => { onSubmit(event, true) }}>save draft</button>
+            <form ref={formRef} onSubmit={onSubmit} className="new-message-form flex column">
+                <input type="email" id="email" name="to" placeholder="to" value={to} onChange={handleChange} required />
+                <input type="text" id="subject" name="subject" placeholder="subject" value={subject} onChange={handleChange} required />
+                <textarea name="body" id="body" placeholder="body" rows="10" value={body} onChange={handleChange} required></textarea>
+                <div className="mail-compose-btns flex space-between">
+                    <button className="send-btn">send</button>
+                    <button type="button" className="save-draft-btn" onClick={(event) => { onSubmit(event, true) }}>save draft</button>
                 </div>
             </form>
         </section>

@@ -9,7 +9,7 @@ export function NavigationBox({ onToggleNav }) {
     useEffect(() => {
 
         setTimeout(() => {
-            document.addEventListener("click", handleClickOutside);
+            document.addEventListener('click', handleClickOutside)
         }, 100)
 
         return () => {

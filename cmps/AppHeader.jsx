@@ -6,7 +6,6 @@ const { useState, useEffect, useRef } = React
 export function AppHeader() {
 
     const [currPage, setCurrPage] = useState(null)
-    const [isFoldersClose, setIsFoldersClose] = useState(false)
     const [isNavOpen, setIsNavOpen] = useState(false)
     const location = useLocation()
 
@@ -16,23 +15,8 @@ export function AppHeader() {
         }
     }, [location.pathname])
 
-    // useEffect(() => {
-    //     if (location.state) {
-    //         if (Object.hasOwn(location.state, 'isFoldersClose')) {
-    //             const { isFoldersClose } = location.state
-    //             setIsFoldersClose(isFoldersClose)
-    //         }
-    //     }
-    // }, [location.state])
-
-
-
-
     function onSetCurrPage(pathname) {
         setCurrPage(pathname)
-    }
-    function onClosefolders() {
-        setIsFoldersClose(prev => prev = !isFoldersClose)
     }
 
     function onToggleNav() {
@@ -41,10 +25,6 @@ export function AppHeader() {
 
     return <header className="app-header">
         <div className='flex align-center'>
-            <button
-                className={`bars-btn fa bars ${isFoldersClose ? 'folders-close' : ''}`}
-                onClick={onClosefolders}
-            ></button>
             <Link to={currPage || '/'}>
                 <div className='main-logo'>
                     <DynamicLogo currPage={currPage} />
@@ -52,16 +32,12 @@ export function AppHeader() {
             </Link>
         </div>
 
-
         <nav>
             <button className='btn-nav' onClick={onToggleNav}>
                 <img src="assets/images/9-point.svg" alt="point" className='nav-point' />
                 {isNavOpen && <NavigationBox onToggleNav={onToggleNav} />}
             </button>
         </nav>
-
-
-        <div className="black-wrapper" onClick={onClosefolders}></div>
 
     </header>
 }

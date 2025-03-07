@@ -9,9 +9,8 @@ export function MailDetails({ onSetcmpType, openMail, onRemoveMail, onGoingBack,
 
     useEffect(() => {
         if (openMail.details.id !== mailDetails.id) {
-            setMailDetails(prev => ({ ...openMail.details }))
+            setMailDetails({ ...openMail.details })
         }
-
     }, [onRemoveMail])
 
     function handleChanges(ev, type, labels) {
@@ -47,12 +46,12 @@ export function MailDetails({ onSetcmpType, openMail, onRemoveMail, onGoingBack,
     const { id, subject, body, sentAt, from, to, isRead, isStared, labels } = mailDetails
 
     return (
-        <section className='mail-details'>
-            <div className='details-header-bar flex space-between align-center '>
-                <div className='details-btn'>
-                    <span className='fa arrow-left' onClick={() => { onSetcmpType('list') }}></span>
+        <section className="mail-details">
+            <div className="details-header-bar flex space-between align-center ">
+                <div className="details-btn">
+                    <span className="fa arrow-left" onClick={() => { onSetcmpType('list') }}></span>
 
-                    <span className='fa tag'
+                    <span className="fa tag"
                         onClick={onTogglLabelPikcer}>
                         {isLabelPickerOpen &&
                             <LabelPicker

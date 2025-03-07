@@ -30,7 +30,6 @@ export function LabelPicker({ labels, handleChanges }) {
         }
     }
 
-
     useEffect(() => {
         document.addEventListener('click', handleClickOutside)
 
