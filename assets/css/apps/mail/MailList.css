@@ -201,6 +201,10 @@
         height: 95%;
     }
 
+    body:has(.folders-close) .emails-wrapper {
+        margin-inline-start: 70px;
+    }
+
     .emails-bar {
         flex-direction: row;
         box-shadow: inset 0px -1px 0px var(--gl-shadow2);

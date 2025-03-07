@@ -15,7 +15,7 @@
 
     width: 18.2857142857em;
 
-    transition: 200ms;
+    transition: width 200ms;
 }
 
 .mail-folder>.folder-title {
@@ -183,6 +183,10 @@
     /* close folders */
 
     body:has(.folders-close) .mail-folder {
+        position: fixed;
+        top: var(--header-height);
+        bottom: 0;
+
         width: 5em;
     }
 
