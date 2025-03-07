@@ -179,9 +179,14 @@ export function MailIndex() {
 
         mailService.save(mail)
             .then(currMail => {
-                setEmails(prev => {
-                    return prev.map(mail => (mail.id === currMail.id) ? currMail : mail)
-                })
+                if (filterBy.status === 'star' && !currMail.isStared) {
+                    setEmails(prev => prev.filter(mail => mail.id !== currMail.id))
+
+                } else {
+                    setEmails(prev => {
+                        return prev.map(mail => (mail.id === currMail.id) ? currMail : mail)
+                    })
+                }
 
                 if (type === 'labels') {
                     showSuccessMsg('The mail labels have been saved')
