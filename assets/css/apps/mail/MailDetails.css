@@ -166,6 +166,14 @@
 
 @media (min-width: 850px) {
 
+    .mail-details {
+        grid-area: 1/2;
+    }
+
+    body:has(.folders-close) .mail-details {
+        margin-inline-start: 70px;
+    }
+
     .mail-details>.details-header-bar>.details-btn .fa.star {
         color: var(--gl-font5);
     }

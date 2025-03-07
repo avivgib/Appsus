@@ -77,15 +77,15 @@ export function MailCompose({ onSetcmpType, onSaveMail, autoSave, openMail, onGo
     const { to, subject, body } = newMail
 
     return (
-        <section className="new-email">
-            <div className="new-email-titel flex space-between">
-                <span>new message</span>
+        <section className="mail-compose">
+            <div className="mail-compose-titel flex space-between">
+                <span>New Message</span>
                 <button className="close-btn fa x" onClick={() => onSetcmpType('list')}></button>
             </div>
             <form ref={formRef} onSubmit={onSubmit} className="new-message-form flex column">
-                <input type="email" id="email" name="to" placeholder="to" value={to} onChange={handleChange} required />
-                <input type="text" id="subject" name="subject" placeholder="subject" value={subject} onChange={handleChange} required />
-                <textarea name="body" id="body" placeholder="body" rows="10" value={body} onChange={handleChange} required></textarea>
+                <input type="email" id="email" name="to" placeholder="To" value={to} onChange={handleChange} required />
+                <input type="text" id="subject" name="subject" placeholder="Subject" value={subject} onChange={handleChange} required />
+                <textarea name="body" id="body" placeholder="Body" rows="10" value={body} onChange={handleChange} required></textarea>
                 <div className="mail-compose-btns flex space-between">
                     <button className="send-btn">send</button>
                     <button type="button" className="save-draft-btn" onClick={(event) => { onSubmit(event, true) }}>save draft</button>

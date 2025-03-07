@@ -1,4 +1,4 @@
-.new-email {
+.mail-compose {
     display: flex;
     flex-direction: column;
 
@@ -14,14 +14,14 @@
     height: 95%;
 }
 
-.new-email>.new-email-titel {
+.mail-compose>.mail-compose-titel {
     padding-inline: 1.14285714286em;
     padding-block: 0.71428571428em;
     font-weight: bold;
     background-color: var(--gl1);
 }
 
-.new-email>.new-email-titel>.close-btn {
+.mail-compose>.mail-compose-titel>.close-btn {
     background: transparent;
 }
 
@@ -74,4 +74,15 @@
 .new-message-form>.mail-compose-btns>.send-btn {
     color: var(--white);
     background-color: var(--g-btn1);
+}
+
+@media (min-width: 850px) {
+
+    .mail-compose {
+        grid-area: 1/2;
+    }
+
+    body:has(.folders-close) .mail-compose {
+        margin-inline-start: 70px;
+    }
 }
