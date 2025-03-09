@@ -13,7 +13,7 @@ export function MailPreview({ currMail, saveChanges, children, mailLabels }) {
         setMail(updateMail)
 
         const isReadUpdate = (type === 'isRead') ? true : false
-        saveChanges(updateMail, isReadUpdate,type)
+        saveChanges(updateMail, isReadUpdate, type)
     }
 
 
@@ -44,7 +44,7 @@ export function MailPreview({ currMail, saveChanges, children, mailLabels }) {
     }
 
 
-    const { createdAt, subject, body, isRead, sentAt, removedAt, isStared, from, to } = mail
+    const { createdAt, subject, body, isRead, sentAt, isStared, from, to } = mail
 
 
     return (
@@ -53,16 +53,21 @@ export function MailPreview({ currMail, saveChanges, children, mailLabels }) {
                 {/* <span className='fa grip-vertical'></span> */}
             </div>
 
-            <div className='mail-envelope'>
+            <div className='mail-envelope'
+                data-title={isRead ? `Mark as read` : `Mark as unread`}
+            >
                 <span
                     className={`fare ${isRead ? 'envelope-open' : 'envelope'}`}
-                    onClick={(event) => handleChanges(event, 'isRead')}>
+                    onClick={(event) => handleChanges(event, 'isRead')}
+                >
                 </span>
             </div>
 
             {children}
 
-            <div className='mail-star'>
+            <div className='mail-star'
+                data-title={isStared ? `Remove stared` : `Mark as stared`}
+            >
                 <span
                     className={`${isStared ? 'fa star' : 'fare star'}`}
                     onClick={(event) => { handleChanges(event, 'isStared') }}>
@@ -84,7 +89,7 @@ export function MailPreview({ currMail, saveChanges, children, mailLabels }) {
 
             </div>
             <div className='gap'></div>
-            <div className='sentat' >
+            <div className='sentat'>
                 {sentAt ? setSentAtDateDisplay(sentAt) : setSentAtDateDisplay(createdAt)}
             </div>
 

@@ -55,7 +55,9 @@ export function MailList({ emails, saveChanges, onSetcmpType, onOpenMail, onRemo
                                 }}>
 
                                 <MailPreview currMail={mail} saveChanges={saveChanges} mailLabels={mail.labels} >
-                                    <div className={`mail-labels ${isLabelPickerOpen ? 'open' : ''} `}>
+                                    <div className={`mail-labels ${isLabelPickerOpen ? 'open' : ''} `}
+                                        data-title='Add label to mail'
+                                    >
                                         <span className='fa tag'
                                             onClick={(event) => { onTogglLabelPikcer(event, mail.id) }}>
                                             {isLabelPickerOpen === mail.id &&
@@ -69,12 +71,21 @@ export function MailList({ emails, saveChanges, onSetcmpType, onOpenMail, onRemo
 
                                 <div className='more-list-btns'>
 
-                                    <span className='fare note-sticky'
-                                        onClick={(event) => onMailToNote(event, mail)}
-                                    ></span>
+                                    <div className='mail-to-note' data-title='Mail to Note' >
+                                        <span
+                                            className='fare note-sticky'
+                                            onClick={(event) => onMailToNote(event, mail)}
+                                        >
+                                        </span>
+                                    </div>
 
-                                    <span className='fare trash'
-                                        onClick={(event) => { onRemoveMail(event, mail.id) }}></span>
+                                    <div className='remove-mail' data-title='Remove mail' >
+                                        <span
+                                            className='fare trash'
+                                            onClick={(event) => { onRemoveMail(event, mail.id) }}>
+                                        </span>
+                                    </div>
+
                                 </div>
                             </li>
                         })
