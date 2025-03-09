@@ -29,6 +29,11 @@ export function MailList({ emails, saveChanges, onSetcmpType, onOpenMail, onRemo
         ev.stopPropagation()
 
         const mail = emails.find(mail => mail.id === isLabelPickerOpen)
+
+        if (mail.labels.sort().join(' ') === labels.sort().join(' ')) {
+            return setIsLabelPickerOpen(null)
+        }
+        
         const updateMail = { ...mail, [type]: labels }
 
         setIsLabelPickerOpen(null)
