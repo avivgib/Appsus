@@ -83,7 +83,8 @@ export function MailCompose() {
         onSaveMail(updatedMail)
     }
 
-    function onGoingBack() {
+    function onCloseComposeAndSave() {
+        onSaveMail(newMail)
         navigate('/mail')
     }
 
@@ -124,7 +125,11 @@ export function MailCompose() {
                             onClick={onFullScreen}
                             data-title={isFullScreen ? 'Exit full screen' : 'Full screen'}
                         ></button>
-                        <button className="close-btn fa x" onClick={onGoingBack}></button>
+                        <button
+                            className="close-btn fa x"
+                            onClick={onCloseComposeAndSave}
+                            data-title='close and save'
+                        ></button>
                     </div>
                 </div>
                 <form ref={formRef} onSubmit={onSubmit} className="new-message-form flex column">

@@ -78,9 +78,16 @@ export function MailIndex() {
                 }
 
                 if (!currMail.sentAt && !filterBy.status !== 'sent' || currMail.id && !filterBy.status !== 'inbox') {
-                    setEmails(prev => {
-                        return prev.map(mail => (mail.id === currMail.id) ? currMail : mail)
-                    })
+                    const isMailExists = emails.some(mail => mail.id === currMail.id)
+
+                    if (isMailExists) {
+                        setEmails(prev => {
+                            return prev.map(mail => (mail.id === currMail.id) ? currMail : mail)
+                        })
+                    } else if (!isMailExists && filterBy.status === 'draft') {
+                        setEmails(prev => [currMail, ...prev])
+                    }
+
                 }
 
                 if (!currMail.isRead) {
