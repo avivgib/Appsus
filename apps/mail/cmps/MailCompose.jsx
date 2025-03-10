@@ -83,7 +83,10 @@ export function MailCompose() {
     }
 
     function onCloseComposeAndSave() {
-        onSaveMail(newMail)
+        if (newMail.body || newMail.subject) {
+            onSaveMail(newMail)
+        }
+
         navigate('/mail')
     }
 

@@ -5,7 +5,6 @@ const { useState, useEffect, useRef } = React
 export function MailPreview({ currMail, saveChanges, children, mailLabels }) {
 
     const [mail, setMail] = useState({ ...currMail })
-    console.log('prev mail', mail);
 
 
     function handleChanges(ev, type) {
