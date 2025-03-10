@@ -120,7 +120,7 @@ export function MailCompose() {
                             data-title={isMinimized ? 'Maximize' : 'Minimize'}
                         ></button>
                         <button
-                            className={isFullScreen ? 'fa minimize' : 'fa maximize'}
+                            className={`full-screen-btn ${isFullScreen ? 'fa minimize' : 'fa maximize'}`}
                             onClick={onFullScreen}
                             data-title={isFullScreen ? 'Exit full screen' : 'Full screen'}
                         ></button>

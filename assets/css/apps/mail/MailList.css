@@ -6,6 +6,12 @@
     border-radius: 16px;
 }
 
+@media (max-width: 850px) {
+    body:has(.mail-compose) .emails-wrapper {
+        display: none;
+    }
+}
+
 .emails-bar {
     flex-direction: column;
     align-items: start;

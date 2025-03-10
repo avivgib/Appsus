@@ -76,6 +76,18 @@
     background-color: var(--g-btn1);
 }
 
+.compose-titel-btns>button {
+    background-color: transparent;
+    font-size: 12px;
+    aspect-ratio: 1/1;
+}
+
+
+.compose-titel-btns>.fa.minus,
+.compose-titel-btns>.full-screen-btn {
+    visibility: hidden;
+}
+
 @media (min-width: 850px) {
 
     /* .mail-compose {
@@ -136,9 +148,6 @@
 
     .compose-titel-btns>button {
         position: relative;
-        background-color: transparent;
-        font-size: 12px;
-        aspect-ratio: 1/1;
 
         &:hover {
             background-color: var(--gl-shadow1);
@@ -147,6 +156,11 @@
 
     .compose-titel-btns>button:not(:last-child) {
         margin-inline-end: 4px;
+    }
+
+    .compose-titel-btns>.fa.minus,
+    .compose-titel-btns>.full-screen-btn {
+        visibility: visible;
     }
 
 }

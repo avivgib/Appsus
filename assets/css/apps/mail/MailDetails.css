@@ -11,6 +11,13 @@
     height: 95%;
 }
 
+@media (max-width: 850px) {
+    body:has(.mail-compose) .mail-details {
+        display: none;
+    }
+}
+
+
 .mail-details>.details-header-bar {
     height: 3.42857142857em;
     padding-inline: 1.14285714286em;

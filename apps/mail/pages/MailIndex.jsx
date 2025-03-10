@@ -290,12 +290,19 @@ export function MailIndex() {
     function onSetStatusInFilterBy(statusType) {
         setFilterBy(prev => ({ ...defaultFilterByRef.current, status: statusType }))
         setSortBy(prev => ({ ...defaultSortByRef.current }))
+
+        if (window.innerWidth < 850) {
+            navigate('/mail')
+        }
     }
 
     // set the DynamicCmp type
 
     function onSetcmpType(cmpType) {
         setCmpType(cmpType)
+        if (window.innerWidth < 850) {
+            setIsFoldersClose(false)
+        }
     }
 
     // open and close folders
