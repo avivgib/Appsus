@@ -12,6 +12,8 @@ export function MailCompose() {
     const { onSaveMail, autoSave } = useOutletContext()
 
     const [newMail, setNewMail] = useState({ ...mailService.getEmptyMail(), createdAt: Date.now() })
+    const [isMinimized, setIsMinimized] = useState(false)
+    const [isFullScreen, setIsFullScreen] = useState(false)
 
     const formRef = useRef()
     const autoSaveRef = useRef()
@@ -85,27 +87,60 @@ export function MailCompose() {
         navigate('/mail')
     }
 
+    function onMinimize() {
+        setIsMinimized(!isMinimized)
+        if (isFullScreen) {
+            setIsFullScreen(false)
+        }
+    }
+    function onFullScreen() {
+        setIsFullScreen(!isFullScreen)
+        if (isMinimized) {
+            setIsMinimized(false)
+        }
+    }
+
+    function onBlackWrapper() {
+        setIsFullScreen(false)
+        setIsMinimized(true)
+    }
+
     const { to, subject, body } = newMail
 
 
     return (
-        <section className="mail-compose">
-            <div className="mail-compose-titel flex space-between">
-                <span>New Message</span>
-                <div>
-                    <button className="close-btn fa x" onClick={onGoingBack}></button>
+        <React.Fragment>
+            <section className={`mail-compose ${isMinimized ? 'minimize' : ''} ${isFullScreen ? 'full-screen' : ''}`}>
+                <div className="mail-compose-titel flex space-between">
+                    <span>New Message</span>
+                    <div className='compose-titel-btns'>
+                        <button
+                            className="fa minus"
+                            onClick={onMinimize}
+                            data-title={isMinimized ? 'Maximize' : 'Minimize'}
+                        ></button>
+                        <button
+                            className={isFullScreen ? 'fa minimize' : 'fa maximize'}
+                            onClick={onFullScreen}
+                            data-title={isFullScreen ? 'Exit full screen' : 'Full screen'}
+                        ></button>
+                        <button className="close-btn fa x" onClick={onGoingBack}></button>
+                    </div>
                 </div>
-            </div>
-            <form ref={formRef} onSubmit={onSubmit} className="new-message-form flex column">
-                <input type="email" id="email" name="to" placeholder="To" value={to} onChange={handleChange} required />
-                <input type="text" id="subject" name="subject" placeholder="Subject" value={subject} onChange={handleChange} required />
-                <textarea name="body" id="body" placeholder="Body" rows="10" value={body} onChange={handleChange} required></textarea>
-                <div className="mail-compose-btns flex space-between">
-                    <button className="send-btn">send</button>
-                    <button type="button" className="save-draft-btn" onClick={(event) => { onSubmit(event, true) }}>save draft</button>
-                </div>
-            </form>
-        </section>
+                <form ref={formRef} onSubmit={onSubmit} className="new-message-form flex column">
+                    <input type="email" id="email" name="to" placeholder="To" value={to} onChange={handleChange} required />
+                    <input type="text" id="subject" name="subject" placeholder="Subject" value={subject} onChange={handleChange} required />
+                    <textarea name="body" id="body" placeholder="Body" rows="10" value={body} onChange={handleChange} required></textarea>
+                    <div className="mail-compose-btns flex space-between">
+                        <button className="send-btn">send</button>
+                        <button type="button" className="save-draft-btn" onClick={(event) => { onSubmit(event, true) }}>save draft</button>
+                    </div>
+                </form>
+            </section >
+
+            <div className="black-wrapper" onClick={onBlackWrapper}></div>
+
+        </React.Fragment>
     )
 
 }

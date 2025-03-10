@@ -20,4 +20,27 @@
         grid-template-columns: max-content 1fr max-content;
         background-color: var(--bc-gl1);
     }
+
+    [data-title]::after {
+        content: attr(data-title);
+        position: absolute;
+        top: 50px;
+        left: 0;
+        width: max-content;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 4px;
+        border-radius: 5px;
+        opacity: 0;
+        transition: opacity 200ms ease-in-out, visibility 0s linear 200ms;
+        visibility: hidden;
+    }
+
+    [data-title]:hover::after {
+        opacity: 1;
+        transition: 1ms;
+        visibility: visible;
+        overflow: visible;
+        transition: opacity 1ms ease-in-out
+    }
 }

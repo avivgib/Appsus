@@ -96,7 +96,57 @@
         z-index: 5;
     }
 
-    body:has(.folders-close) .mail-compose {
-        margin-inline-start: 70px;
+    .mail-compose.minimize {
+        height: max-content;
     }
+
+    .mail-compose.minimize .new-message-form {
+        display: none;
+    }
+
+    .mail-compose.full-screen {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        bottom: auto;
+        right: auto;
+        translate: -50% -50%;
+
+        width: 80vw;
+        height: 80vh;
+    }
+
+
+    .black-wrapper {
+        position: fixed;
+        inset: 0;
+        display: block;
+        background-color: rgba(0, 0, 0, 0.273);
+        z-index: 3;
+        cursor: pointer;
+        pointer-events: none;
+        opacity: 0;
+        transition: 200ms;
+    }
+
+    body:has(.full-screen) .black-wrapper {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .compose-titel-btns>button {
+        position: relative;
+        background-color: transparent;
+        font-size: 12px;
+        aspect-ratio: 1/1;
+
+        &:hover {
+            background-color: var(--gl-shadow1);
+        }
+    }
+
+    .compose-titel-btns>button:not(:last-child) {
+        margin-inline-end: 4px;
+    }
+
 }

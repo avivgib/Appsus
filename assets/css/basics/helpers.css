@@ -149,6 +149,18 @@
     content: '\f008';
 }
 
+.fa.minus::before {
+    content: '\f068';
+}
+
+.fa.minimize::before {
+    content: '\f422';
+}
+
+.fa.maximize::before {
+    content: '\f424';
+}
+
 /* regular */
 
 .fare {
@@ -218,7 +230,6 @@
 
 .fare.copy::before {
     content: '\f0c5';
-
 }
 
 .fare.notes::before {
