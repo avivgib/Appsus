@@ -5,6 +5,8 @@ const { useState, useEffect, useRef } = React
 export function MailPreview({ currMail, saveChanges, children, mailLabels }) {
 
     const [mail, setMail] = useState({ ...currMail })
+    console.log('prev mail', mail);
+
 
     function handleChanges(ev, type) {
         ev.stopPropagation()
@@ -44,7 +46,8 @@ export function MailPreview({ currMail, saveChanges, children, mailLabels }) {
     }
 
 
-    const { createdAt, subject, body, isRead, sentAt, isStared, from, to } = mail
+    const { createdAt, subject, body, sentAt, from, to } = currMail
+    const { isRead, isStared } = mail
 
 
     return (

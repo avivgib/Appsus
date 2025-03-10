@@ -1,44 +1,51 @@
 
 import { mailService } from "../services/mail.service.js";
 const { useState, useEffect, useRef } = React
+const { useOutletContext, useNavigate } = ReactRouterDOM
 
-export function MailCompose({ onSetcmpType, onSaveMail, autoSave, openMail, onGoingBack, noteToMail, resetNoteToMail }) {
+
+// { onSetcmpType, onSaveMail, autoSave, openMail, onGoingBack, noteToMail, resetNoteToMail }
+
+export function MailCompose() {
+    const navigate = useNavigate()
+
+    const { onSaveMail, autoSave } = useOutletContext()
 
     const [newMail, setNewMail] = useState({ ...mailService.getEmptyMail(), createdAt: Date.now() })
 
     const formRef = useRef()
     const autoSaveRef = useRef()
 
-    useEffect(() => {
-        if (noteToMail) {
-            onNoteToMail(noteToMail)
-        }
+    // useEffect(() => {
+    //     if (noteToMail) {
+    //         onNoteToMail(noteToMail)
+    //     }
 
-        return (() => {
-            if (noteToMail) {
-                resetNoteToMail()
-            }
-        })
-    }, [noteToMail])
+    //     return (() => {
+    //         if (noteToMail) {
+    //             resetNoteToMail()
+    //         }
+    //     })
+    // }, [noteToMail])
 
-    function onNoteToMail(note) {
-        const { title, content } = note.info
-        setNewMail(prev => ({ ...prev, subject: title, body: content }))
-    }
+    // function onNoteToMail(note) {
+    //     const { title, content } = note.info
+    //     setNewMail(prev => ({ ...prev, subject: title, body: content }))
+    // }
 
-    useEffect(() => {
-        if (openMail.edit) {
-            setEditDraft(openMail.edit)
-        }
-        return (() => {
-            onGoingBack('edit')
-        })
-    }, [openMail.edit])
+    // useEffect(() => {
+    //     if (openMail.edit) {
+    //         setEditDraft(openMail.edit)
+    //     }
+    //     return (() => {
+    //         onGoingBack('edit')
+    //     })
+    // }, [openMail.edit])
 
 
-    function setEditDraft(openMail) {
-        setNewMail({ ...openMail })
-    }
+    // function setEditDraft(openMail) {
+    //     setNewMail({ ...openMail })
+    // }
 
 
 
@@ -74,13 +81,20 @@ export function MailCompose({ onSetcmpType, onSaveMail, autoSave, openMail, onGo
         onSaveMail(updatedMail)
     }
 
+    function onGoingBack() {
+        navigate('/mail')
+    }
+
     const { to, subject, body } = newMail
+
 
     return (
         <section className="mail-compose">
             <div className="mail-compose-titel flex space-between">
                 <span>New Message</span>
-                <button className="close-btn fa x" onClick={() => onSetcmpType('list')}></button>
+                <div>
+                    <button className="close-btn fa x" onClick={onGoingBack}></button>
+                </div>
             </div>
             <form ref={formRef} onSubmit={onSubmit} className="new-message-form flex column">
                 <input type="email" id="email" name="to" placeholder="To" value={to} onChange={handleChange} required />

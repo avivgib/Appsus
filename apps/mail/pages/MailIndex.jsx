@@ -10,11 +10,13 @@ import { mailService } from '../services/mail.service.js'
 
 
 const { useState, useEffect, useRef } = React
-const { useSearchParams, useLocation } = ReactRouterDOM
+const { useSearchParams, useLocation, Outlet } = ReactRouterDOM
 
 export function MailIndex() {
 
     const [emails, setEmails] = useState(null)
+    console.log(emails);
+
 
     const [unreadEmailsCount, setUnreadEmailsCount] = useState(null)
 
@@ -100,16 +102,20 @@ export function MailIndex() {
             })
     }
 
-    function autoSave(mail) {
-        return mailService.save(mail)
+    function autoSave(savedMail) {
+        return mailService.save(savedMail)
             .then(currMail => {
 
+                const isMailExists = emails.some(mail => mail.id === currMail.id)
 
-                if (currMail.id && !filterBy.status !== 'sent' || currMail.id && !filterBy.status !== 'inbox') {
+                if (isMailExists) {
                     setEmails(prev => {
                         return prev.map(mail => (mail.id === currMail.id) ? currMail : mail)
                     })
+                } else if (!isMailExists && filterBy.status === 'draft') {
+                    setEmails(prev => [currMail, ...prev])
                 }
+
 
                 if (!currMail.isRead) {
                     updateunreadEmailsCount(1, false, mail)
@@ -358,6 +364,8 @@ export function MailIndex() {
             {!emails && <img className='loader' src="assets/images/loading.gif" alt="load" />}
 
             <MailSideNav />
+
+            <Outlet context={{ onSaveMail, autoSave }} />
 
         </section>
     )

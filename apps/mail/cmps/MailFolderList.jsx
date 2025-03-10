@@ -1,13 +1,19 @@
 import { utilService } from "../../../services/util.service.js";
 
 const { useState, useEffect, useRef } = React
+const { useNavigate } = ReactRouterDOM
 
 export function MailFolderList({ onSetcmpType, onSetStatusInFilterBy, filterBy, unreadEmailsCount, onClosefolders }) {
 
     const [isMoreLabelsOpen, setIsMoreLabelsOpen] = useState(null)
+    const navigate = useNavigate()
 
     function toggleMoreLabels() {
         setIsMoreLabelsOpen(prev => prev = !isMoreLabelsOpen)
+    }
+
+    function onComposeMail() {
+        navigate('/mail/compose')
     }
 
     const { status } = filterBy
@@ -16,9 +22,9 @@ export function MailFolderList({ onSetcmpType, onSetStatusInFilterBy, filterBy, 
 
             <div className='folder-title'>Gmail</div>
 
-            <button className='add-email-btn' onClick={() => { onSetcmpType('compose'); onClosefolders(false) }}>
+            <button className='add-email-btn' onClick={() => { onComposeMail(); onClosefolders(false) }}>
                 <span className='fa pen'></span>
-                <span className='add-email-content'>new email</span>
+                <span className='add-email-content'>compose mail</span>
             </button>
 
             <ul className='clean-list'>
