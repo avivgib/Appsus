@@ -80,6 +80,7 @@ export function MailCompose() {
         const updatedMail = isDraft ? { ...newMail } : { ...newMail, sentAt: Date.now() }
 
         onSaveMail(updatedMail)
+        navigate('/mail')
     }
 
     function onCloseComposeAndSave() {

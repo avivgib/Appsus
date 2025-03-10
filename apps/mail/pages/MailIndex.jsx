@@ -64,6 +64,8 @@ export function MailIndex() {
             .then(currMail => {
                 if (currMail.sentAt && filterBy.status === 'sent') {
                     setEmails(prev => ([currMail, ...prev]))
+                } else if (currMail.sentAt && filterBy.status !== 'sent') {
+                    setEmails(prev => prev.filter(mail => mail.id !== currMail.id))
                 }
 
                 if (!currMail.sentAt && !filterBy.status !== 'sent' || currMail.id && !filterBy.status !== 'inbox') {
