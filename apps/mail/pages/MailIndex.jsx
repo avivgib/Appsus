@@ -10,13 +10,13 @@ import { mailService } from '../services/mail.service.js'
 
 
 const { useState, useEffect, useRef } = React
-const { useSearchParams, useLocation, Outlet } = ReactRouterDOM
+const { useSearchParams, useLocation, Outlet, useNavigate } = ReactRouterDOM
 
 export function MailIndex() {
 
-    const [emails, setEmails] = useState(null)
-    console.log(emails);
+    const navigate = useNavigate()
 
+    const [emails, setEmails] = useState(null)
 
     const [unreadEmailsCount, setUnreadEmailsCount] = useState(null)
 
@@ -46,17 +46,6 @@ export function MailIndex() {
     useEffect(() => {
         loadUnreadStats()
     }, [])
-
-
-    useEffect(() => {
-        if (location.state) {
-            if (Object.hasOwn(location.state, 'noteToMail')) {
-                const { noteToMail } = location.state
-                setNoteToMail(noteToMail)
-                setCmpType('compose')
-            }
-        }
-    }, [location.state])
 
 
     function loadEmails() { // LIST
@@ -233,6 +222,10 @@ export function MailIndex() {
         }
 
         setOpenMail(prev => ({ ...prev, [type]: mailUpdate }))
+
+        if (type === 'edit') {
+            navigate('/mail/compose')
+        }
     }
 
     function onGoingBack(type) {
@@ -372,7 +365,7 @@ export function MailIndex() {
 
             <MailSideNav />
 
-            <Outlet context={{ onSaveMail, autoSave }} />
+            <Outlet context={{ onSaveMail, autoSave, openMail, onGoingBack }} />
 
         </section>
     )
@@ -382,8 +375,8 @@ function DynamicCmp({ cmpType, ...prop }) {
     switch (cmpType) {
         case 'list':
             return <MailList {...prop} />
-        case 'compose':
-            return <MailCompose {...prop} />
+        // case 'compose':
+        //     return <MailCompose {...prop} />
         case 'details':
             return <MailDetails  {...prop} />
         default:

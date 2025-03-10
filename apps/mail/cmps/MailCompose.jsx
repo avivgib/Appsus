@@ -1,15 +1,16 @@
 
 import { mailService } from "../services/mail.service.js";
+
 const { useState, useEffect, useRef } = React
-const { useOutletContext, useNavigate } = ReactRouterDOM
+const { useOutletContext, useNavigate, useLocation } = ReactRouterDOM
 
-
-// { onSetcmpType, onSaveMail, autoSave, openMail, onGoingBack, noteToMail, resetNoteToMail }
 
 export function MailCompose() {
-    const navigate = useNavigate()
 
-    const { onSaveMail, autoSave } = useOutletContext()
+    const navigate = useNavigate()
+    const location = useLocation()
+
+    const { onSaveMail, autoSave, openMail, onGoingBack } = useOutletContext()
 
     const [newMail, setNewMail] = useState({ ...mailService.getEmptyMail(), createdAt: Date.now() })
     const [isMinimized, setIsMinimized] = useState(false)
@@ -18,36 +19,34 @@ export function MailCompose() {
     const formRef = useRef()
     const autoSaveRef = useRef()
 
-    // useEffect(() => {
-    //     if (noteToMail) {
-    //         onNoteToMail(noteToMail)
-    //     }
 
-    //     return (() => {
-    //         if (noteToMail) {
-    //             resetNoteToMail()
-    //         }
-    //     })
-    // }, [noteToMail])
+    useEffect(() => {
+        if (location.state) {
+            if (Object.hasOwn(location.state, 'noteToMail')) {
+                const { noteToMail } = location.state
+                onNoteToMail(noteToMail)
+            }
+        }
+    }, [location.state])
 
-    // function onNoteToMail(note) {
-    //     const { title, content } = note.info
-    //     setNewMail(prev => ({ ...prev, subject: title, body: content }))
-    // }
+    function onNoteToMail(note) {
+        const { title, content } = note.info
+        setNewMail(prev => ({ ...prev, subject: title, body: content }))
+    }
 
-    // useEffect(() => {
-    //     if (openMail.edit) {
-    //         setEditDraft(openMail.edit)
-    //     }
-    //     return (() => {
-    //         onGoingBack('edit')
-    //     })
-    // }, [openMail.edit])
+    useEffect(() => {
+        if (openMail.edit) {
+            setEditDraft(openMail.edit)
+        }
+        return (() => {
+            onGoingBack('edit')
+        })
+    }, [openMail.edit])
 
 
-    // function setEditDraft(openMail) {
-    //     setNewMail({ ...openMail })
-    // }
+    function setEditDraft(openMail) {
+        setNewMail({ ...openMail })
+    }
 
 
 

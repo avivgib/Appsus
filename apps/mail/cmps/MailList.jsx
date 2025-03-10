@@ -33,7 +33,7 @@ export function MailList({ emails, saveChanges, onSetcmpType, onOpenMail, onRemo
         if (mail.labels.sort().join(' ') === labels.sort().join(' ')) {
             return setIsLabelPickerOpen(null)
         }
-        
+
         const updateMail = { ...mail, [type]: labels }
 
         setIsLabelPickerOpen(null)
@@ -56,7 +56,7 @@ export function MailList({ emails, saveChanges, onSetcmpType, onOpenMail, onRemo
                                 key={mail.id} className='mail-preview'
                                 onClick={() => {
                                     onOpenMail(mail.id, (mail.sentAt) ? 'details' : 'edit')
-                                    mail.sentAt ? onSetcmpType('details') : onSetcmpType('compose')
+                                    mail.sentAt ? onSetcmpType('details') : ''
                                 }}>
 
                                 <MailPreview currMail={mail} saveChanges={saveChanges} mailLabels={mail.labels} >

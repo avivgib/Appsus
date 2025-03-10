@@ -15,7 +15,7 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onCopyNote, onToggle
     const [labels, setLabels] = useState(utilService.getNotesLabels() || [])
 
     function onNoteToMail(note) {
-        navigate('/mail', { state: { noteToMail: note } })
+        navigate('/mail/compose', { state: { noteToMail: note } })
     }
 
     function onPinNote(noteId) {
