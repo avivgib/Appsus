@@ -76,6 +76,10 @@
     background-color: var(--g-btn1);
 }
 
+.new-message-form>.mail-compose-btns>.remove-draft-btn {
+    background-color: var(--g-btn3);
+}
+
 .compose-titel-btns>button {
     background-color: transparent;
     font-size: 12px;

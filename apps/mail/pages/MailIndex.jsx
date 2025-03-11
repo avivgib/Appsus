@@ -134,11 +134,11 @@ export function MailIndex() {
             .catch(error => console.log(error))
     }
 
-    function onRemoveMail(ev, mailId) { // DELETE
+    function onRemoveMail(ev, mailId, isRemoveDraft) { // DELETE
         ev.stopPropagation()
         const mail = emails.find(mail => mail.id === mailId)
 
-        if (mail.removedAt) {
+        if (mail.removedAt || isRemoveDraft) {
             mailService.remove(mailId)
                 .then(res => {
                     setEmails(prev => prev.filter(mail => mail.id !== mailId))
@@ -147,7 +147,12 @@ export function MailIndex() {
                         updateunreadEmailsCount(-1, false, mail)
                     }
 
-                    showSuccessMsg('The mail has been removed')
+                    if (isRemoveDraft) {
+                        showSuccessMsg('The draft has been removed')
+                    } else {
+                        showSuccessMsg('The mail has been removed')
+                    }
+
                     return onSetcmpType('list')
                 })
                 .catch(error => {
@@ -158,7 +163,6 @@ export function MailIndex() {
             mailToTrash(mail)
         }
     }
-
 
     function mailToTrash(mail) {
         const updateMail = { ...mail, removedAt: Date.now() }
@@ -396,6 +400,7 @@ export function MailIndex() {
                 onToggleCompose={onToggleCompose}
                 noteToMail={noteToMail}
                 resetNoteToMail={resetNoteToMail}
+                onRemoveMail={onRemoveMail}
             />}
 
         </section>

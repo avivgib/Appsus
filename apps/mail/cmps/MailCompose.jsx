@@ -3,7 +3,7 @@ import { mailService } from "../services/mail.service.js";
 
 const { useState, useEffect, useRef } = React
 
-export function MailCompose({ onSaveMail, autoSave, openMail, onGoingBack, onToggleCompose, noteToMail, resetNoteToMail }) {
+export function MailCompose({ onSaveMail, autoSave, openMail, onGoingBack, onToggleCompose, noteToMail, resetNoteToMail, onRemoveMail }) {
 
     const [newMail, setNewMail] = useState({ ...mailService.getEmptyMail(), createdAt: Date.now() })
     const [isMinimized, setIsMinimized] = useState(false)
@@ -101,8 +101,14 @@ export function MailCompose({ onSaveMail, autoSave, openMail, onGoingBack, onTog
         setIsMinimized(true)
     }
 
-    const { to, subject, body } = newMail
+    function onRemoveDraft(ev) {
+        if (newMail.id) {
+            onRemoveMail(ev, newMail.id, true)
+        }
+        onToggleCompose(false)
+    }
 
+    const { to, subject, body } = newMail
 
     return (
         <React.Fragment>
@@ -134,13 +140,14 @@ export function MailCompose({ onSaveMail, autoSave, openMail, onGoingBack, onTog
                     <div className="mail-compose-btns flex space-between">
                         <button className="send-btn">send</button>
                         <button type="button" className="save-draft-btn" onClick={(event) => { onSubmit(event, true) }}>save draft</button>
+                        <button type="button" className="remove-draft-btn" onClick={onRemoveDraft}>remove draft</button>
                     </div>
                 </form>
             </section >
 
             <div className="black-wrapper" onClick={onBlackWrapper}></div>
 
-        </React.Fragment>
+        </React.Fragment >
     )
 
 }
