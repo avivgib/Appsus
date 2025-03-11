@@ -128,8 +128,8 @@ export function MailCompose({ onSaveMail, autoSave, openMail, onGoingBack, onTog
         <React.Fragment>
             <section className={`mail-compose ${isMinimized ? 'minimize' : ''} ${isFullScreen ? 'full-screen' : ''}`}>
                 <div className="mail-compose-titel flex space-between">
-                    <span>New Message</span>
-                    <div className='compose-titel-btns'>
+                    <span>{subject ? subject : 'New Message'}</span>
+                    <div className='compose-titel-btns flex'>
                         <button
                             className="fa minus"
                             onClick={onMinimize}

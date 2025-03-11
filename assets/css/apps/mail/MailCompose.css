@@ -21,6 +21,12 @@
     background-color: var(--gl1);
 }
 
+.mail-compose>.mail-compose-titel>span {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
 .mail-compose>.mail-compose-titel>.close-btn {
     background: transparent;
 }
@@ -80,12 +86,12 @@
     background-color: var(--g-btn3);
 }
 
+
 .compose-titel-btns>button {
     background-color: transparent;
     font-size: 12px;
     aspect-ratio: 1/1;
 }
-
 
 .compose-titel-btns>.fa.minus,
 .compose-titel-btns>.full-screen-btn {
