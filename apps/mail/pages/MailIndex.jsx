@@ -10,33 +10,33 @@ import { mailService } from '../services/mail.service.js'
 
 
 const { useState, useEffect, useRef } = React
-const { useSearchParams, useLocation, Outlet, useNavigate } = ReactRouterDOM
+const { useSearchParams, useLocation, useNavigate } = ReactRouterDOM
 
 export function MailIndex() {
 
     const navigate = useNavigate()
 
     const [emails, setEmails] = useState(null)
-
     const [unreadEmailsCount, setUnreadEmailsCount] = useState(null)
+
+    const [isComposeOpen, setIsComposeOpen] = useState(false)
+    const [openMail, setOpenMail] = useState({ details: null, edit: null })
+    const [noteToMail, setNoteToMail] = useState(null)
+
+    const [isFoldersClose, setIsFoldersClose] = useState(false)
+    const [cmpType, setCmpType] = useState('list')
 
     const [searchParams, setSearchParams] = useSearchParams()
     const [filterBy, setFilterBy] = useState({ ...mailService.getFilterFromSearchParams(searchParams) })
     const [sortBy, setSortBy] = useState({ ...mailService.getDefaultSortBy() })
 
-    const [openMail, setOpenMail] = useState({ details: null, edit: null })
-    const [noteToMail, setNoteToMail] = useState(null)
-
-
-    const [cmpType, setCmpType] = useState('list')
-
-
     const defaultFilterByRef = useRef({ ...mailService.getDefaultFilterBy() })
     const defaultSortByRef = useRef({ ...sortBy })
 
-    const [isFoldersClose, setIsFoldersClose] = useState(false)
+
 
     const location = useLocation()
+
 
     useEffect(() => {
         setSearchParams(filterBy)
@@ -47,11 +47,21 @@ export function MailIndex() {
         loadUnreadStats()
     }, [])
 
+    useEffect(() => {
+        if (location.state) {
+            if (Object.hasOwn(location.state, 'noteToMail')) {
+                const { noteToMail } = location.state
+                setNoteToMail(noteToMail)
+            }
+        }
+    }, [location.state])
+
 
     function loadEmails() { // LIST
         mailService.query(filterBy, sortBy)
             .then(emails => setEmails(emails))
             .catch(error => console.error(error))
+            .finally(() => { if (noteToMail) onToggleCompose(true) })
     }
 
     function loadUnreadStats() { // LIST
@@ -91,7 +101,6 @@ export function MailIndex() {
                     showSuccessMsg('The mail has been saved')
                 }
 
-                onSetcmpType('list')
                 return
             })
             .catch(error => {
@@ -226,12 +235,20 @@ export function MailIndex() {
         setOpenMail(prev => ({ ...prev, [type]: mailUpdate }))
 
         if (type === 'edit') {
-            navigate('/mail/compose')
+            setIsComposeOpen(true)
         }
+    }
+
+    function onToggleCompose(isOpen) {
+        setIsComposeOpen(isOpen)
     }
 
     function onGoingBack(type) {
         setOpenMail(prev => ({ ...prev, [type]: null }))
+
+        if (type === 'edit') {
+            setIsComposeOpen(false)
+        }
     }
 
     function onNavigateBetweenEmails(mailId, dif) {
@@ -341,6 +358,7 @@ export function MailIndex() {
                 filterBy={filterBy}
                 unreadEmailsCount={unreadEmailsCount}
                 onClosefolders={onClosefolders}
+                onToggleCompose={onToggleCompose}
             />
 
 
@@ -353,12 +371,7 @@ export function MailIndex() {
                 openMail={openMail}
                 onGoingBack={onGoingBack}
                 onNavigateBetweenEmails={onNavigateBetweenEmails}
-
-                onSaveMail={onSaveMail}
-                autoSave={autoSave}
                 onRemoveMail={onRemoveMail}
-                noteToMail={noteToMail}
-                resetNoteToMail={resetNoteToMail}
 
                 searchParams={searchParams}
                 saveChanges={saveChanges}
@@ -374,7 +387,16 @@ export function MailIndex() {
 
             <MailSideNav />
 
-            <Outlet context={{ onSaveMail, autoSave, openMail, onGoingBack }} />
+
+            {isComposeOpen && <MailCompose
+                onSaveMail={onSaveMail}
+                autoSave={autoSave}
+                openMail={openMail}
+                onGoingBack={onGoingBack}
+                onToggleCompose={onToggleCompose}
+                noteToMail={noteToMail}
+                resetNoteToMail={resetNoteToMail}
+            />}
 
         </section>
     )

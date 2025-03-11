@@ -2,15 +2,8 @@
 import { mailService } from "../services/mail.service.js";
 
 const { useState, useEffect, useRef } = React
-const { useOutletContext, useNavigate, useLocation } = ReactRouterDOM
 
-
-export function MailCompose() {
-
-    const navigate = useNavigate()
-    const location = useLocation()
-
-    const { onSaveMail, autoSave, openMail, onGoingBack } = useOutletContext()
+export function MailCompose({ onSaveMail, autoSave, openMail, onGoingBack, onToggleCompose, noteToMail, resetNoteToMail }) {
 
     const [newMail, setNewMail] = useState({ ...mailService.getEmptyMail(), createdAt: Date.now() })
     const [isMinimized, setIsMinimized] = useState(false)
@@ -19,15 +12,13 @@ export function MailCompose() {
     const formRef = useRef()
     const autoSaveRef = useRef()
 
-
     useEffect(() => {
-        if (location.state) {
-            if (Object.hasOwn(location.state, 'noteToMail')) {
-                const { noteToMail } = location.state
-                onNoteToMail(noteToMail)
-            }
+        if (noteToMail) {
+            onNoteToMail(noteToMail)
         }
-    }, [location.state])
+
+        return (() => resetNoteToMail())
+    }, [noteToMail])
 
     function onNoteToMail(note) {
         const { title, content } = note.info
@@ -80,7 +71,7 @@ export function MailCompose() {
         const updatedMail = isDraft ? { ...newMail } : { ...newMail, sentAt: Date.now() }
 
         onSaveMail(updatedMail)
-        navigate('/mail')
+        onToggleCompose(false)
     }
 
     function onCloseComposeAndSave() {
@@ -88,7 +79,7 @@ export function MailCompose() {
             onSaveMail(newMail)
         }
 
-        navigate('/mail')
+        onToggleCompose(false)
     }
 
     function onMinimize() {
