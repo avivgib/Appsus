@@ -40,9 +40,10 @@ export function MailCompose({ onSaveMail, autoSave, openMail, onGoingBack, onTog
     }
 
 
-
     useEffect(() => {
-        autoSaveRef.current = setInterval(onAutoSave, 5000)
+        if (newMail.body || newMail.subject) {
+            autoSaveRef.current = setInterval(onAutoSave, 5000)
+        }
 
         return (() => {
             clearInterval(autoSaveRef.current)
