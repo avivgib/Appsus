@@ -33,10 +33,7 @@ export function MailIndex() {
     const defaultFilterByRef = useRef({ ...mailService.getDefaultFilterBy() })
     const defaultSortByRef = useRef({ ...sortBy })
 
-
-
     const location = useLocation()
-
 
     useEffect(() => {
         setSearchParams(filterBy)
@@ -79,6 +76,7 @@ export function MailIndex() {
                 }
 
                 if (!currMail.sentAt && !filterBy.status !== 'sent' || currMail.id && !filterBy.status !== 'inbox') {
+
                     const isMailExists = emails.some(mail => mail.id === currMail.id)
 
                     if (isMailExists) {
@@ -113,15 +111,18 @@ export function MailIndex() {
         return mailService.save(savedMail)
             .then(currMail => {
 
-                const isMailExists = emails.some(mail => mail.id === currMail.id)
+                setEmails(prev => {
+                    const isMailExists = prev.some(mail => mail.id === currMail.id)
 
-                if (isMailExists) {
-                    setEmails(prev => {
+                    if (isMailExists) {
                         return prev.map(mail => (mail.id === currMail.id) ? currMail : mail)
-                    })
-                } else if (!isMailExists && filterBy.status === 'draft') {
-                    setEmails(prev => [currMail, ...prev])
-                }
+                    } else if (!isMailExists && filterBy.status === 'draft') {
+                        return [currMail, ...prev]
+                    }
+
+                    return prev
+
+                })
 
 
                 if (!currMail.isRead) {
@@ -169,9 +170,6 @@ export function MailIndex() {
 
         mailService.save(updateMail)
             .then(updateMail => {
-                setEmails(prev => {
-                    return prev.map(mail => (mail.id === updateMail.id) ? updateMail : mail)
-                })
                 setEmails(prev => prev.filter(mail => mail.id !== updateMail.id))
 
                 if (!mail.isRead) {
@@ -340,6 +338,7 @@ export function MailIndex() {
         }
     }
 
+    //  rest note to mail
     function resetNoteToMail() {
         setNoteToMail(null)
     }

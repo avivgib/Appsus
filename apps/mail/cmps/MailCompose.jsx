@@ -1,5 +1,7 @@
 
+import { utilService } from "../../../services/util.service.js";
 import { mailService } from "../services/mail.service.js";
+
 
 const { useState, useEffect, useRef } = React
 
@@ -10,8 +12,12 @@ export function MailCompose({ onSaveMail, autoSave, openMail, onGoingBack, onTog
     const [isFullScreen, setIsFullScreen] = useState(false)
 
     const formRef = useRef()
-    const autoSaveRef = useRef()
+    const autoSaveDebounce = useRef(utilService.debounce(onAutoSave, 2000))
+    // const autoSaveRef = useRef()
 
+
+
+    ///  note to mail
     useEffect(() => {
         if (noteToMail) {
             onNoteToMail(noteToMail)
@@ -25,6 +31,7 @@ export function MailCompose({ onSaveMail, autoSave, openMail, onGoingBack, onTog
         setNewMail(prev => ({ ...prev, subject: title, body: content }))
     }
 
+    /// edit draft
     useEffect(() => {
         if (openMail.edit) {
             setEditDraft(openMail.edit)
@@ -39,18 +46,25 @@ export function MailCompose({ onSaveMail, autoSave, openMail, onGoingBack, onTog
         setNewMail({ ...openMail })
     }
 
+    /// auto save
+    // useEffect(() => {
+    //     if (newMail.body || newMail.subject) {
+    //         autoSaveRef.current = setInterval(onAutoSave, 5000)
+    //     }
+
+    //     return (() => {
+    //         clearInterval(autoSaveRef.current)
+    //     })
+    // }, [newMail])
+
+
 
     useEffect(() => {
-        if (newMail.body || newMail.subject) {
-            autoSaveRef.current = setInterval(onAutoSave, 5000)
-        }
-
-        return (() => {
-            clearInterval(autoSaveRef.current)
-        })
+        autoSaveDebounce.current(newMail)
     }, [newMail])
 
-    function onAutoSave() {
+
+    function onAutoSave(newMail) {
         console.log('auto save');
         autoSave(newMail)
             .then(mail => {
