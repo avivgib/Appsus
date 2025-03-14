@@ -9,15 +9,15 @@ export function NoteSearchCategory({ filterBy, onSetFilter, onSearchFocus }) {
 
     useEffect(() => {
         if (JSON.stringify(filterByToEdit) !== JSON.stringify(filterBy)) {
-            onSetFilter(filterByToEdit);
+            onSetFilter(filterByToEdit)
         }
 
         setTimeout(() => {
             if (filterByToEdit.color || filterByToEdit.labels) {
-                onSearchFocus(false);
+                onSearchFocus(false)
             }
         }, 600)
-    }, [filterByToEdit, filterBy]);
+    }, [filterByToEdit, filterBy])
 
 
 
