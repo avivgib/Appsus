@@ -5,3 +5,46 @@
      font-family: Roboto, Helvetica, Arial, sans-serif;
      line-height: 1.42857142857;
  }
+
+ .home-nav {
+     display: none;
+ }
+
+ .box-nav {
+     display: block;
+ }
+
+
+ @media (min-width: 850px) {
+     .home-nav {
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         gap: 0.71428571428em;
+     }
+
+     .home-nav a {
+         display: flex;
+         justify-content: center;
+         align-items: center;
+
+         &:hover {
+             color: var(--g-btn1);
+         }
+     }
+
+     .home-nav img {
+         height: 30px;
+         width: 30px;
+         object-fit: contain;
+     }
+
+     .home-nav span {
+         margin-inline: 0.71428571428em;
+         font-size: 1.42857142857em;
+     }
+
+     .box-nav {
+         display: none;
+     }
+ }

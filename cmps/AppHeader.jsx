@@ -25,21 +25,37 @@ export function AppHeader() {
 
     return <header className="app-header">
         <div className='flex align-center'>
-            <Link to={currPage || '/'}>
+            <Link to="/">
                 <div className='main-logo'>
                     <DynamicLogo currPage={currPage} />
                 </div>
             </Link>
         </div>
 
-        <nav>
+        {(currPage === "/" || currPage === "/about") && < nav className="home-nav" >
+            <NavLink to="/about">
+                <img src="assets/images/home-logo.png" alt="about" className='btn-logo' />
+                <span className='btn-name'>About</span>
+            </NavLink>
+            <NavLink to="/mail">
+                <img src="assets/images/gmail-logo.png" alt="gmail" className='btn-logo' />
+                <span className='btn-name'>Gmail</span>
+            </NavLink>
+            <NavLink to="/note" >
+                <img src="assets/images/keep-logo.png" alt="keep" className='btn-logo' />
+                <span className='btn-name'>Keep</span>
+            </NavLink>
+        </nav>
+        }
+
+        <nav className="box-nav">
             <button className='btn-nav' onClick={onToggleNav}>
                 <img src="assets/images/9-point.svg" alt="point" className='nav-point' />
                 {isNavOpen && <NavigationBox onToggleNav={onToggleNav} />}
             </button>
         </nav>
 
-    </header>
+    </header >
 }
 
 
@@ -53,7 +69,7 @@ function DynamicLogo({ currPage }) {
         case '/about':
             return <React.Fragment>
                 <img src="assets/images/home-logo.png" className='logo-img' alt="about" />
-                <div className='page-name'>About</div>
+                <div className='page-name'>Appsus</div>
             </React.Fragment>
         case '/mail':
             return <React.Fragment>
