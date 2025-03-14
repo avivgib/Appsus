@@ -52,6 +52,7 @@ function query(filterBy, sortBy) {
             }
 
 
+
             if (getMailLabels().includes(filterBy.status)) {
                 return emails = emails.filter(mail => mail.labels.includes(filterBy.status))
             }
@@ -70,6 +71,11 @@ function query(filterBy, sortBy) {
             if (filterBy.subject) {
                 const regex = new RegExp(filterBy.subject, 'i')
                 emails = emails.filter(mail => regex.test(mail.subject))
+            }
+            if (filterBy.date) {
+                emails = emails.filter(mail => {
+                    return new Date(mail.sentAt).toISOString().slice(0, 10) === new Date(+filterBy.date).toISOString().slice(0, 10)
+                })
             }
 
             if (filterBy.isRead) {
@@ -125,6 +131,7 @@ function getDefaultFilterBy() {
         isStared: false,
         from: '',
         labels: [],
+        date: ''
     }
 }
 

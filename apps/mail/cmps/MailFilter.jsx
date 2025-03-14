@@ -1,5 +1,5 @@
 import { utilService } from "../../../services/util.service.js"
-import { MoreFilters } from "../../note/cmps/MoreFilters.jsx"
+import { MoreFilters } from "./MoreFilters.jsx"
 
 const { useState, useEffect, useRef } = React
 
@@ -30,6 +30,7 @@ export function MailFilter({ filterBy, onSetFilterBy, defaultFilterByRef }) {
 
         if (type === 'number') value = +value
         if (type === 'checkbox') value = checked
+        if (name === 'date') value = new Date(value).getTime()
 
         setEditFilterBy(prev => ({ ...prev, [name]: value }))
 
@@ -71,7 +72,6 @@ export function MailFilter({ filterBy, onSetFilterBy, defaultFilterByRef }) {
                 </span>
 
             </div>
-
 
 
         </section>
