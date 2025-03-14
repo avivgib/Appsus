@@ -136,6 +136,26 @@
 }
 
 @media (max-width: 850px) {
+    .mail-folder {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+
+        background-color: var(--bc-gl1);
+        z-index: 10;
+        height: 100%;
+
+        font-size: 0.875rem;
+        font-family: Roboto, Helvetica, Arial, sans-serif;
+
+        line-height: 1.42857142857;
+
+        width: 18.2857142857em;
+
+        transition: 200ms;
+    }
+
     body:not(.folders-close) .mail-folder {
         transform: translateX(-100%);
     }
