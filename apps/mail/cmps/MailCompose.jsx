@@ -5,7 +5,7 @@ import { mailService } from "../services/mail.service.js";
 
 const { useState, useEffect, useRef } = React
 
-export function MailCompose({ onSaveMail, autoSave, openMail, onGoingBack, onToggleCompose, noteToMail, resetNoteToMail, onRemoveMail }) {
+export function MailCompose({ onSaveMail, autoSave, openMail, onGoingBack, onToggleCompose, noteToMail, resetNoteToMail, onRemoveDraftMail }) {
 
     const [newMail, setNewMail] = useState({ ...mailService.getEmptyMail(), createdAt: Date.now() })
     const [isMinimized, setIsMinimized] = useState(false)
@@ -115,9 +115,9 @@ export function MailCompose({ onSaveMail, autoSave, openMail, onGoingBack, onTog
         setIsMinimized(true)
     }
 
-    function onRemoveDraft(ev) {
+    function onRemoveDraft() {
         if (newMail.id) {
-            onRemoveMail(ev, newMail.id, true)
+            onRemoveDraftMail(newMail)
         }
         onToggleCompose(false)
     }

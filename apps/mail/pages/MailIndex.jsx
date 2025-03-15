@@ -137,11 +137,11 @@ export function MailIndex() {
             .catch(error => console.log(error))
     }
 
-    function onRemoveMail(ev, mailId, isRemoveDraft) { // DELETE
+    function onRemoveMail(ev, mailId) { // DELETE
         ev.stopPropagation()
         const mail = emails.find(mail => mail.id === mailId)
 
-        if (mail.removedAt || isRemoveDraft) {
+        if (mail.removedAt) {
             mailService.remove(mailId)
                 .then(res => {
                     setEmails(prev => prev.filter(mail => mail.id !== mailId))
@@ -149,12 +149,7 @@ export function MailIndex() {
                     if (!mail.isRead) {
                         updateunreadEmailsCount(-1, false, mail)
                     }
-
-                    if (isRemoveDraft) {
-                        showSuccessMsg('The draft has been removed')
-                    } else {
-                        showSuccessMsg('The mail has been removed')
-                    }
+                    showSuccessMsg('The mail has been removed')
 
                     return onSetcmpType('list')
                 })
@@ -185,6 +180,26 @@ export function MailIndex() {
             .catch(error => {
                 console.error(error)
                 showErrorMsg(`couldn't remove mail`)
+            })
+    }
+
+    function onRemoveDraftMail(draftMail) {
+        mailService.remove(draftMail.id)
+            .then(res => {
+                setEmails(prev => prev.filter(mail => mail.id !== draftMail.id))
+
+
+                if (!draftMail.isRead) {
+                    updateunreadEmailsCount(-1, false, draftMail)
+                }
+
+                showSuccessMsg('The draft has been removed')
+
+                return onSetcmpType('list')
+            })
+            .catch(error => {
+                console.error(error)
+                showErrorMsg(`couldn't remove draft`)
             })
     }
 
@@ -401,7 +416,7 @@ export function MailIndex() {
                 onToggleCompose={onToggleCompose}
                 noteToMail={noteToMail}
                 resetNoteToMail={resetNoteToMail}
-                onRemoveMail={onRemoveMail}
+                onRemoveDraftMail={onRemoveDraftMail}
             />}
 
         </section>
