@@ -38,7 +38,7 @@ export function MailPreview({ currMail, saveChanges, children, mailLabels }) {
         if (mail.from !== usrEmail) {
             return <span>{from.split('@')[0]}</span>
         } else if (mail.from === usrEmail && mail.sentAt) {
-            return <span>{`to: ${to.split('@')[0]}`}</span>
+            return <span>{`To: ${to.split('@')[0]}`}</span>
         } else if (!mail.sentAt) {
             return <span style={{ color: 'var(--gl-font3)' }}>Draft</span>
         }

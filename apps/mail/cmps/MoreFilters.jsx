@@ -32,7 +32,7 @@ export function MoreFilters({ editFilterBy, onSetEditFilterBy, onOpenMoreFilters
             <label htmlFor="subject">Subject:</label>
             <input type="input" id="subject" name="subject" value={subject || ''} onChange={onSetEditFilterBy} />
 
-            <label htmlFor="date">date:</label>
+            <label htmlFor="date">Date:</label>
             <input type="date" id="date" name="date" value={date ? new Date(+date).toISOString().slice(0, 10) : ''} onChange={onSetEditFilterBy} />
 
             <input type="checkbox" id="isRead" name="isRead" checked={isRead} onChange={onSetEditFilterBy} />
