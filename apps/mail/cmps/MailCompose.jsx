@@ -12,8 +12,8 @@ export function MailCompose({ onSaveMail, autoSave, openMail, onGoingBack, onTog
     const [isFullScreen, setIsFullScreen] = useState(false)
 
     const formRef = useRef()
-    const autoSaveDebounce = useRef(utilService.debounce(onAutoSave, 2000))
-    // const autoSaveRef = useRef()
+    // const autoSaveDebounce = useRef(utilService.debounce(onAutoSave, 2000))
+    const autoSaveRef = useRef()
 
 
 
@@ -47,24 +47,24 @@ export function MailCompose({ onSaveMail, autoSave, openMail, onGoingBack, onTog
     }
 
     /// auto save
-    // useEffect(() => {
-    //     if (newMail.body || newMail.subject) {
-    //         autoSaveRef.current = setInterval(onAutoSave, 5000)
-    //     }
-
-    //     return (() => {
-    //         clearInterval(autoSaveRef.current)
-    //     })
-    // }, [newMail])
-
-
-
     useEffect(() => {
-        autoSaveDebounce.current(newMail)
+        if (newMail.body || newMail.subject) {
+            autoSaveRef.current = setInterval(onAutoSave, 4000)
+        }
+
+        return (() => {
+            clearInterval(autoSaveRef.current)
+        })
     }, [newMail])
 
 
-    function onAutoSave(newMail) {
+
+    // useEffect(() => {
+    //     autoSaveDebounce.current(newMail)
+    // }, [newMail])
+
+
+    function onAutoSave() {
         console.log('auto save');
         autoSave(newMail)
             .then(mail => {

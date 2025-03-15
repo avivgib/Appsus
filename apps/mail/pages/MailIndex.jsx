@@ -69,25 +69,27 @@ export function MailIndex() {
     function onSaveMail(mail) {  // CREATE 
         mailService.save(mail)
             .then(currMail => {
-                if (currMail.sentAt && filterBy.status === 'sent') {
-                    setEmails(prev => ([currMail, ...prev]))
-                } else if (currMail.sentAt && filterBy.status !== 'sent') {
-                    setEmails(prev => prev.filter(mail => mail.id !== currMail.id))
-                }
+                setEmails(prev => {
 
-                if (!currMail.sentAt && !filterBy.status !== 'sent' || currMail.id && !filterBy.status !== 'inbox') {
-
-                    const isMailExists = emails.some(mail => mail.id === currMail.id)
-
-                    if (isMailExists) {
-                        setEmails(prev => {
-                            return prev.map(mail => (mail.id === currMail.id) ? currMail : mail)
-                        })
-                    } else if (!isMailExists && filterBy.status === 'draft') {
-                        setEmails(prev => [currMail, ...prev])
+                    if (currMail.sentAt && filterBy.status === 'sent') {
+                        return [currMail, ...prev]
+                    } else if (currMail.sentAt && filterBy.status !== 'sent') {
+                        return prev.filter(mail => mail.id !== currMail.id)
                     }
 
-                }
+                    if (!currMail.sentAt && filterBy.status !== 'sent' || currMail.id && filterBy.status !== 'inbox') {
+                        const isMailExists = prev.some(mail => mail.id === currMail.id)
+
+                        if (isMailExists) {
+                            return prev.map(mail => (mail.id === currMail.id) ? currMail : mail)
+                        } else if (!isMailExists && filterBy.status === 'draft') {
+                            return [currMail, ...prev]
+                        }
+                    }
+
+                    return prev
+                })
+
 
                 if (!currMail.isRead) {
                     updateunreadEmailsCount(1, false, currMail)
